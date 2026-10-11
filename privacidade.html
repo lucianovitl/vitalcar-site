@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0d0b0a">
+  <meta name="color-scheme" content="dark">
+  <title>Privacidade | Vitalcar Ilhéus</title>
+  <meta name="description" content="Saiba como os dados do agendamento são usados pela Vitalcar, quais serviços participam do site e como solicitar informações sobre seus dados.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230d0b0a'/%3E%3Ctext x='32' y='47' text-anchor='middle' font-family='Arial,sans-serif' font-size='46' font-weight='900' fill='%23ff1a1a'%3EV%3C/text%3E%3C/svg%3E">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0d0b0a;
+      --surface: #151210;
+      --text: #f5ecd8;
+      --muted: #c3b49f;
+      --red: #ff1a1a;
+      --border: #514339;
+      --focus: #f5c518;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 1.5rem; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 1rem;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+    }
+    a { color: var(--text); text-underline-offset: .22em; text-decoration-thickness: .08em; }
+    a:hover { color: var(--focus); }
+    :focus-visible { outline: 3px solid var(--focus); outline-offset: 5px; border-radius: 2px; }
+    .container { width: min(100% - 2.5rem, 70rem); margin-inline: auto; }
+    .skip-link {
+      position: absolute;
+      top: .75rem;
+      left: 1rem;
+      z-index: 10;
+      transform: translateY(-200%);
+      background: var(--text);
+      color: var(--bg);
+      padding: .75rem 1rem;
+      font-weight: 700;
+    }
+    .skip-link:focus { transform: translateY(0); color: var(--bg); }
+    .site-header { border-bottom: 1px solid var(--border); }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem 2rem; padding-block: 1.25rem; }
+    .brand { display: inline-block; text-decoration: none; font-size: 1.65rem; font-weight: 900; letter-spacing: -.06em; line-height: 1.15; }
+    .brand span { color: var(--red); }
+    .brand small { display: block; margin-top: .35rem; color: var(--muted); font-size: .65rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; }
+    .header-links { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; }
+    .header-links a { display: inline-flex; align-items: center; min-height: 44px; font-size: .9rem; font-weight: 700; }
+    .hero { padding-block: clamp(3rem, 8vw, 6rem) 2.5rem; }
+    .eyebrow { margin: 0 0 1rem; color: var(--muted); font-size: .8rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+    h1, h2, h3 { line-height: 1.2; }
+    h1 { margin: 0; font-size: clamp(2.2rem, 8vw, 5.25rem); font-weight: 900; letter-spacing: -.055em; text-transform: uppercase; }
+    h1::after { content: ""; display: block; width: 5rem; height: .35rem; margin-top: 1.5rem; background: var(--red); }
+    .intro { max-width: 49rem; margin-block: 1.5rem 1rem; color: var(--muted); font-size: clamp(1.08rem, 2.5vw, 1.3rem); }
+    .updated { color: var(--muted); font-size: .9rem; }
+    .quick-read { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-block: 0 3rem; }
+    .quick-card { padding: 1.4rem; background: var(--surface); border: 1px solid var(--border); border-top: 3px solid var(--red); }
+    .quick-card h2 { margin: 0 0 .65rem; font-size: 1.1rem; }
+    .quick-card p { margin: 0; color: var(--muted); }
+    .layout { display: grid; grid-template-columns: 15rem minmax(0, 1fr); align-items: start; gap: 3rem; padding-bottom: 4rem; }
+    .contents { padding: 1.25rem; background: var(--surface); border: 1px solid var(--border); }
+    .contents h2 { margin: 0 0 .75rem; font-size: 1rem; }
+    .contents ol { margin: 0; padding-left: 1.4rem; color: var(--muted); }
+    .contents a { display: inline-block; padding-block: .55rem; font-size: .95rem; }
+    .article { min-width: 0; }
+    .article section { padding-block: 2rem; border-top: 1px solid var(--border); scroll-margin-top: 1rem; }
+    .article section:first-child { padding-top: 0; border-top: 0; }
+    .article h2 { margin: 0 0 1rem; font-size: clamp(1.35rem, 3vw, 1.75rem); letter-spacing: -.025em; }
+    .article h3 { margin: 1.5rem 0 .6rem; font-size: 1.1rem; }
+    .article p { margin: 0 0 1rem; color: var(--muted); }
+    .article p:last-child { margin-bottom: 0; }
+    .article ul, .article ol { margin: 0 0 1.25rem; padding-left: 1.3rem; color: var(--muted); }
+    .article li { margin-block: .65rem; padding-left: .2rem; }
+    strong { color: var(--text); }
+    .note { padding: 1rem 1.25rem; border-left: 3px solid var(--red); background: var(--surface); }
+    details { margin-block: .75rem; padding: 0 1rem; border: 1px solid var(--border); background: var(--surface); }
+    summary { padding-block: 1rem; cursor: pointer; font-weight: 700; line-height: 1.5; }
+    summary::marker { color: var(--text); }
+    details[open] summary { margin-bottom: .75rem; border-bottom: 1px solid var(--border); }
+    .article details p:last-child { margin-bottom: 1rem; }
+    .article .contact-link { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: .75rem 1.25rem; background: #ab0d0d; color: var(--text); font-weight: 800; text-decoration: none; border: 1px solid #e75b50; }
+    .article .contact-link:hover { background: #7e0909; text-decoration: underline; }
+    address { margin-top: 1.25rem; color: var(--muted); font-style: normal; }
+    .site-footer { border-top: 1px solid var(--border); color: var(--muted); }
+    .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem 2rem; padding-block: 1.5rem; }
+    .site-footer p { margin: 0; font-size: .85rem; }
+    .site-footer a { display: inline-block; padding-block: .6rem; font-size: .9rem; }
+    @media (max-width: 58rem) {
+      .layout { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+      .contents ol { columns: 2; column-gap: 2rem; }
+      .contents li { break-inside: avoid; }
+    }
+    @media (max-width: 38rem) {
+      .container { width: calc(100% - 2rem); }
+      .quick-read { grid-template-columns: minmax(0, 1fr); margin-bottom: 2rem; }
+      .contents ol { columns: 1; }
+      .article section { padding-block: 1.5rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="site-header" id="topo">
+    <div class="container header-inner">
+      <a class="brand" href="/" aria-label="Vitalcar — página inicial">VITAL<span>CAR</span><small>Estética automotiva · Ilhéus</small></a>
+      <nav class="header-links" aria-label="Navegação principal">
+        <a href="/">Voltar ao início</a>
+        <a href="/#contato">Falar com a Vitalcar</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" id="conteudo" tabindex="-1">
+    <div class="hero">
+      <p class="eyebrow">Informações sobre o site</p>
+      <h1>Privacidade</h1>
+      <p class="intro">Entenda quais dados entram no agendamento, como os serviços do site participam desse processo e como falar com a Vitalcar sobre suas informações.</p>
+      <p class="updated">Última atualização: <time datetime="2026-10-10">10/10/2026</time></p>
+    </div>
+
+    <section class="quick-read" aria-label="Resumo dos canais de atendimento">
+      <div class="quick-card">
+        <h2>Ao enviar o formulário</h2>
+        <p>Os dados preenchidos são enviados ao sistema de agendamentos. Esse envio acontece ao selecionar “Enviar agendamento”, independentemente do envio de uma mensagem no WhatsApp.</p>
+      </div>
+      <div class="quick-card">
+        <h2>Ao escolher o WhatsApp</h2>
+        <p>O serviço abre com uma mensagem preparada. Revise o conteúdo: a mensagem só chega ao atendimento da Vitalcar quando você a envia no próprio WhatsApp.</p>
+      </div>
+    </section>
+
+    <div class="layout">
+      <nav class="contents" aria-label="Nesta página">
+        <h2>Nesta página</h2>
+        <ol>
+          <li><a href="#dados">Dados do agendamento</a></li>
+          <li><a href="#finalidade">Uso e envio dos dados</a></li>
+          <li><a href="#armazenamento">Armazenamento e conservação</a></li>
+          <li><a href="#servicos">Serviços externos</a></li>
+          <li><a href="#navegador">Preferências e cache</a></li>
+          <li><a href="#controles">Controles no navegador</a></li>
+          <li><a href="#direitos">Seus direitos e contato</a></li>
+        </ol>
+      </nav>
+
+      <div class="article">
+        <section id="dados" aria-labelledby="dados-titulo">
+          <h2 id="dados-titulo">1. Dados do agendamento</h2>
+          <p>O formulário da página principal solicita informações para que a Vitalcar possa identificar seu pedido e entrar em contato:</p>
+          <ul>
+            <li><strong>Nome e telefone/WhatsApp</strong> para identificar e responder ao solicitante.</li>
+            <li><strong>Veículo e tipo de veículo:</strong> descrição, como marca, modelo e ano, e categoria, como hatch, sedan, pick-up ou moto.</li>
+            <li><strong>Serviço desejado</strong> para entender o atendimento solicitado.</li>
+            <li><strong>Placa, opcional,</strong> caso você queira informar a identificação do veículo.</li>
+            <li><strong>Data e período preferidos, opcionais,</strong> para orientar a consulta de disponibilidade.</li>
+            <li><strong>Observações, opcionais,</strong> com detalhes que você queira acrescentar sobre o veículo ou serviço.</li>
+            <li><strong>Como nos encontrou, opcional,</strong> para informar a origem do contato, como busca, rede social ou indicação.</li>
+          </ul>
+          <p>O sistema também registra informações do pedido, como protocolo, data e hora de criação, origem pelo site, situação do atendimento e valores ou descontos calculados a partir do serviço selecionado.</p>
+          <p class="note">Nas observações, informe apenas os detalhes necessários sobre o veículo e o serviço solicitado.</p>
+        </section>
+
+        <section id="finalidade" aria-labelledby="finalidade-titulo">
+          <h2 id="finalidade-titulo">2. Uso e envio dos dados</h2>
+          <p>As informações são usadas para responder ao contato, consultar disponibilidade, organizar o agendamento e prestar ou acompanhar o serviço solicitado. A resposta opcional sobre como você nos encontrou ajuda a identificar a origem do contato.</p>
+          <h3>Formulário do site</h3>
+          <p>Ao acionar <strong>“Enviar agendamento”</strong>, após a validação dos campos, o navegador transmite os dados ao sistema de agendamentos no Firestore. Preencher os campos sem enviar não registra, por si só, um pedido nesse sistema.</p>
+          <p>O site também pode abrir o WhatsApp com um resumo do pedido para continuar o atendimento. O registro enviado pelo formulário não depende de você enviar essa mensagem. Confira o retorno exibido no formulário; em caso de dúvida sobre o recebimento, fale com a Vitalcar antes de reenviar.</p>
+          <h3>Opção de WhatsApp</h3>
+          <p>Ao selecionar <strong>“Só chamar no WhatsApp”</strong>, o site prepara uma mensagem com os campos preenchidos e abre o WhatsApp. Essa opção não envia o formulário ao Firestore. Você pode revisar ou alterar a mensagem antes de confirmar o envio no aplicativo.</p>
+          <p><strong>O conteúdo só é enviado como mensagem à Vitalcar quando você o envia no WhatsApp.</strong> A abertura do link já conecta seu navegador ao WhatsApp/Meta; o texto pré-preenchido é incluído no endereço usado para preparar a conversa e pode ser recebido pelo serviço mesmo antes do envio da mensagem.</p>
+        </section>
+
+        <section id="armazenamento" aria-labelledby="armazenamento-titulo">
+          <h2 id="armazenamento-titulo">3. Armazenamento e conservação</h2>
+          <p>Os pedidos enviados pelo formulário são armazenados no <strong>Firebase/Google Cloud Firestore</strong>, utilizado no sistema de atendimento da Vitalcar. As mensagens que você envia pelo WhatsApp também passam a fazer parte da conversa nesse serviço.</p>
+          <p>Esta página não estabelece um prazo fixo de guarda. Para saber sobre a conservação dos registros do seu atendimento, entre em contato com a Vitalcar. A análise deve considerar a finalidade do pedido, o serviço prestado e as obrigações legais aplicáveis.</p>
+          <p>Uma solicitação de exclusão pode não abranger registros cuja manutenção seja necessária para cumprir obrigações legais ou exercer direitos, nos casos previstos em lei. É possível solicitar esclarecimentos sobre quais informações precisam ser mantidas e por qual motivo.</p>
+        </section>
+
+        <section id="servicos" aria-labelledby="servicos-titulo">
+          <h2 id="servicos-titulo">4. Serviços externos</h2>
+          <p>Algumas funções da página principal usam serviços de outras empresas. Ao se conectar a eles, seu navegador pode transmitir dados técnicos, como endereço IP, tipo de navegador, horário e endereço do recurso solicitado. O tratamento por cada provedor também segue as regras desse serviço.</p>
+          <details>
+            <summary>Firebase / Google — sistema de agendamentos</summary>
+            <p>O Cloud Firestore recebe e armazena os dados do formulário enviado. A página principal também consulta configurações do site nesse serviço, como promoções e horários de atendimento.</p>
+            <p><a href="https://firebase.google.com/support/privacy" rel="external noreferrer">Informações de privacidade do Firebase (site externo)</a>.</p>
+          </details>
+          <details>
+            <summary>WhatsApp / Meta — conversa com o atendimento</summary>
+            <p>Links e botões de WhatsApp levam ao serviço da Meta. A abertura pode envolver informações técnicas e o texto preparado no link. A mensagem para a Vitalcar depende da sua confirmação de envio no WhatsApp.</p>
+            <p><a href="https://www.whatsapp.com/legal/privacy-policy" rel="external noreferrer">Política de privacidade do WhatsApp (site externo)</a>.</p>
+          </details>
+          <details>
+            <summary>Google Maps e YouTube — localização e vídeos</summary>
+            <p>A página principal contém links e conteúdos incorporados do Google Maps e do YouTube. Ao carregar esses conteúdos ou abrir os links, você se conecta aos serviços do Google, que podem tratar dados técnicos e usar seus próprios mecanismos de armazenamento.</p>
+            <p>Conteúdos incorporados podem ser carregados conforme você se aproxima da seção na página; isso não depende, necessariamente, de clicar em um link ou fechar o aviso do site.</p>
+            <p><a href="https://policies.google.com/privacy?hl=pt-BR" rel="external noreferrer">Política de privacidade do Google, incluindo Maps e YouTube (site externo)</a>.</p>
+          </details>
+          <details>
+            <summary>Cloudflare — hospedagem do site</summary>
+            <p>O site é hospedado na infraestrutura da Cloudflare. A entrega das páginas pode envolver o processamento de dados de conexão e de registros técnicos pelo provedor, conforme suas configurações e políticas.</p>
+            <p><a href="https://www.cloudflare.com/privacypolicy/" rel="external noreferrer">Política de privacidade da Cloudflare (site externo)</a>.</p>
+          </details>
+          <details>
+            <summary>Fontes e biblioteca visual da página principal</summary>
+            <p>A página principal utiliza fontes do Google Fonts e uma biblioteca visual distribuída pela CDN UNPKG. O carregamento desses arquivos pode estabelecer conexões com esses provedores.</p>
+            <p>Esta página de privacidade usa fontes do seu dispositivo e estilos incluídos no próprio arquivo. Ela não incorpora esses recursos, mapas, vídeos, formulários ou scripts.</p>
+          </details>
+        </section>
+
+        <section id="navegador" aria-labelledby="navegador-titulo">
+          <h2 id="navegador-titulo">5. Preferências e cache no dispositivo</h2>
+          <p>Na página principal, o <strong>armazenamento local do navegador (localStorage)</strong> guarda preferências de tema e idioma e o registro da interação com o aviso do site. Isso permite lembrar essas escolhas em visitas posteriores no mesmo navegador.</p>
+          <p>Fechar o aviso registra essa interação. O aviso não funciona como um controle geral de autorização ou bloqueio dos serviços externos e não desfaz um envio de agendamento.</p>
+          <p>O site também usa um <strong>service worker e cache de PWA</strong>: são recursos do navegador que podem manter cópias de páginas e arquivos no dispositivo para facilitar o carregamento e permitir acesso a parte do conteúdo sem conexão. O envio de agendamentos e o contato pelo WhatsApp continuam dependendo de conexão.</p>
+          <p>As preferências e o cache do navegador são diferentes dos registros de atendimento guardados no sistema da Vitalcar.</p>
+        </section>
+
+        <section id="controles" aria-labelledby="controles-titulo">
+          <h2 id="controles-titulo">6. Controles no navegador</h2>
+          <p>Você pode gerenciar os dados locais nas configurações do seu navegador. Os nomes das opções variam conforme o aplicativo e o dispositivo:</p>
+          <ul>
+            <li><strong>Limpar dados deste site:</strong> procure opções como “Privacidade”, “Dados de sites” ou “Armazenamento” para remover preferências, cookies e cache associados ao endereço do site.</li>
+            <li><strong>Revisar permissões:</strong> consulte as permissões do site e, se tiver instalado a PWA, as configurações do aplicativo. Você pode retirar permissões concedidas, como notificações.</li>
+            <li><strong>Restringir conteúdo externo:</strong> use os controles de privacidade disponíveis no navegador. Bloqueios de armazenamento, scripts ou conteúdo podem afetar mapas, vídeos e outras funções.</li>
+          </ul>
+          <p>Ao limpar os dados locais, suas preferências podem ser redefinidas, o aviso pode reaparecer e arquivos podem precisar ser baixados novamente. Bloquear cookies, por si só, não impede todas as conexões a serviços externos.</p>
+          <p class="note"><strong>Apagar dados do navegador não exclui agendamentos já enviados ao Firestore nem mensagens do WhatsApp.</strong> Para tratar desses registros com a Vitalcar, use os canais de contato abaixo.</p>
+        </section>
+
+        <section id="direitos" aria-labelledby="direitos-titulo">
+          <h2 id="direitos-titulo">7. Seus direitos e contato</h2>
+          <p>Nos casos previstos pela Lei Geral de Proteção de Dados (LGPD), você pode solicitar confirmação do tratamento, acesso às suas informações, correção de dados incompletos ou incorretos e avaliação de um pedido de exclusão. Também pode pedir informações sobre o uso e o compartilhamento dos dados e exercer outros direitos aplicáveis ao seu caso.</p>
+          <p>O atendimento de cada solicitação depende das condições legais e da identificação dos registros envolvidos. Pode ser necessário confirmar sua identidade para evitar a entrega de dados a outra pessoa. A exclusão está sujeita às hipóteses de conservação legal mencionadas nesta página.</p>
+          <p>Use os canais disponíveis na seção de contato da página principal. Informe que sua solicitação é sobre privacidade e, se houver, o protocolo do atendimento para ajudar a localizar o pedido.</p>
+          <p><a class="contact-link" href="/#contato">Solicitar informações à Vitalcar</a></p>
+          <address>
+            <strong>Vitalcar Estúdios Estética Automotiva</strong><br>
+            Rua Havaí, 184 — São Francisco<br>
+            Ilhéus — BA
+          </address>
+        </section>
+      </div>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>Vitalcar · Estética automotiva em Ilhéus, Bahia</p>
+      <a href="#topo">Voltar ao topo</a>
+      <a href="/">Página inicial</a>
+    </div>
+  </footer>
+</body>
+</html>

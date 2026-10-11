@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vitalcar Liquid Metal Hero — Demo Vanilla</title>
+<style>
+  :root{
+    --bg:#0d0b0a;--bg2:#151210;--red:#ff1a1a;--red-dark:#c40000;--yellow:#f5c518;
+    --text:#f5ecd8;--text2:#a89880;--text3:#6b5f4a;--border:#2a241f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Archivo','Arial Black',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;600;700;900&family=Space+Mono:wght@400;700&display=swap');
+</style>
+</head>
+<body>
+
+<!-- Mount point -->
+<div id="lm-hero" data-lm-hero
+  data-badge="🚀 Lançamento Beta · Vagas Limitadas"
+  data-title="VITALCAR SAAS"
+  data-subtitle="O sistema completo para oficinas de estética automotiva. Agendamentos, clientes, financeiro e relatórios em um só lugar."
+  data-primary-cta="Começar Grátis 14 Dias"
+  data-primary-href="https://wa.me/557391436726"
+  data-secondary-cta="Ver Demo"
+  data-secondary-href="#demo"
+  data-features="Agendamento Inteligente|Gestão de Frota|Financeiro Integrado|Relatórios Executivos|WhatsApp Automatizado|Multi-loja"
+  data-rating="5.0"
+  data-reviews="247"
+></div>
+
+<!-- Sections for scroll demo -->
+<section id="demo" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:60px 24px;">
+  <div style="max-width:800px;text-align:center;">
+    <h2 style="font-family:'Archivo Black',sans-serif;font-size:clamp(2rem,5vw,4rem);margin-bottom:24px;color:var(--text);">
+      Demo Interativo <span style="color:var(--yellow)">Aqui</span>
+    </h2>
+    <p style="font-family:'Space Mono',monospace;font-size:1.1rem;color:var(--text2);line-height:1.7;max-width:600px;margin:0 auto;">
+      Role para baixo para ver o hero em ação. O canvas WebGL roda nativamente — zero React, zero build.
+    </p>
+  </div>
+</section>
+
+<section id="features" style="min-height:100vh;padding:60px 24px;background:var(--bg2);">
+  <div style="max-width:1000px;margin:0 auto;text-align:center;">
+    <h2 style="font-family:'Archivo Black',sans-serif;font-size:clamp(2rem,5vw,4rem);margin-bottom:40px;color:var(--text);">
+      Funcionalidades <span style="color:var(--red)">Principais</span>
+    </h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;text-align:left;">
+      <div style="background:var(--bg);border:2px solid var(--border);border-radius:12px;padding:32px;">
+        <h3 style="font-family:'Archivo Black',sans-serif;font-size:1.3rem;margin-bottom:12px;color:var(--text);">📅 Agendamento Inteligente</h3>
+        <p style="font-family:'Space Mono',monospace;color:var(--text2);line-height:1.7;">Calendar com IA que otimiza sua agenda, evita conflitos e maximiza ocupação.</p>
+      </div>
+      <div style="background:var(--bg);border:2px solid var(--border);border-radius:12px;padding:32px;">
+        <h3 style="font-family:'Archivo Black',sans-serif;font-size:1.3rem;margin-bottom:12px;color:var(--text);">💰 Financeiro Real</h3>
+        <p style="font-family:'Space Mono',monospace;color:var(--text2);line-height:1.7;">Caixa diário, contas a pagar/receber, fluxo de caixa e lucro líquido por serviço.</p>
+      </div>
+      <div style="background:var(--bg);border:2px solid var(--border);border-radius:12px;padding:32px;">
+        <h3 style="font-family:'Archivo Black',sans-serif;font-size:1.3rem;margin-bottom:12px;color:var(--text);">📱 WhatsApp Automatizado</h3>
+        <p style="font-family:'Space Mono',monospace;color:var(--text2);line-height:1.7;">Confirmações, lembretes 24h, pós-venda NPS e cobrança de devedores no automático.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Liquid Metal Vanilla Script -->
+<script src="liquid-metal-vanilla.js"></script>
+
+<script>
+/* Manual mount with custom callbacks (optional) */
+// LiquidMetalHero.mount('#lm-hero', {
+//   badge: '🚀 Beta Fechado · 50 vagas',
+//   title: 'VITALCAR SAAS',
+//   subtitle: 'Sistema completo para oficinas de estética automotiva.',
+//   primaryCtaLabel: 'Quero Acesso Antecipado',
+//   primaryCtaHref: 'https://wa.me/557391436726',
+//   secondaryCtaLabel: 'Ver Demo',
+//   secondaryCtaHref: '#demo',
+//   features: ['Agendamento Inteligente', 'Financeiro Integrado', 'WhatsApp Automatizado'],
+//   onPrimaryClick: (e) => console.log('Primary clicked', e),
+//   onSecondaryClick: (e) => console.log('Secondary clicked', e)
+// });
+
+/* Track scroll for demo */
+document.addEventListener('scroll', () => {
+  const hero = document.getElementById('lm-hero');
+  if (hero) {
+    const rect = hero.getBoundingClientRect();
+    const visible = rect.bottom > 0 && rect.top < window.innerHeight;
+    hero.style.opacity = visible ? '1' : '0.3';
+  }
+});
+</script>
+
+</body>
+</html>

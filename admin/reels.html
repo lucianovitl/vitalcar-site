@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerador de Capa · Reels · Vitalcar</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a0a'/%3E%3Ctext x='32' y='46' font-family='Arial Black' font-size='44' font-weight='900' fill='%23ff1a1a' text-anchor='middle'%3EV%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#ff1a1a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#0a0a0a;color:#f5f5f5;min-height:100vh;line-height:1.5}
+.hidden{display:none!important}
+#login{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;background:radial-gradient(circle at 50% 0%,rgba(255,26,26,.1) 0%,transparent 60%)}
+.login-box{background:#111;border:1px solid #222;border-radius:20px;padding:48px 40px;width:100%;max-width:420px;position:relative;overflow:hidden}
+.login-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,#ff1a1a,transparent)}
+.login-box .logo{font-size:1.7rem;font-weight:900;letter-spacing:-1px;text-align:center;margin-bottom:4px}
+.login-box .logo span{color:#ff1a1a}
+.login-box .sub{text-align:center;color:#888;font-size:.75rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:4px;font-weight:600}
+.login-box .sub2{text-align:center;color:#666;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:36px}
+.login-box h2{font-size:1.3rem;margin-bottom:8px}
+.login-box p{color:#888;font-size:.85rem;margin-bottom:28px}
+.login-box form{display:grid;gap:14px}
+.login-box input{background:#0a0a0a;border:1px solid #222;border-radius:10px;padding:14px 16px;color:#fff;font-family:inherit;font-size:.95rem;outline:0;transition:border-color .15s}
+.login-box input:focus{border-color:#ff1a1a}
+.login-box button{background:#ff1a1a;color:#fff;border:0;padding:15px;border-radius:10px;font-family:inherit;font-weight:700;font-size:.95rem;cursor:pointer;transition:background .15s}
+.login-box button:hover{background:#b30000}
+.login-box button:disabled{opacity:.5;cursor:wait}
+#login-error{color:#ff5e5e;font-size:.82rem;text-align:center;margin-top:12px;min-height:18px}
+#painel{min-height:100vh;display:flex;flex-direction:column}
+header{background:#111;border-bottom:1px solid #222;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;flex-wrap:wrap;gap:12px}
+header .logo{font-size:1.1rem;font-weight:900;letter-spacing:-.5px;display:flex;flex-direction:column;gap:2px}
+header .logo .brand{display:flex;align-items:baseline;gap:6px}
+header .logo span{color:#ff1a1a}
+header .logo .sub{font-size:.58rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:#666}
+header .user{display:flex;align-items:center;gap:14px;font-size:.85rem;color:#888;flex-wrap:wrap}
+header .user .email{font-size:.78rem}
+header button{background:transparent;border:1px solid #222;color:#888;padding:8px 16px;border-radius:100px;font-family:inherit;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .15s}
+header button:hover{border-color:#ff1a1a;color:#fff}
+.container{max-width:1280px;width:100%;margin:0 auto;padding:32px 24px;flex:1}
+.page-header{margin-bottom:28px}
+.page-header .back-link{color:#888;text-decoration:none;font-size:.85rem;font-weight:600;display:inline-flex;align-items:center;gap:6px;transition:color .2s;margin-bottom:12px}
+.page-header .back-link:hover{color:#ff1a1a}
+.page-header h1{font-size:1.8rem;font-weight:900;letter-spacing:-1px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.page-header h1 .badge{font-size:.65rem;background:rgba(255,26,26,.15);color:#ff1a1a;padding:4px 12px;border-radius:100px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.page-header p{color:#888;font-size:.92rem;margin-top:8px}
+.layout{display:grid;grid-template-columns:1fr 460px;gap:32px;align-items:start}
+@media(max-width:1024px){.layout{grid-template-columns:1fr}}
+.controls{background:#111;border:1px solid #222;border-radius:16px;padding:24px;display:grid;gap:18px}
+.control-group{display:flex;flex-direction:column;gap:8px}
+.control-group label{font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#888}
+.control-group input,.control-group textarea,.control-group select{background:#0a0a0a;border:1px solid #222;border-radius:10px;padding:12px 14px;color:#fff;font-family:inherit;font-size:.92rem;outline:0;transition:border-color .15s;width:100%}
+.control-group input:focus,.control-group textarea:focus,.control-group select:focus{border-color:#ff1a1a}
+.control-group textarea{resize:vertical;min-height:70px}
+.control-group .hint{font-size:.68rem;color:#666;margin-top:2px}
+.template-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.template-btn{background:#0a0a0a;border:2px solid #222;border-radius:12px;padding:14px 12px;cursor:pointer;transition:all .2s;font-family:inherit;color:#888;font-size:.82rem;font-weight:700;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px}
+.template-btn:hover{border-color:#333;color:#fff}
+.template-btn.active{border-color:#ff1a1a;background:linear-gradient(180deg,#0a0a0a,rgba(255,26,26,.08));color:#fff;box-shadow:0 4px 16px rgba(255,26,26,.2)}
+.template-btn .ico{font-size:1.5rem}
+.color-picker{display:flex;gap:8px;flex-wrap:wrap}
+.color-picker button{width:38px;height:38px;border-radius:50%;border:2px solid #222;cursor:pointer;transition:all .2s;position:relative}
+.color-picker button:hover{transform:scale(1.1)}
+.color-picker button.active{border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.2)}
+.file-input{display:block;background:#0a0a0a;border:2px dashed #222;border-radius:10px;padding:20px;text-align:center;cursor:pointer;transition:border-color .2s;position:relative}
+.file-input:hover{border-color:#333}
+.file-input input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.file-input .label{font-size:.82rem;color:#888;font-weight:600}
+.file-input .preview{font-size:.72rem;color:#4ade80;margin-top:6px;font-weight:700;display:none}
+.file-input.has-file .preview{display:block}
+.file-input.has-file{border-style:solid;border-color:rgba(74,222,128,.3)}
+.preview-panel{position:sticky;top:100px}
+.preview-wrap{background:#0a0a0a;border:1px solid #222;border-radius:16px;padding:20px;display:flex;flex-direction:column;align-items:center;gap:14px}
+.preview-canvas-wrap{width:100%;max-width:420px;aspect-ratio:9/16;background:#000;border-radius:12px;overflow:hidden;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.preview-canvas-wrap canvas{width:100%;height:100%;display:block}
+.preview-label{font-size:.72rem;color:#666;text-align:center;letter-spacing:.5px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;width:100%;max-width:420px}
+.btn{flex:1;padding:14px 20px;border-radius:10px;border:0;font-family:inherit;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn-primary{background:#ff1a1a;color:#fff}
+.btn-primary:hover{background:#b30000;transform:translateY(-1px)}
+.btn-instagram{background:linear-gradient(135deg,#e1306c,#833ab4,#405de6);color:#fff}
+.btn-instagram:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(225,48,108,.4)}
+.btn-ghost{background:transparent;border:1px solid #222;color:#888;flex:0 0 auto;padding:14px 20px;font-size:.85rem}
+.btn-ghost:hover{border-color:#ff1a1a;color:#fff}
+.tips{background:#111;border:1px solid #222;border-radius:12px;padding:16px 18px;margin-top:20px;font-size:.82rem;color:#888;line-height:1.7}
+.tips strong{color:#fff}
+.tips .ico{color:#ff1a1a;margin-right:6px}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:#141414;border:1px solid #22c55e;border-radius:12px;padding:14px 24px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 12px 40px rgba(34,197,94,.2);z-index:3000;opacity:0;transition:all .4s cubic-bezier(.16,1,.3,1);display:flex;align-items:center;gap:10px;max-width:90vw}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.toast.error{border-color:#ef4444}
+.toast .ico{color:#22c55e;font-size:1.2rem}
+.toast.error .ico{color:#ef4444}
+@media(max-width:640px){
+  .container{padding:20px 16px}
+  .page-header h1{font-size:1.4rem}
+  .controls{padding:18px}
+  .preview-panel{position:static}
+}
+</style>
+</head>
+<body>
+
+<div id="login">
+  <div class="login-box">
+    <div class="logo">VITAL<span>CAR</span></div>
+    <div class="sub">Estúdios Estética</div>
+    <div class="sub2">Gerador de Capas · Reels</div>
+    <h2>Entrar</h2>
+    <p>Acesso restrito ao proprietário.</p>
+    <form id="login-form">
+      <input type="email" id="email" placeholder="Email" autocomplete="email" required>
+      <input type="password" id="senha" placeholder="Senha" autocomplete="current-password" required>
+      <button type="submit" id="login-btn">Entrar →</button>
+    </form>
+    <div id="login-error"></div>
+  </div>
+</div>
+
+<div id="painel" class="hidden">
+  <header>
+    <div class="logo">
+      <div class="brand">VITAL<span>CAR</span></div>
+      <div class="sub">Estúdios Estética · Gerador de Capas</div>
+    </div>
+    <div class="user">
+      <span class="email" id="user-email"></span>
+      <button id="logout">Sair</button>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <div class="page-header">
+      <a class="back-link" href="/admin/">← Voltar ao painel</a>
+      <h1>🎬 Capa para Reels <span class="badge">1080×1920</span></h1>
+      <p>Cria a capa em 30 segundos. Baixa em PNG, posta no Instagram/TikTok.</p>
+    </div>
+
+    <div class="layout">
+
+      <div class="controls">
+
+        <div class="control-group">
+          <label>Template</label>
+          <div class="template-grid" id="template-grid">
+            <button class="template-btn active" data-template="antesdepois">
+              <span class="ico">🔄</span>
+              <span>Antes / Depois</span>
+            </button>
+            <button class="template-btn" data-template="revelacao">
+              <span class="ico">✨</span>
+              <span>Revelação</span>
+            </button>
+            <button class="template-btn" data-template="promo">
+              <span class="ico">💰</span>
+              <span>Promo / Preço</span>
+            </button>
+            <button class="template-btn" data-template="dica">
+              <span class="ico">🎯</span>
+              <span>Dica / Erro</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label for="r-titulo">Título principal *</label>
+          <input type="text" id="r-titulo" placeholder="Ex: SUA MOTO MERECE" value="MOTO SUJA" maxlength="30">
+          <span class="hint">Texto grande na capa. Máx 30 caracteres.</span>
+        </div>
+
+        <div class="control-group">
+          <label for="r-subtitulo">Subtítulo / frase de apoio</label>
+          <input type="text" id="r-subtitulo" placeholder="Ex: NÃO COMBINA" value="NÃO COMBINA" maxlength="40">
+        </div>
+
+        <div class="control-group" id="group-badge">
+          <label for="r-badge">Etiqueta (badge)</label>
+          <input type="text" id="r-badge" placeholder="Ex: HONDA BROS · R$50" value="HONDA BROS · R$50" maxlength="30">
+        </div>
+
+        <div class="control-group" id="group-price" style="display:none">
+          <label for="r-price">Preço em destaque</label>
+          <input type="text" id="r-price" placeholder="Ex: R$50" value="R$50" maxlength="10">
+        </div>
+
+        <div class="control-group" id="group-numero" style="display:none">
+          <label for="r-numero">Número do erro / dica</label>
+          <input type="text" id="r-numero" placeholder="Ex: 01" value="01" maxlength="3">
+        </div>
+
+        <div class="control-group">
+          <label>Cor de destaque</label>
+          <div class="color-picker" id="color-picker">
+            <button data-cor="#ff1a1a" class="active" style="background:#ff1a1a"></button>
+            <button data-cor="#ffd700" style="background:#ffd700"></button>
+            <button data-cor="#22ff88" style="background:#22ff88"></button>
+            <button data-cor="#22d3ee" style="background:#22d3ee"></button>
+            <button data-cor="#a855f7" style="background:#a855f7"></button>
+            <button data-cor="#ffffff" style="background:#ffffff"></button>
+          </div>
+        </div>
+
+        <div class="control-group" id="group-foto1">
+          <label>Foto 1 (Antes) *</label>
+          <label class="file-input" id="file-wrap-1">
+            <input type="file" id="foto1" accept="image/*" capture="environment">
+            <div class="label">📷 Toque para tirar/escolher foto</div>
+            <div class="preview" id="preview-1">✓ Foto carregada</div>
+          </label>
+        </div>
+
+        <div class="control-group" id="group-foto2">
+          <label>Foto 2 (Depois)</label>
+          <label class="file-input" id="file-wrap-2">
+            <input type="file" id="foto2" accept="image/*" capture="environment">
+            <div class="label">📷 Toque para tirar/escolher foto</div>
+            <div class="preview" id="preview-2">✓ Foto carregada</div>
+          </label>
+        </div>
+
+        <div class="tips">
+          <div><span class="ico">💡</span><strong>Dica 1:</strong> Use fotos verticais pra preencher a capa. Se for horizontal, o app corta automaticamente.</div>
+          <div><span class="ico">🎨</span><strong>Dica 2:</strong> Vermelho é a cor da marca, mas amarelo/dourado funciona bem pra promoções.</div>
+          <div><span class="ico">📱</span><strong>Dica 3:</strong> Antes de postar, o Instagram aplica um corte na capa (não mostra inteira). O essencial deve estar no <strong>centro</strong>.</div>
+        </div>
+
+      </div>
+
+      <div class="preview-panel">
+        <div class="preview-wrap">
+          <div class="preview-canvas-wrap">
+            <canvas id="reel-canvas" width="1080" height="1920"></canvas>
+          </div>
+          <div class="preview-label">Preview 1080×1920 (Reels / Stories / TikTok)</div>
+          <div class="actions">
+            <button class="btn btn-primary" id="btn-download">📥 Baixar PNG</button>
+            <button class="btn btn-instagram" id="btn-instagram">📱 Abrir Instagram</button>
+            <button class="btn btn-ghost" id="btn-clear">🗑 Limpar</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <span class="ico" id="toast-ico">✓</span>
+  <span id="toast-msg">Salvo</span>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBcp2qNpvhXHszEXmyW96plVxR9_FTAn6c",
+  authDomain: "vitalcar-87179.firebaseapp.com",
+  projectId: "vitalcar-87179",
+  storageBucket: "vitalcar-87179.firebasestorage.app",
+  messagingSenderId: "160463012047",
+  appId: "1:160463012047:web:4e2a0ca802220e5d8237ba"
+};
+
+const UIDS_AUTORIZADOS = ["sBBSCgUu8EgPATi1sSkh7C9AX1L2","iNm06ITBokft0xtfNh8y2HoYWTe2"];
+const EMAILS_AUTORIZADOS = ["lucianovital36@hotmail.com.br","lucianovital78@gmail.com"];
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+const loginEl = document.getElementById('login');
+const painelEl = document.getElementById('painel');
+const loginForm = document.getElementById('login-form');
+const loginBtn = document.getElementById('login-btn');
+const loginError = document.getElementById('login-error');
+const userEmail = document.getElementById('user-email');
+
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  loginBtn.disabled = true;
+  loginBtn.textContent = 'Entrando...';
+  loginError.textContent = '';
+  try {
+    await signInWithEmailAndPassword(auth, document.getElementById('email').value.trim(), document.getElementById('senha').value);
+  } catch (err) {
+    let msg = 'Email ou senha incorretos.';
+    if (err.code === 'auth/invalid-email') msg = 'Formato de email inválido.';
+    else if (err.code === 'auth/network-request-failed') msg = 'Sem conexão.';
+    loginError.textContent = msg;
+    loginBtn.disabled = false;
+    loginBtn.textContent = 'Entrar →';
+  }
+});
+
+document.getElementById('logout').addEventListener('click', () => signOut(auth));
+
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    loginEl.classList.remove('hidden');
+    painelEl.classList.add('hidden');
+    loginBtn.disabled = false;
+    loginBtn.textContent = 'Entrar →';
+    loginForm.reset();
+    return;
+  }
+  if (!UIDS_AUTORIZADOS.includes(user.uid) || !EMAILS_AUTORIZADOS.map(e => e.toLowerCase()).includes(user.email.toLowerCase())) {
+    loginError.textContent = 'Essa conta não tem acesso.';
+    signOut(auth);
+    return;
+  }
+  loginEl.classList.add('hidden');
+  painelEl.classList.remove('hidden');
+  userEmail.textContent = user.email;
+  iniciarGerador();
+});
+
+// ============================================================
+// ESTADO
+// ============================================================
+let templateAtual = 'antesdepois';
+let corAtual = '#ff1a1a';
+let foto1 = null;
+let foto2 = null;
+let geradorIniciado = false;
+
+// ============================================================
+// TOAST
+// ============================================================
+function showToast(msg, ico = '✓', error = false) {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  document.getElementById('toast-ico').textContent = ico;
+  t.classList.toggle('error', error);
+  t.classList.add('show');
+  clearTimeout(t._timeout);
+  t._timeout = setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+// ============================================================
+// INICIAR
+// ============================================================
+function iniciarGerador() {
+  if (geradorIniciado) return;
+  geradorIniciado = true;
+
+  // Templates
+  document.querySelectorAll('.template-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.template-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      templateAtual = btn.dataset.template;
+      atualizarCamposVisiveis();
+      render();
+    });
+  });
+
+  // Cores
+  document.querySelectorAll('#color-picker button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#color-picker button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      corAtual = btn.dataset.cor;
+      render();
+    });
+  });
+
+  // Inputs de texto
+  ['r-titulo', 'r-subtitulo', 'r-badge', 'r-price', 'r-numero'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', render);
+  });
+
+  // Fotos
+  document.getElementById('foto1').addEventListener('change', (e) => carregarFoto(e, 1));
+  document.getElementById('foto2').addEventListener('change', (e) => carregarFoto(e, 2));
+
+  // Botões
+  document.getElementById('btn-download').addEventListener('click', baixar);
+  document.getElementById('btn-instagram').addEventListener('click', abrirInstagram);
+  document.getElementById('btn-clear').addEventListener('click', limpar);
+
+  atualizarCamposVisiveis();
+  render();
+}
+
+function atualizarCamposVisiveis() {
+  const show = (id, bool) => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = bool ? '' : 'none';
+  };
+  show('group-badge', templateAtual !== 'promo' && templateAtual !== 'dica');
+  show('group-price', templateAtual === 'promo');
+  show('group-numero', templateAtual === 'dica');
+  show('group-foto1', templateAtual !== 'promo');
+  show('group-foto2', templateAtual === 'antesdepois');
+
+  const label1 = document.querySelector('#group-foto1 label');
+  const label2 = document.querySelector('#group-foto2 label');
+  if (label1) label1.textContent = templateAtual === 'revelacao' ? 'Foto de fundo *' : 'Foto 1 (Antes) *';
+  if (label2) label2.textContent = 'Foto 2 (Depois)';
+}
+
+function carregarFoto(e, num) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    const img = new Image();
+    img.onload = () => {
+      if (num === 1) foto1 = img;
+      else foto2 = img;
+      document.getElementById('file-wrap-' + num).classList.add('has-file');
+      render();
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+function render() {
+  const canvas = document.getElementById('reel-canvas');
+  const ctx = canvas.getContext('2d');
+  const W = 1080, H = 1920;
+
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#0a0a0a';
+  ctx.fillRect(0, 0, W, H);
+
+  const titulo = document.getElementById('r-titulo').value || 'VITALCAR';
+  const subtitulo = document.getElementById('r-subtitulo').value || '';
+  const badge = document.getElementById('r-badge').value || '';
+  const price = document.getElementById('r-price').value || 'R$50';
+  const numero = document.getElementById('r-numero').value || '01';
+
+  if (templateAtual === 'antesdepois') renderAntesDepois(ctx, W, H, titulo, subtitulo, badge);
+  else if (templateAtual === 'revelacao') renderRevelacao(ctx, W, H, titulo, subtitulo);
+  else if (templateAtual === 'promo') renderPromo(ctx, W, H, titulo, subtitulo, price);
+  else if (templateAtual === 'dica') renderDica(ctx, W, H, titulo, subtitulo, numero);
+
+  // Marca d'água Vitalcar no rodapé (em todos os templates)
+  renderLogoRodape(ctx, W, H);
+}
+
+function renderAntesDepois(ctx, W, H, titulo, subtitulo, badge) {
+  const meio = H / 2;
+
+  // Topo: foto 1 (antes) ou placeholder
+  if (foto1) {
+    desenharFotoCobrindo(ctx, foto1, 0, 0, W, meio);
+  } else {
+    ctx.fillStyle = '#1a1a1a';
+    ctx.fillRect(0, 0, W, meio);
+    ctx.fillStyle = '#333';
+    ctx.font = 'bold 40px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('📷 ANTES', W/2, meio/2);
+  }
+
+  // Overlay topo
+  const grad1 = ctx.createLinearGradient(0, 0, 0, meio);
+  grad1.addColorStop(0, 'rgba(10,10,10,0.85)');
+  grad1.addColorStop(0.4, 'rgba(10,10,10,0.3)');
+  grad1.addColorStop(1, 'rgba(10,10,10,0.6)');
+  ctx.fillStyle = grad1;
+  ctx.fillRect(0, 0, W, meio);
+
+  // Bottom: foto 2 (depois) ou placeholder
+  if (foto2) {
+    desenharFotoCobrindo(ctx, foto2, 0, meio, W, meio);
+  } else {
+    ctx.fillStyle = '#111';
+    ctx.fillRect(0, meio, W, meio);
+    ctx.fillStyle = '#333';
+    ctx.font = 'bold 40px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('📷 DEPOIS', W/2, meio + meio/2);
+  }
+
+  // Overlay baixo
+  const grad2 = ctx.createLinearGradient(0, meio, 0, H);
+  grad2.addColorStop(0, 'rgba(10,10,10,0.6)');
+  grad2.addColorStop(0.5, 'rgba(10,10,10,0.2)');
+  grad2.addColorStop(1, 'rgba(10,10,10,0.95)');
+  ctx.fillStyle = grad2;
+  ctx.fillRect(0, meio, W, meio);
+
+  // Labels ANTES / DEPOIS
+  ctx.fillStyle = 'rgba(0,0,0,0.7)';
+  roundRect(ctx, 40, 40, 220, 70, 35);
+  ctx.fill();
+  ctx.fillStyle = '#fff';
+  ctx.font = '900 32px Inter, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('ANTES', 150, 75);
+
+  ctx.fillStyle = corAtual;
+  roundRect(ctx, 40, meio + 40, 240, 70, 35);
+  ctx.fill();
+  ctx.fillStyle = '#fff';
+  ctx.fillText('DEPOIS', 160, meio + 75);
+
+  // Divisor central com logo
+  ctx.fillStyle = corAtual;
+  ctx.fillRect(0, meio - 4, W, 8);
+
+  // Logo central
+  ctx.font = '900 60px Inter, sans-serif';
+  ctx.fillStyle = '#0a0a0a';
+  const logoW = ctx.measureText('VITALCAR').width + 80;
+  ctx.fillStyle = corAtual;
+  roundRect(ctx, (W - logoW)/2, meio - 50, logoW, 100, 50);
+  ctx.fill();
+  ctx.fillStyle = '#fff';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('VITALCAR', W/2, meio + 5);
+
+  // Título principal (embaixo)
+  ctx.font = '900 96px Inter, sans-serif';
+  ctx.fillStyle = '#fff';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'alphabetic';
+  const lines = quebrarTexto(ctx, titulo, W - 120);
+  let y = H - 480;
+  lines.forEach(l => {
+    ctx.fillText(l, W/2, y);
+    y += 100;
+  });
+
+  // Subtítulo
+  if (subtitulo) {
+    ctx.font = '700 52px Inter, sans-serif';
+    ctx.fillStyle = corAtual;
+    ctx.fillText(subtitulo, W/2, y + 20);
+  }
+
+  // Badge (opcional)
+  if (badge) {
+    ctx.font = '800 30px Inter, sans-serif';
+    const bw = ctx.measureText(badge).width + 60;
+    ctx.fillStyle = 'rgba(255,255,255,0.1)';
+    roundRect(ctx, (W - bw)/2, H - 220, bw, 60, 30);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.fillStyle = '#fff';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(badge, W/2, H - 190);
+  }
+}
+
+function renderRevelacao(ctx, W, H, titulo, subtitulo) {
+  // Foto de fundo
+  if (foto1) {
+    desenharFotoCobrindo(ctx, foto1, 0, 0, W, H);
+  } else {
+    ctx.fillStyle = '#111';
+    ctx.fillRect(0, 0, W, H);
+    // Grid
+    ctx.strokeStyle = 'rgba(255,26,26,0.08)';
+    ctx.lineWidth = 1;
+    for (let i = 0; i < W; i += 80) {
+      ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, H); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(W, i); ctx.stroke();
+    }
+  }
+
+  // Overlay escuro topo e base
+  const grad1 = ctx.createLinearGradient(0, 0, 0, H * 0.5);
+  grad1.addColorStop(0, 'rgba(10,10,10,0.85)');
+  grad1.addColorStop(1, 'rgba(10,10,10,0)');
+  ctx.fillStyle = grad1;
+  ctx.fillRect(0, 0, W, H * 0.5);
+
+  const grad2 = ctx.createLinearGradient(0, H * 0.45, 0, H);
+  grad2.addColorStop(0, 'rgba(10,10,10,0)');
+  grad2.addColorStop(0.5, 'rgba(10,10,10,0.7)');
+  grad2.addColorStop(1, 'rgba(10,10,10,0.98)');
+  ctx.fillStyle = grad2;
+  ctx.fillRect(0, H * 0.45, W, H * 0.55);
+
+  // Borda
+  ctx.strokeStyle = corAtual;
+  ctx.lineWidth = 8;
+  ctx.strokeRect(30, 30, W - 60, H - 60);
+
+  // Título grande
+  ctx.font = '900 140px Inter, sans-serif';
+  ctx.fillStyle = '#fff';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'alphabetic';
+  const lines = quebrarTexto(ctx, titulo, W - 120);
+  let y = H - 500;
+  lines.forEach(l => {
+    ctx.fillText(l, W/2, y);
+    y += 145;
+  });
+
+  // Linha decorativa
+  ctx.fillStyle = corAtual;
+  ctx.fillRect((W - 200)/2, y - 30, 200, 6);
+
+  // Subtítulo
+  if (subtitulo) {
+    ctx.font = '700 56px Inter, sans-serif';
+    ctx.fillStyle = corAtual;
+    ctx.fillText(subtitulo, W/2, y + 60);
+  }
+
+  // Badge topo
+  ctx.font = '900 32px Inter, sans-serif';
+  const bw = 340;
+  ctx.fillStyle = corAtual;
+  roundRect(ctx, (W - bw)/2, 140, bw, 80, 40);
+  ctx.fill();
+  ctx.fillStyle = '#fff';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('✨ RESULTADO', W/2, 180);
+}
+
+function renderPromo(ctx, W, H, titulo, subtitulo, price) {
+  // Fundo preto com grid
+  ctx.fillStyle = '#0a0a0a';
+  ctx.fillRect(0, 0, W, H);
+  ctx.strokeStyle = 'rgba(255,26,26,0.06)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i < W; i += 80) {
+    ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, H); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(W, i); ctx.stroke();
+  }
+
+  // Glow central
+  const glow = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, W * 0.7);
+  glow.addColorStop(0, 'rgba(255,26,26,0.2)');
+  glow.addColorStop(1, 'rgba(255,26,26,0)');
+  ctx.fillStyle = glow;
+  ctx.fillRect(0, 0, W, H);
+
+  // Borda
+  ctx.strokeStyle = corAtual;
+  ctx.lineWidth = 8;
+  ctx.strokeRect(30, 30, W - 60, H - 60);
+
+  // Badge "PROMO"
+  ctx.font = '900 40px Inter, sans-serif';
+  const bw = 280;
+  ctx.fillStyle = corAtual;
+  roundRect(ctx, (W - bw)/2, 200, bw, 100, 50);
+  ctx.fill();
+  ctx.fillStyle = '#fff';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('PROMOÇÃO', W/2, 250);
+
+  // Título
+  ctx.font = '900 110px Inter, sans-serif';
+  ctx.fillStyle = '#fff';
+  ctx.textBaseline = 'alphabetic';
+  const lines = quebrarTexto(ctx, titulo, W - 120);
+  let y = 620;
+  lines.forEach(l => {
+    ctx.fillText(l, W/2, y);
+    y += 120;
+  });
+
+  // Preço gigante
+  ctx.font = '900 340px Inter, sans-serif';
+  ctx.fillStyle = corAtual;
+  ctx.fillText(price, W/2, y + 280);
+
+  // Linha
+  ctx.fillStyle = 'rgba(255,255,255,0.2)';
+  ctx.fillRect((W - 400)/2, y + 360, 400, 3);
+
+  // Subtítulo
+  if (subtitulo) {
+    ctx.font = '800 60px Inter, sans-serif';
+    ctx.fillStyle = '#fff';
+    ctx.fillText(subtitulo, W/2, y + 460);
+  }
+
+  // CTA
+  ctx.font = '700 36px Inter, sans-serif';
+  ctx.fillStyle = 'rgba(255,255,255,0.7)';
+  ctx.fillText('CHAMA NO WHATSAPP · (73) 9143-6726', W/2, H - 300);
+
+  // Seta
+  ctx.font = '900 80px Inter, sans-serif';
+  ctx.fillStyle = corAtual;
+  ctx.fillText('⬇', W/2, H - 200);
+}
+
+function renderDica(ctx, W, H, titulo, subtitulo, numero) {
+  // Fundo preto
+  ctx.fillStyle = '#0a0a0a';
+  ctx.fillRect(0, 0, W, H);
+
+  // Foto lateral (esquerda)
+  const fotoW = W * 0.42;
+  if (foto1) {
+    desenharFotoCobrindo(ctx, foto1, 0, 0, fotoW, H);
+    // Overlay
+    const grad = ctx.createLinearGradient(0, 0, fotoW, 0);
+    grad.addColorStop(0, 'rgba(10,10,10,0.2)');
+    grad.addColorStop(0.7, 'rgba(10,10,10,0.5)');
+    grad.addColorStop(1, 'rgba(10,10,10,1)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, fotoW, H);
+  } else {
+    ctx.fillStyle = '#111';
+    ctx.fillRect(0, 0, fotoW, H);
+    ctx.fillStyle = '#333';
+    ctx.font = 'bold 32px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('📷', fotoW/2, H/2);
+  }
+
+  // Número gigante
+  ctx.font = '900 420px Inter, sans-serif';
+  ctx.fillStyle = corAtual;
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillText(numero, fotoW - 80, H * 0.5 + 100);
+
+  // Borda
+  ctx.strokeStyle = corAtual;
+  ctx.lineWidth = 8;
+  ctx.strokeRect(30, 30, W - 60, H - 60);
+
+  // Badge topo
+  ctx.font = '900 32px Inter, sans-serif';
+  const bw = 280;
+  ctx.fillStyle = corAtual;
+  roundRect(ctx, W - bw - 90, 140, bw, 80, 40);
+  ctx.fill();
+  ctx.fillStyle = '#fff';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('🎯 DICA', W - bw/2 - 90, 180);
+
+  // Título (direita)
+  ctx.font = '900 80px Inter, sans-serif';
+  ctx.fillStyle = '#fff';
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+  const lines = quebrarTexto(ctx, titulo, W - fotoW - 120);
+  let y = 400;
+  lines.forEach(l => {
+    ctx.fillText(l, fotoW + 60, y);
+    y += 95;
+  });
+
+  // Subtítulo
+  if (subtitulo) {
+    ctx.font = '700 44px Inter, sans-serif';
+    ctx.fillStyle = corAtual;
+    ctx.textAlign = 'left';
+    const subl = quebrarTexto(ctx, subtitulo, W - fotoW - 120);
+    subl.forEach(l => {
+      ctx.fillText(l, fotoW + 60, y + 40);
+      y += 55;
+    });
+  }
+
+  // CTA embaixo
+  ctx.font = '700 32px Inter, sans-serif';
+  ctx.fillStyle = 'rgba(255,255,255,0.6)';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('VITALCAR · (73) 9143-6726', W/2, H - 150);
+}
+
+function renderLogoRodape(ctx, W, H) {
+  // Logo VITALCAR no rodapé (fixo)
+  ctx.font = '900 42px Inter, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+
+  // Sombra
+  ctx.fillStyle = 'rgba(0,0,0,0.5)';
+  roundRect(ctx, (W - 380)/2 + 2, H - 102, 380, 70, 35);
+  ctx.fill();
+
+  // Fundo
+  ctx.fillStyle = '#0a0a0a';
+  roundRect(ctx, (W - 380)/2, H - 105, 380, 70, 35);
+  ctx.fill();
+
+  // Borda
+  ctx.strokeStyle = corAtual;
+  ctx.lineWidth = 3;
+  roundRect(ctx, (W - 380)/2, H - 105, 380, 70, 35);
+  ctx.stroke();
+
+  // Texto
+  const textoW = ctx.measureText('VITAL').width + 6 + ctx.measureText('CAR').width;
+  const startX = (W - textoW)/2;
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#fff';
+  ctx.fillText('VITAL', startX, H - 68);
+  ctx.fillStyle = corAtual;
+  ctx.fillText('CAR', startX + ctx.measureText('VITAL').width + 6, H - 68);
+}
+
+// ============================================================
+// HELPERS DE CANVAS
+// ============================================================
+function desenharFotoCobrindo(ctx, img, x, y, w, h) {
+  const ratio = Math.max(w / img.width, h / img.height);
+  const nw = img.width * ratio;
+  const nh = img.height * ratio;
+  const nx = x + (w - nw) / 2;
+  const ny = y + (h - nh) / 2;
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(x, y, w, h);
+  ctx.clip();
+  ctx.drawImage(img, nx, ny, nw, nh);
+  ctx.restore();
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+
+function quebrarTexto(ctx, texto, maxWidth) {
+  if (!texto) return [''];
+  const palavras = texto.split(' ');
+  const linhas = [];
+  let linha = '';
+  for (const p of palavras) {
+    const teste = linha ? linha + ' ' + p : p;
+    if (ctx.measureText(teste).width > maxWidth && linha) {
+      linhas.push(linha);
+      linha = p;
+    } else {
+      linha = teste;
+    }
+  }
+  if (linha) linhas.push(linha);
+  return linhas;
+}
+
+// ============================================================
+// AÇÕES
+// ============================================================
+function baixar() {
+  const canvas = document.getElementById('reel-canvas');
+  canvas.toBlob((blob) => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'capa-reel-vitalcar-' + Date.now() + '.png';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast('Capa baixada!', '📥');
+  }, 'image/png', 0.95);
+}
+
+async function abrirInstagram() {
+  const texto = document.getElementById('r-titulo').value + (document.getElementById('r-subtitulo').value ? '\n' + document.getElementById('r-subtitulo').value : '');
+  try {
+    await navigator.clipboard.writeText(texto);
+    showToast('Texto copiado! Baixa a capa e cola', '📋');
+  } catch(e) {
+    showToast('Baixa a capa primeiro', '📥');
+  }
+  setTimeout(() => window.open('https://www.instagram.com/', '_blank'), 700);
+}
+
+function limpar() {
+  if (!confirm('Limpar tudo?')) return;
+  document.getElementById('r-titulo').value = 'MOTO SUJA';
+  document.getElementById('r-subtitulo').value = 'NÃO COMBINA';
+  document.getElementById('r-badge').value = 'HONDA BROS · R$50';
+  document.getElementById('r-price').value = 'R$50';
+  document.getElementById('r-numero').value = '01';
+  document.getElementById('foto1').value = '';
+  document.getElementById('foto2').value = '';
+  document.getElementById('file-wrap-1').classList.remove('has-file');
+  document.getElementById('file-wrap-2').classList.remove('has-file');
+  foto1 = null;
+  foto2 = null;
+  render();
+  showToast('Limpado', '🗑');
+}
+</script>
+
+</body>
+</html>

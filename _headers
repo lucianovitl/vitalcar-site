@@ -1,0 +1,83 @@
+# Cloudflare Pages _headers — Vitalcar
+# Última atualização: 2026-10-03
+
+# ══════════════════════════════════════════════
+# SEGURANÇA GLOBAL
+# ══════════════════════════════════════════════
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(self), payment=()
+  X-XSS-Protection: 1; mode=block
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://www.googletagmanager.com https://www.gstatic.com https://apis.google.com https://*.firebaseio.com https://*.googleapis.com; style-src 'self' 'unsafe-inline' https://unpkg.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firebaseinstallations.googleapis.com; frame-src https://www.google.com https://maps.google.com https://www.youtube.com; media-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self' https://wa.me; upgrade-insecure-requests
+
+# ══════════════════════════════════════════════
+# HTML: sempre revalidar (promo e preços mudam)
+# ══════════════════════════════════════════════
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+/
+  Cache-Control: public, max-age=0, must-revalidate
+/404.html
+  Cache-Control: public, max-age=0, must-revalidate
+/privacidade.html
+  Cache-Control: public, max-age=0, must-revalidate
+/privacidade
+  Cache-Control: public, max-age=0, must-revalidate
+/scripts/quote.js
+  Cache-Control: public, max-age=0, must-revalidate
+/studio.css
+  Cache-Control: public, max-age=0, must-revalidate
+/scripts/studio.js
+  Cache-Control: public, max-age=0, must-revalidate
+/showroom.css
+  Cache-Control: public, max-age=0, must-revalidate
+/scripts/car-3d.js
+  Cache-Control: public, max-age=0, must-revalidate
+/scripts/showroom.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+# ══════════════════════════════════════════════
+# Imagens, vídeos, fontes: imutáveis 1 ano
+# ══════════════════════════════════════════════
+/img/*
+  Cache-Control: public, max-age=31536000, immutable
+/video/*
+  Cache-Control: public, max-age=31536000, immutable
+/certificados/*
+  Cache-Control: public, max-age=31536000, immutable
+/galeria/*
+  Cache-Control: public, max-age=31536000, immutable
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: image/webp
+/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+/*.png
+  Cache-Control: public, max-age=31536000, immutable
+/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+/*.mp4
+  Cache-Control: public, max-age=31536000, immutable
+  Accept-Ranges: bytes
+
+# ══════════════════════════════════════════════
+# PWA e SEO: curto
+# ══════════════════════════════════════════════
+/manifest.json
+  Cache-Control: public, max-age=3600
+  Content-Type: application/manifest+json
+/sitemap.xml
+  Cache-Control: public, max-age=3600
+/robots.txt
+  Cache-Control: public, max-age=3600
+/sw.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+# ══════════════════════════════════════════════
+# Admin — sem cache (dados dinâmicos)
+# ══════════════════════════════════════════════
+/admin/*
+  Cache-Control: no-cache, no-store, must-revalidate
+  X-Robots-Tag: noindex, nofollow

@@ -1,0 +1,36 @@
+name: 📊 Relatório Semanal Vitalcar
+
+on:
+  # Roda todo domingo às 23:00 UTC = 20:00 horário de Brasília
+  # (Brasil é UTC-3)
+  schedule:
+    - cron: '0 23 * * 0'
+
+  # Permite rodar manualmente pelo painel do GitHub (útil pra testar)
+  workflow_dispatch:
+
+jobs:
+  enviar-relatorio:
+    name: Enviar relatório no WhatsApp
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Baixar código do repositório
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 📦 Instalar dependências
+        run: |
+          npm init -y
+          npm install firebase-admin@12
+
+      - name: 🚀 Executar script do relatório
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
+          CALLMEBOT_API_KEY: ${{ secrets.CALLMEBOT_API_KEY }}
+        run: node scripts/relatorio-semanal.js

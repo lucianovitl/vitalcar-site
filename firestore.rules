@@ -1,0 +1,37 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    function isAdmin() {
+      return request.auth != null && request.auth.token.admin == true;
+    }
+    
+    function isValidOrder(data) {
+      return data.origem == 'site' &&
+             data.uid == 'anon' &&
+             data.status == 'pendente';
+    }
+
+    match /config/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /ordens/{ordemId} {
+      allow read: if request.auth != null;
+      
+      // Criação via site (anônimo)
+      allow create: if 
+        request.resource.data.origem == 'site' &&
+        request.resource.data.uid == 'anon' &&
+        request.resource.data.status == 'pendente';
+      
+      // Admin pode tudo
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /{document=**} {
+      allow read, write: if isAdmin();
+    }
+  }
+}

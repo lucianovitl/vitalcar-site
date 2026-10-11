@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"
+        xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0">
+
+  <!-- Site one-page: apenas a URL canônica. Âncoras (#) são ignoradas pelo Google. -->
+  <url>
+    <loc>https://vitalcar.pages.dev/</loc>
+    <lastmod>2026-10-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <mobile:mobile/>
+
+    <!-- Hero / Capa -->
+    <image:image>
+      <image:loc>https://vitalcar.pages.dev/img/hero-01.webp</image:loc>
+      <image:title>Vitalcar Estúdios Estética Automotiva — fachada em Ilhéus BA</image:title>
+      <image:caption>Estética automotiva profissional em Ilhéus, Bahia — lavagem, polimento, vitrificação</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://vitalcar.pages.dev/img/og-cover.jpg</image:loc>
+      <image:title>Vitalcar — capa para redes sociais</image:title>
+      <image:caption>Estética automotiva Vitalcar em Ilhéus BA</image:caption>
+    </image:image>
+
+    <!-- Processo / Serviços -->
+    <image:image>
+      <image:loc>https://vitalcar.pages.dev/img/processo-01.webp</image:loc>
+      <image:title>Interior higienizado — Vitalcar Ilhéus</image:title>
+      <image:caption>Interior de veículo higienizado profissionalmente</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://vitalcar.pages.dev/img/processo-02.webp</image:loc>
+      <image:title>Lavagem técnica profissional Vitalcar</image:title>
+      <image:caption>Lavagem e estética automotiva profissional em Ilhéus, Bahia</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://vitalcar.pages.dev/img/processo-03.webp</image:loc>
+      <image:title>Polimento técnico Vitalcar</image:title>
+      <image:caption>Polimento e vitrificação de veículos em Ilhéus</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://vitalcar.pages.dev/img/processo-04.webp</image:loc>
+      <image:title>Polimento concluído — lateral do veículo</image:title>
+      <image:caption>Frente lateral após polimento — Vitalcar Ilhéus</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://vitalcar.pages.dev/img/processo-05.webp</image:loc>
+      <image:title>Higienização de interiores Vitalcar</image:title>
+      <image:caption>Higienização interna de carros em Ilhéus</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://vitalcar.pages.dev/img/processo-06.webp</image:loc>
+      <image:title>Bancos de couro hidratados</image:title>
+      <image:caption>Banco de couro hidratado — Vitalcar Ilhéus</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://vitalcar.pages.dev/img/processo-07.webp</image:loc>
+      <image:title>Lavagem com snow foam</image:title>
+      <image:caption>Lavagem traseira com snow foam — Vitalcar Ilhéus</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://vitalcar.pages.dev/img/processo-08.webp</image:loc>
+      <image:title>Detalhe exterior de SUV</image:title>
+      <image:caption>Detalhe 4x4 após limpeza — Vitalcar Ilhéus</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://vitalcar.pages.dev/img/processo-09.webp</image:loc>
+      <image:title>Vidros impermeabilizados</image:title>
+      <image:caption>Vidro impermeabilizado — Vitalcar Ilhéus</image:caption>
+    </image:image>
+
+    <!-- Motos -->
+    <image:image>
+      <image:loc>https://vitalcar.pages.dev/img/moto-bros-01.webp</image:loc>
+      <image:title>Lavagem de motos profissional</image:title>
+      <image:caption>Moto lavada — serviço de moto Vitalcar Ilhéus</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://vitalcar.pages.dev/img/moto-bros-07.webp</image:loc>
+      <image:title>Resultado final moto detalhada</image:title>
+      <image:caption>Moto finalizada após detalhamento — Vitalcar Ilhéus</image:caption>
+    </image:image>
+
+    <!-- Galeria extra -->
+    <image:image>
+      <image:loc>https://vitalcar.pages.dev/img/soltas-snow-01.webp</image:loc>
+      <image:title>Lavagem snow foam Ilhéus</image:title>
+      <image:caption>Banho de espuma snow foam — Vitalcar Ilhéus BA</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://vitalcar.pages.dev/img/soltas-brilho-01.webp</image:loc>
+      <image:title>Polimento brilho espelhado Ilhéus</image:title>
+      <image:caption>Carro com brilho após polimento — Vitalcar Ilhéus</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://vitalcar.pages.dev/img/soltas-brilho-02.webp</image:loc>
+      <image:title>Brilho espelhado após polimento técnico</image:title>
+      <image:caption>Pintura espelhada após polimento profissional — Vitalcar Ilhéus</image:caption>
+    </image:image>
+
+    <!-- Certificados -->
+    <image:image>
+      <image:loc>https://vitalcar.pages.dev/certificados/lavagem-tecnica.webp</image:loc>
+      <image:title>Certificado Lavagem Técnica Profissional — Luciano dos Santos</image:title>
+      <image:caption>Certificado de formação em lavagem técnica profissional</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://vitalcar.pages.dev/certificados/polidor-mestre.webp</image:loc>
+      <image:title>Certificado Polidor Mestre — Luciano dos Santos</image:title>
+      <image:caption>Certificado de formação em polimento automotivo</image:caption>
+    </image:image>
+
+    <!-- Antes e Depois -->
+    <image:image>
+      <image:loc>https://vitalcar.pages.dev/galeria/antes-depois-01/antes.webp</image:loc>
+      <image:title>Antes — veículo sujo antes do serviço</image:title>
+      <image:caption>Veículo antes da lavagem profissional — Vitalcar Ilhéus</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://vitalcar.pages.dev/galeria/antes-depois-01/depois.webp</image:loc>
+      <image:title>Depois — veículo limpo após serviço</image:title>
+      <image:caption>Veículo depois da lavagem profissional — Vitalcar Ilhéus</image:caption>
+    </image:image>
+
+    <!-- Vídeos -->
+    <video:video>
+      <video:thumbnail_loc>https://vitalcar.pages.dev/video/poster-01.webp</video:thumbnail_loc>
+      <video:title>Lavagem técnica profissional — Vitalcar Ilhéus</video:title>
+      <video:description>Processo de lavagem técnica profissional com snow foam na Vitalcar Estúdios em Ilhéus BA</video:description>
+      <video:content_loc>https://vitalcar.pages.dev/video/video-01.mp4</video:content_loc>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://vitalcar.pages.dev/video/poster-02.webp</video:thumbnail_loc>
+      <video:title>Polimento automotivo — Vitalcar Ilhéus</video:title>
+      <video:description>Polimento técnico de pintura automotiva na Vitalcar Estúdios em Ilhéus BA</video:description>
+      <video:content_loc>https://vitalcar.pages.dev/video/video-02.mp4</video:content_loc>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+
+</urlset>

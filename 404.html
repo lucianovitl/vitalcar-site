@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Página não encontrada — Vitalcar Ilhéus</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#ff1a1a">
+<link rel="canonical" href="https://vitalcar.pages.dev/">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0d0b0a;color:#f5ecd8;font-family:'Arial Black',Arial,sans-serif;text-align:center;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;overflow:hidden}
+body::before{content:'404';position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-size:30vw;font-weight:900;color:rgba(255,26,26,.04);pointer-events:none;z-index:0;letter-spacing:-.06em}
+.content{position:relative;z-index:1;max-width:520px}
+.brand{font-size:1.4rem;letter-spacing:-.05em;margin-bottom:32px;color:#a89880}
+.brand span{color:#ff1a1a}
+h1{font-size:clamp(5rem,15vw,9rem);color:#ff1a1a;line-height:.9;letter-spacing:-.05em;margin-bottom:16px;text-shadow:4px 4px 0 rgba(245,197,24,.2)}
+h2{font-size:clamp(1.2rem,3vw,1.6rem);color:#f5ecd8;margin-bottom:12px;text-transform:uppercase;letter-spacing:.02em}
+p{color:#a89880;font-family:Arial,sans-serif;font-size:1rem;margin-bottom:32px;line-height:1.6}
+.actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+a{padding:16px 32px;text-decoration:none;font-weight:900;text-transform:uppercase;font-size:.9rem;letter-spacing:1px;transition:all .18s;display:inline-flex;align-items:center;gap:8px}
+.btn-home{background:#ff1a1a;color:#fff;border:2px solid #ff1a1a}
+.btn-home:hover{background:transparent;color:#ff1a1a;transform:translate(-2px,-2px);box-shadow:4px 4px 0 #f5c518}
+.btn-whats{background:transparent;color:#f5ecd8;border:2px solid #f5ecd8}
+.btn-whats:hover{background:#25D366;color:#fff;border-color:#25D366}
+.countdown{margin-top:24px;font-family:Arial,sans-serif;font-size:.82rem;color:#6b5f4a;letter-spacing:1px}
+.countdown span{color:#ff1a1a;font-weight:700}
+@media(max-width:480px){
+  .actions{flex-direction:column}
+  a{width:100%;justify-content:center}
+}
+</style>
+</head>
+<body>
+<div class="content">
+  <div class="brand">VITAL<span>CAR</span></div>
+  <h1>404</h1>
+  <h2>Ops, essa página não existe.</h2>
+  <p>Mas seu carro pode ficar como novo. Volte pro site ou agende direto pelo WhatsApp.</p>
+  <div class="actions">
+    <a href="/" class="btn-home">← Voltar pra Vitalcar</a>
+    <a href="https://wa.me/557391436726?text=Ol%C3%A1!%20Vim%20do%20site%20da%20Vitalcar." target="_blank" rel="noopener" class="btn-whats">📱 WhatsApp</a>
+  </div>
+  <div class="countdown">Redirecionando em <span id="timer">6</span>s</div>
+</div>
+<script>
+(function(){
+  var s=6,el=document.getElementById('timer');
+  var t=setInterval(function(){s--;if(el)el.textContent=s;if(s<=0){clearInterval(t);location.href='/';}},1000);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1316 @@
+/* Vitalcar / Studio
+   Load after the legacy inline stylesheet. All component overrides are scoped
+   to body.vitalcar-studio; photographs and copy remain in the document.
+   Motion contract: html.studio-motion-ready, .studio-reveal.is-visible,
+   html[data-motion-paused="true"], --tilt-x / --tilt-y, --scroll-progress. */
+
+:root {
+  color-scheme: dark;
+  --bg: #101214;
+  --bg2: #191c1f;
+  --text: #f4f1e9;
+  --text2: #b8bbb8;
+  --text3: #9b9f9d;
+  --red: #ef4135;
+  --red-dark: #c83128;
+  --yellow: #f4f1e9;
+  --green: #80cba6;
+  --border: rgba(244, 241, 233, .17);
+  --max-w: 1280px;
+  --studio-signal: #ef4135;
+  --studio-ink: #101214;
+  --studio-paper: #f4f1e9;
+  --studio-raised: #212528;
+  --studio-line-strong: rgba(244, 241, 233, .32);
+  --studio-accent-wash: rgba(239, 65, 53, .09);
+  --studio-nav: rgba(16, 18, 20, .97);
+  --studio-focus: #f4f1e9;
+  --studio-font: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --studio-mono: 'Space Mono', Consolas, monospace;
+  --studio-serif: Georgia, 'Times New Roman', serif;
+  --studio-gutter: clamp(20px, 4vw, 48px);
+  --studio-section: clamp(72px, 8vw, 116px);
+  --studio-ease: cubic-bezier(.22, .61, .36, 1);
+  --studio-header: 88px;
+}
+
+html.light-mode {
+  color-scheme: light;
+  --bg: #f4f1e9;
+  --bg2: #eae7df;
+  --text: #101214;
+  --text2: #515956;
+  --text3: #626963;
+  --red: #bf3027;
+  --red-dark: #a12720;
+  --yellow: #101214;
+  --green: #236b4a;
+  --border: rgba(16, 18, 20, .18);
+  --studio-raised: #fffdf7;
+  --studio-line-strong: rgba(16, 18, 20, .34);
+  --studio-accent-wash: rgba(191, 48, 39, .065);
+  --studio-nav: rgba(244, 241, 233, .98);
+  --studio-focus: #101214;
+}
+
+html { scroll-padding-top: calc(var(--studio-header) + 20px); }
+
+body.vitalcar-studio {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--studio-font);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+  transition: background-color .25s, color .25s;
+  padding-top: var(--studio-header);
+}
+
+body.vitalcar-studio *,
+body.vitalcar-studio *::before,
+body.vitalcar-studio *::after { box-sizing: border-box; }
+
+body.vitalcar-studio ::selection { color: var(--studio-paper); background: #a72d25; }
+body.vitalcar-studio :where(img, video, iframe) { max-width: 100%; }
+body.vitalcar-studio :where(button, input, select, textarea) { font: inherit; }
+body.vitalcar-studio :where(button, a) { -webkit-tap-highlight-color: rgba(239, 65, 53, .12); }
+body.vitalcar-studio :where(a) { text-underline-offset: .25em; }
+body.vitalcar-studio :where(h1, h2, h3, h4, p, li, label, figcaption) { overflow-wrap: break-word; }
+body.vitalcar-studio :where(h1, h2, h3, h4) {
+  font-family: var(--studio-font);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -.045em;
+  text-transform: none;
+  text-shadow: none;
+  text-wrap: balance;
+}
+
+body.vitalcar-studio :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--studio-focus);
+  outline-offset: 5px;
+}
+
+body.vitalcar-studio :where(button:disabled, [aria-disabled="true"]) {
+  cursor: not-allowed;
+  opacity: .5;
+}
+
+/* Author display rules must never revive controls hidden by application state. */
+body.vitalcar-studio [hidden]:not([hidden="until-found"]),
+body.vitalcar-studio .gallery-item.hidden { display: none !important; }
+
+body.vitalcar-studio .container {
+  width: 100%;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: var(--studio-gutter);
+}
+
+body.vitalcar-studio main { min-width: 0; }
+body.vitalcar-studio section {
+  padding-block: var(--studio-section);
+  scroll-margin-top: calc(var(--studio-header) + 20px);
+  content-visibility: visible;
+  contain-intrinsic-size: none;
+}
+
+/* These sections have border widths set in HTML in the original document. */
+body.vitalcar-studio main > section[style] { border-block-width: 1px !important; }
+
+body.vitalcar-studio .section-label,
+body.vitalcar-studio .studio-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: fit-content;
+  max-width: 100%;
+  padding: 0;
+  margin-bottom: 22px;
+  border: 0;
+  background: none;
+  color: var(--text2);
+  font: 400 .67rem/1.6 var(--studio-mono);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+body.vitalcar-studio .section-label::before,
+body.vitalcar-studio .studio-eyebrow::before {
+  content: '';
+  width: 22px;
+  height: 2px;
+  flex: 0 0 22px;
+  background: var(--studio-signal);
+}
+
+body.vitalcar-studio .section-title {
+  max-width: 1000px;
+  margin: 0 0 24px;
+  color: var(--text);
+  font: 600 clamp(2.3rem, 4.5vw, 4.4rem)/1.04 var(--studio-font);
+  letter-spacing: -.055em;
+  text-transform: none;
+  text-shadow: none;
+}
+
+body.vitalcar-studio .section-title .stroke {
+  -webkit-text-stroke: 0;
+  color: var(--text2);
+  font-family: var(--studio-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -.045em;
+}
+
+body.vitalcar-studio .section-sub {
+  max-width: 640px;
+  margin-bottom: 42px;
+  color: var(--text2);
+  font: 400 1.02rem/1.8 var(--studio-font);
+  letter-spacing: 0;
+}
+
+body.vitalcar-studio .studio-skip {
+  position: fixed;
+  top: 12px;
+  left: max(16px, env(safe-area-inset-left, 0px));
+  z-index: 10002;
+  max-width: calc(100% - 32px);
+  padding: 14px 22px;
+  color: var(--studio-ink);
+  background: var(--studio-paper);
+  border: 2px solid var(--studio-signal);
+  font-weight: 700;
+  transform: translateY(calc(-100% - 20px));
+}
+body.vitalcar-studio .studio-skip:focus { transform: none; }
+
+body.vitalcar-studio .btn-primary,
+body.vitalcar-studio .btn-ghost {
+  min-height: 52px;
+  max-width: 100%;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px 24px;
+  border: 1px solid var(--text);
+  border-radius: 2px;
+  background: var(--text);
+  color: var(--bg);
+  font: 600 .82rem/1.5 var(--studio-font);
+  letter-spacing: .015em;
+  text-transform: none;
+  text-align: center;
+  text-decoration: none;
+  white-space: normal;
+  box-shadow: none;
+  text-shadow: none;
+  transition: background-color .2s, color .2s, border-color .2s;
+}
+
+body.vitalcar-studio .btn-primary:hover {
+  background: var(--studio-signal);
+  border-color: var(--studio-signal);
+  color: var(--studio-ink);
+  transform: none;
+  box-shadow: none;
+}
+
+body.vitalcar-studio .btn-ghost { background: transparent; border-color: var(--studio-line-strong); color: var(--text); }
+body.vitalcar-studio .btn-ghost:hover { background: var(--studio-raised); border-color: var(--text2); color: var(--text); transform: none; box-shadow: none; }
+body.vitalcar-studio .btn-primary:disabled { pointer-events: auto; background: var(--studio-raised); border-color: var(--border); color: var(--text2); opacity: .6; }
+body.vitalcar-studio .btn-primary.loading { opacity: .7; cursor: progress; }
+
+/* 01 / Navigation: solid, quiet chrome and a document progress hairline. */
+body.vitalcar-studio nav.site-nav {
+  z-index: 1100;
+  inset: 0 0 auto;
+  width: 100%;
+  padding: max(14px, env(safe-area-inset-top, 0px)) 0 14px;
+  background: var(--studio-nav);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: none;
+  box-shadow: none;
+  transition: box-shadow .25s, border-color .25s;
+}
+
+body.vitalcar-studio nav.site-nav.is-scrolled {
+  border-color: var(--studio-line-strong);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, .08);
+}
+
+body.vitalcar-studio nav.site-nav::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 -1px;
+  height: 2px;
+  background: var(--studio-signal);
+  transform: scaleX(var(--scroll-progress, 0));
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+body.vitalcar-studio nav.site-nav .container { gap: 24px; min-height: 44px; }
+body.vitalcar-studio .logo { order: 1; flex-shrink: 0; text-decoration: none; }
+body.vitalcar-studio .logo .brand { color: var(--text); font: 700 1.6rem/1.15 var(--studio-font); letter-spacing: -.075em; }
+body.vitalcar-studio .logo .brand span { color: var(--studio-signal); }
+body.vitalcar-studio .logo .sub { margin-top: 5px; color: var(--text3); font-size: .49rem; letter-spacing: .13em; }
+body.vitalcar-studio .nav-links { order: 2; gap: 4px; margin-left: auto; min-width: 0; }
+body.vitalcar-studio .nav-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 13px;
+  border: 0;
+  color: var(--text2);
+  font: 600 .75rem/1.4 var(--studio-font);
+  text-transform: none;
+  letter-spacing: 0;
+  text-align: center;
+}
+body.vitalcar-studio .nav-links a:hover { background: none; color: var(--text); }
+body.vitalcar-studio .nav-links .nav-cta {
+  padding: 12px 19px !important;
+  background: var(--text);
+  color: var(--bg) !important;
+  border-radius: 2px;
+  font-weight: 600 !important;
+  white-space: normal;
+  box-shadow: inset 3px 0 0 var(--studio-signal);
+}
+body.vitalcar-studio .nav-links .nav-cta:hover { background: var(--studio-signal) !important; color: var(--studio-ink) !important; }
+body.vitalcar-studio .nav-controls { order: 3; gap: 8px; flex-shrink: 0; }
+body.vitalcar-studio .nav-icon-btn,
+body.vitalcar-studio .nav-toggle { width: 44px; height: 44px; border: 1px solid var(--border); border-radius: 2px; color: var(--text); }
+body.vitalcar-studio .nav-icon-btn:hover,
+body.vitalcar-studio .nav-toggle:hover { border-color: var(--text2); background: var(--bg2); color: var(--text); }
+body.vitalcar-studio .nav-toggle { order: 4; }
+body.vitalcar-studio .idioma-pills { border-radius: 2px; }
+body.vitalcar-studio .idioma-pills button { min-width: 34px; min-height: 44px; padding: 8px; font-size: .61rem; font-weight: 400; color: var(--text2); }
+body.vitalcar-studio .idioma-pills button.active { color: var(--text); background: var(--studio-raised); box-shadow: inset 0 -2px 0 var(--studio-signal); }
+body.vitalcar-studio .idioma-pills button:focus-visible { outline-offset: -4px; }
+
+body.vitalcar-studio .promo-bar { background: var(--bg2); border-bottom: 1px solid var(--border); color: var(--text2); padding: 12px 20px; font-size: .67rem; line-height: 1.8; letter-spacing: .05em; }
+body.vitalcar-studio .promo-bar strong { background: none; border: 0; color: var(--red); padding: 0 4px; }
+body.vitalcar-studio .promo-bar a { color: var(--text); }
+
+/* 02 / Split hero: oversized type beside an actual photographic contact sheet. */
+body.vitalcar-studio .hero.studio-hero {
+  padding: calc(var(--studio-header) + 48px) 0 0;
+  overflow: clip;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+body.vitalcar-studio .hero::before,
+body.vitalcar-studio .hero-bg,
+body.vitalcar-studio .hero-emoji { display: none; }
+
+body.vitalcar-studio .studio-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(28px, 4.5vw, 64px);
+}
+body.vitalcar-studio .studio-hero-grid > * { min-width: 0; }
+body.vitalcar-studio .hero-content { z-index: 2; padding: 22px 0; text-align: left; }
+body.vitalcar-studio .studio-eyebrow { margin-bottom: 26px; font-size: .64rem; letter-spacing: .13em; }
+body.vitalcar-studio .hero h1.studio-title {
+  margin: 0 0 28px;
+  color: var(--text);
+  font: 600 clamp(3.8rem, 6.2vw, 6.1rem)/.99 var(--studio-font);
+  letter-spacing: -.072em;
+  text-transform: none;
+  text-shadow: none;
+}
+body.vitalcar-studio .hero h1.studio-title span {
+  color: inherit;
+  transform: none;
+  text-shadow: none;
+  -webkit-text-stroke: 0;
+}
+body.vitalcar-studio .hero .studio-title .title-line { display: block; max-width: 100%; }
+body.vitalcar-studio .hero .studio-title .title-line:nth-child(2) { padding-left: clamp(10px, 2vw, 28px); }
+body.vitalcar-studio .hero .studio-title .title-accent {
+  padding: .04em .08em .06em 0;
+  color: var(--text2);
+  font-family: var(--studio-serif);
+  font-size: 1.05em;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -.065em;
+}
+body.vitalcar-studio .hero-sub { max-width: 440px; margin: 0 0 28px; padding: 0; color: var(--text2); font: 400 1.01rem/1.85 var(--studio-font); letter-spacing: 0; text-shadow: none; }
+body.vitalcar-studio .hero-btns { justify-content: flex-start; gap: 10px; margin: 0 0 22px; }
+body.vitalcar-studio .hero-btns .btn-primary { background: var(--studio-signal); color: var(--studio-ink); border-color: var(--studio-signal); }
+body.vitalcar-studio .hero-btns .btn-primary:hover { background: #ff685b; border-color: #ff685b; }
+body.vitalcar-studio .hero-btns .btn-ghost { padding-inline: 19px; }
+
+body.vitalcar-studio .hero-rating {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  padding: 10px 0;
+  max-width: 100%;
+  min-height: 44px;
+  color: var(--text2);
+  background: none;
+  border: 0;
+  box-shadow: none;
+  font: 400 .72rem/1.6 var(--studio-font);
+  transform: none;
+}
+body.vitalcar-studio .hero-rating:hover { color: var(--text); transform: none; box-shadow: none; }
+body.vitalcar-studio .hero-rating-stars { color: var(--red); font-size: .8rem; letter-spacing: .12em; }
+body.vitalcar-studio .hero-rating-text strong { color: var(--text); font-weight: 600; }
+body.vitalcar-studio .studio-hero-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border); }
+body.vitalcar-studio .hero-badge,
+body.vitalcar-studio .hero-badge.promo { max-width: 100%; padding: 0; background: none; border: 0; color: var(--text2); font: 400 .62rem/1.8 var(--studio-mono); letter-spacing: .035em; }
+body.vitalcar-studio #status-loja { display: inline-flex; gap: 7px; padding: 0; margin: 0; max-width: 100%; background: none; border: 0; font: 400 .62rem/1.8 var(--studio-mono); letter-spacing: .025em; }
+body.vitalcar-studio #status-loja.aberto { color: var(--green); }
+body.vitalcar-studio #status-loja.fechado { color: var(--text2); }
+body.vitalcar-studio #status-loja .dot-green,
+body.vitalcar-studio #status-loja .dot-red { width: 6px; height: 6px; flex: 0 0 6px; }
+
+body.vitalcar-studio .studio-visual {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: clamp(540px, 46vw, 670px);
+  min-width: 0;
+  background: #202326;
+  color: var(--studio-paper);
+  overflow: hidden;
+  border-radius: 2px;
+  clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 28px 100%, 0 calc(100% - 28px));
+}
+body.vitalcar-studio .studio-scene {
+  position: absolute;
+  inset: -2px;
+  z-index: 0;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+  transform: perspective(1200px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) scale(1.04);
+  transition: opacity .85s ease, visibility .85s, transform .5s var(--studio-ease);
+  pointer-events: none;
+}
+body.vitalcar-studio .studio-scene.is-active,
+body.vitalcar-studio .studio-visual:not(:has(.studio-scene.is-active)) .studio-scene:first-child { opacity: 1; visibility: visible; }
+body.vitalcar-studio .studio-scene.is-active { z-index: 1; }
+body.vitalcar-studio .studio-scene img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(.86) saturate(.85) contrast(1.06);
+  transform: scale(1.02);
+}
+body.vitalcar-studio .studio-scene.is-active img { animation: studio-photo-drift 18s ease-in-out infinite alternate; }
+body.vitalcar-studio .studio-scene::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(5, 8, 10, .24), transparent 33%, rgba(5, 8, 10, .18) 50%, rgba(5, 8, 10, .92) 100%);
+  pointer-events: none;
+}
+body.vitalcar-studio .studio-visual::before { content: ''; position: absolute; inset: 0; z-index: 4; border: 1px solid rgba(244, 241, 233, .15); pointer-events: none; }
+body.vitalcar-studio .studio-visual::after {
+  content: '';
+  position: absolute;
+  z-index: 3;
+  top: -20%;
+  bottom: -20%;
+  left: -60%;
+  width: 38%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .055), transparent);
+  transform: translateX(0) skewX(-18deg);
+  animation: studio-sheen 13s ease-in-out infinite;
+  pointer-events: none;
+}
+body.vitalcar-studio .studio-visual[data-motion-suspended="true"] *,
+body.vitalcar-studio .studio-visual[data-motion-suspended="true"]::after { animation-play-state: paused !important; }
+body.vitalcar-studio .studio-scene-status { position: absolute; z-index: 6; left: 20px; right: 20px; top: 74px; padding: 12px; color: #f4f1e9; background: #101214; font: 400 .8rem/1.5 var(--studio-font); }
+body.vitalcar-studio .studio-scene-status:empty { display: none; }
+body.vitalcar-studio .studio-frame-mark { position: absolute; z-index: 4; top: 26px; left: 26px; width: 28px; height: 28px; border-top: 2px solid var(--studio-signal); border-left: 2px solid var(--studio-signal); pointer-events: none; }
+body.vitalcar-studio .studio-visual-label { position: absolute; z-index: 4; top: 26px; right: 28px; max-width: calc(100% - 104px); padding: 6px 9px; background: rgba(16, 18, 20, .78); color: var(--studio-paper); font: 400 .58rem/1.6 var(--studio-mono); letter-spacing: .12em; text-transform: uppercase; }
+body.vitalcar-studio .studio-photo-caption { position: absolute; z-index: 4; bottom: 94px; left: 28px; right: 28px; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding-top: 18px; border-top: 1px solid rgba(244, 241, 233, .45); }
+body.vitalcar-studio .studio-photo-caption::before { content: ''; position: absolute; top: -1px; left: 0; width: 56px; height: 2px; background: var(--studio-signal); }
+body.vitalcar-studio .studio-photo-caption > div { min-width: 0; }
+body.vitalcar-studio .studio-photo-label { display: block; color: var(--studio-paper); font: 400 .62rem/1.6 var(--studio-mono); letter-spacing: .09em; text-transform: uppercase; }
+body.vitalcar-studio .studio-photo-caption p { margin-top: 10px; color: var(--studio-paper); font: 500 clamp(1.2rem, 1.8vw, 1.75rem)/1.2 var(--studio-font); letter-spacing: -.035em; text-wrap: balance; }
+body.vitalcar-studio .studio-photo-number { flex-shrink: 0; padding-top: 3px; color: var(--studio-paper); font: 400 .7rem/1.6 var(--studio-mono); }
+body.vitalcar-studio .studio-controls { position: absolute; z-index: 5; bottom: 24px; left: 28px; right: 28px; display: flex; align-items: stretch; gap: 6px; }
+body.vitalcar-studio .studio-controls button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 44px;
+  gap: 7px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px 10px;
+  background: rgba(16, 18, 20, .88);
+  border: 1px solid rgba(244, 241, 233, .45);
+  border-radius: 2px;
+  color: var(--studio-paper);
+  font: 400 .67rem/1.45 var(--studio-mono);
+  cursor: pointer;
+  transition: color .2s, background-color .2s, border-color .2s;
+}
+body.vitalcar-studio .studio-controls button:hover { background: #363a3c; border-color: var(--studio-paper); }
+body.vitalcar-studio .studio-controls button[data-scene][aria-pressed="true"] { background: var(--studio-paper); color: var(--studio-ink); border-color: var(--studio-paper); box-shadow: inset 0 -2px 0 var(--studio-signal); }
+body.vitalcar-studio .studio-controls button:focus-visible { outline: 2px solid var(--studio-paper); outline-offset: -5px; }
+body.vitalcar-studio #studio-motion-toggle { flex: 0 1 145px; font: 500 .66rem/1.4 var(--studio-font); }
+body.vitalcar-studio #studio-motion-toggle svg { width: 14px; height: 14px; flex-shrink: 0; }
+body.vitalcar-studio .studio-hero-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px 24px; margin-top: 36px; padding: 22px 0; border-top: 1px solid var(--border); color: var(--text3); font: 400 .63rem/1.7 var(--studio-mono); letter-spacing: .045em; }
+body.vitalcar-studio .studio-hero-bottom a { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; color: var(--text2); text-decoration: none; }
+body.vitalcar-studio .studio-hero-bottom a:hover { color: var(--text); }
+body.vitalcar-studio .studio-hero-bottom svg { width: 17px; height: 17px; color: var(--red); }
+
+@keyframes studio-photo-drift { from { transform: scale(1.02) translateY(0); } to { transform: scale(1.075) translateY(-.6%); } }
+@keyframes studio-sheen { 0%, 70% { opacity: 0; transform: translateX(0) skewX(-18deg); } 74% { opacity: 1; } 91%, 100% { opacity: 0; transform: translateX(480%) skewX(-18deg); } }
+
+/* 03 / Proof, craft and credentials. */
+body.vitalcar-studio .marquee { padding: 18px 0; background: #15181a; border-block: 1px solid rgba(244, 241, 233, .12); }
+body.vitalcar-studio .marquee-track { animation-duration: 52s; }
+body.vitalcar-studio .marquee-track span { padding-inline: 28px; color: #babcb7; font: 400 .66rem/1.5 var(--studio-mono); letter-spacing: .13em; }
+body.vitalcar-studio .marquee-track span::after { content: '/'; margin-left: 56px; color: var(--studio-signal); font-size: .75rem; }
+body.vitalcar-studio .marquee:hover .marquee-track { animation-play-state: paused; }
+body.vitalcar-studio .studio-trust { display: block; padding-block: 30px; border-bottom: 1px solid var(--border); }
+body.vitalcar-studio .studio-trust > .container { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+body.vitalcar-studio .studio-trust-item { display: block; min-width: 0; padding: 12px 26px; border-right: 1px solid var(--border); text-decoration: none; }
+body.vitalcar-studio .studio-trust-item:first-child { padding-left: 0; }
+body.vitalcar-studio .studio-trust-item:last-child { border-right: 0; }
+body.vitalcar-studio .studio-trust-value { display: block; color: var(--text); font: 600 clamp(1.7rem, 2.7vw, 2.4rem)/1.15 var(--studio-font); letter-spacing: -.045em; }
+body.vitalcar-studio .studio-trust-value small { font-size: .55em; font-weight: 400; }
+body.vitalcar-studio .studio-trust-label { display: block; margin-top: 8px; color: var(--text3); font: 400 .64rem/1.7 var(--studio-mono); letter-spacing: .03em; }
+body.vitalcar-studio .studio-trust-item:hover .studio-trust-value { color: var(--text2); }
+body.vitalcar-studio .studio-trust-item:focus-visible { outline-offset: -5px; }
+body.vitalcar-studio .brands { padding-block: 40px; background: var(--bg); border-bottom: 1px solid var(--border); }
+body.vitalcar-studio .brands-label { margin-bottom: 22px; color: var(--text3); font-size: .61rem; font-weight: 400; letter-spacing: .14em; }
+body.vitalcar-studio .brands-grid { max-width: none; gap: 18px 30px; }
+body.vitalcar-studio .brands-grid span { color: var(--text2); font: 600 clamp(.84rem, 1.25vw, 1.05rem)/1.4 var(--studio-font); letter-spacing: -.02em; text-transform: none; opacity: .8; }
+body.vitalcar-studio .brands-grid span:hover { color: var(--text); transform: none; opacity: 1; }
+
+body.vitalcar-studio .studio-about-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .85fr); gap: clamp(32px, 7vw, 96px); align-items: center; }
+body.vitalcar-studio .studio-about-copy { min-width: 0; }
+body.vitalcar-studio .studio-about-copy .section-sub { margin-bottom: 24px; max-width: 560px; }
+body.vitalcar-studio .studio-about-photo { min-width: 0; margin: 0; padding-top: 24px; border-top: 1px solid var(--border); }
+body.vitalcar-studio .studio-about-photo img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 2px; filter: saturate(.82); clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 0 100%); }
+body.vitalcar-studio .studio-about-photo figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 20px; padding-top: 16px; color: var(--text3); font: 400 .66rem/1.7 var(--studio-mono); }
+body.vitalcar-studio .share-btn { min-height: 44px; padding: 12px 0; border: 0; border-bottom: 1px solid var(--studio-line-strong); color: var(--text2); font: 500 .76rem/1.5 var(--studio-font); letter-spacing: 0; text-transform: none; }
+body.vitalcar-studio .share-btn:hover { color: var(--text); border-color: var(--red); }
+
+body.vitalcar-studio #certificacoes { padding-block: clamp(56px, 6vw, 80px); }
+body.vitalcar-studio #certificacoes .section-title { max-width: 750px; font-size: clamp(2rem, 3.3vw, 3rem); }
+body.vitalcar-studio #certificacoes .section-sub { max-width: 730px; margin-bottom: 32px; font-size: .95rem; }
+body.vitalcar-studio .certs-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; align-items: start; }
+body.vitalcar-studio .cert-card { min-width: 0; aspect-ratio: auto; padding: 8px; overflow: visible; border: 1px solid var(--border); border-radius: 2px; background: var(--bg); text-align: left; transition: border-color .2s; }
+body.vitalcar-studio .cert-card img { width: 100%; height: auto; aspect-ratio: 1.414 / 1; object-fit: contain; filter: none; }
+body.vitalcar-studio .cert-card:hover { transform: none; box-shadow: none; border-color: var(--text2); }
+body.vitalcar-studio .cert-card:hover img { transform: none; }
+body.vitalcar-studio .cert-overlay { position: static; min-height: 64px; padding: 12px 4px 6px; flex-direction: row; justify-content: flex-start; align-items: baseline; gap: 8px; opacity: 1; background: none; }
+body.vitalcar-studio .cert-lupa { font-size: .7rem; filter: grayscale(1); }
+body.vitalcar-studio .cert-nome { color: var(--text2); font: 500 .73rem/1.5 var(--studio-font); text-transform: none; letter-spacing: 0; }
+body.vitalcar-studio .cert-card.cert-erro { min-height: 160px; }
+body.vitalcar-studio .cert-card.cert-erro::after { padding: 12px; font-size: .67rem; letter-spacing: .025em; }
+
+body.vitalcar-studio .grid-3 { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; border: 0; border-block: 1px solid var(--border); }
+body.vitalcar-studio .card { min-width: 0; padding: 30px 24px; background: transparent; border: 0; border-right: 1px solid var(--border); }
+body.vitalcar-studio .card:first-child { padding-left: 0; }
+body.vitalcar-studio .card:nth-child(3n) { border-right: 1px solid var(--border); }
+body.vitalcar-studio .card:last-child { border-right: 0; }
+body.vitalcar-studio .card:hover,
+body.vitalcar-studio .card:active { background: transparent; transform: none; }
+body.vitalcar-studio .card-icon { margin-bottom: 22px; font-size: 1.5rem; filter: grayscale(1); }
+body.vitalcar-studio .card h3 { margin-bottom: 12px; font-size: 1.1rem; color: var(--text); }
+body.vitalcar-studio .card p { font: 400 .88rem/1.75 var(--studio-font); color: var(--text2); }
+body.vitalcar-studio .card:is(:hover, :active) h3 { color: var(--text) !important; }
+body.vitalcar-studio .card:is(:hover, :active) p { color: var(--text2) !important; }
+body.vitalcar-studio .card:is(:hover, :active) .card-icon { filter: grayscale(1); }
+
+/* 04 / Service index: two-column photographic editorial cards, readable lists. */
+body.vitalcar-studio .services-categories { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; align-items: start; border: 0; }
+body.vitalcar-studio .service-category { position: relative; min-width: 0; padding: 0 0 24px; border: 0; border-bottom: 1px solid var(--border); background: transparent; }
+body.vitalcar-studio .service-category:last-child { border-bottom: 1px solid var(--border); }
+body.vitalcar-studio .studio-service-photo { position: relative; margin: 0 0 25px; overflow: hidden; background: var(--bg2); aspect-ratio: 16 / 9; border-radius: 2px; }
+body.vitalcar-studio .studio-service-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 60%, rgba(16, 18, 20, .2)); pointer-events: none; }
+body.vitalcar-studio .studio-service-photo img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(.8) contrast(1.02); transition: transform .65s var(--studio-ease); }
+body.vitalcar-studio .service-category:hover .studio-service-photo img { transform: scale(1.025); }
+body.vitalcar-studio .studio-service-index { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 14px; color: var(--red); font: 400 .7rem/1.5 var(--studio-mono); letter-spacing: .08em; }
+body.vitalcar-studio .studio-service-index::after { content: ''; width: 38px; height: 1px; background: var(--border); }
+body.vitalcar-studio .studio-service-photo .studio-service-index { position: absolute; z-index: 2; left: 18px; bottom: 18px; justify-content: center; width: 44px; height: 44px; margin: 0; border: 1px solid rgba(244, 241, 233, .4); border-radius: 2px; background: rgba(16, 18, 20, .9); color: var(--studio-paper); }
+body.vitalcar-studio .studio-service-photo .studio-service-index::after { display: none; }
+body.vitalcar-studio .service-category-header { gap: 16px; margin-bottom: 14px; padding-bottom: 22px; border-bottom: 1px solid var(--border); }
+body.vitalcar-studio .service-category-icon { display: none; }
+body.vitalcar-studio .service-category-info { min-width: 0; }
+body.vitalcar-studio .service-category-info h3 { margin-bottom: 10px; color: var(--text); font: 600 clamp(1.45rem, 2.3vw, 2rem)/1.14 var(--studio-font); letter-spacing: -.04em; }
+body.vitalcar-studio .service-category-info p { max-width: 420px; color: var(--text2); font: 400 .92rem/1.7 var(--studio-font); }
+body.vitalcar-studio .service-category-list { grid-template-columns: minmax(0, 1fr); gap: 0; }
+body.vitalcar-studio .service-item { min-width: 0; flex-wrap: nowrap; gap: 10px; min-height: 54px; padding: 5px 0; border: 0; border-bottom: 1px solid var(--border); background: transparent; color: var(--text2); font: 400 .85rem/1.5 var(--studio-font); }
+body.vitalcar-studio .service-item:last-child { border-bottom: 0; }
+body.vitalcar-studio .service-item::before { content: ''; width: 3px; height: 3px; background: var(--studio-signal); border-radius: 50%; }
+body.vitalcar-studio .service-item > span:first-of-type { min-width: 0; flex: 1; color: var(--text2); }
+body.vitalcar-studio .service-item:hover { transform: none; border-color: var(--border); }
+body.vitalcar-studio .service-item:hover > span:first-of-type { color: var(--text); }
+body.vitalcar-studio .service-item .share-service { flex: 0 0 44px; width: 44px; min-height: 44px; margin-left: 0; padding: 9px; border: 1px solid transparent; border-radius: 2px; color: var(--text2); background: transparent; font-size: .8rem; }
+body.vitalcar-studio .service-item .share-service:hover { background: var(--bg2); border-color: var(--border); color: var(--text); }
+body.vitalcar-studio .service-item .promo-tag,
+body.vitalcar-studio .service-item .share-service + .promo-tag { flex: 0 0 auto; margin-left: 0; padding: 3px 6px; color: var(--red); background: var(--studio-accent-wash); border: 0; font: 400 .59rem/1.6 var(--studio-mono); letter-spacing: 0; white-space: nowrap; }
+
+/* 05 / Packages and the working estimate. */
+body.vitalcar-studio .combos { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; border: 0; background: transparent; align-items: stretch; }
+body.vitalcar-studio .combo { display: flex; flex-direction: column; min-width: 0; padding: 32px 28px; border: 1px solid var(--border); border-radius: 2px; background: var(--bg); transition: border-color .2s; }
+body.vitalcar-studio .combo:last-child { border-right: 1px solid var(--border); }
+body.vitalcar-studio .combo:nth-child(2) { border-top: 2px solid var(--studio-signal); background: var(--studio-raised); }
+body.vitalcar-studio .combo:hover { background: var(--bg); border-color: var(--studio-line-strong); }
+body.vitalcar-studio .combo:nth-child(2):hover { background: var(--studio-raised); border-top-color: var(--studio-signal); }
+body.vitalcar-studio .combo-tag { position: static; align-self: flex-start; max-width: 100%; margin-bottom: 28px; padding: 0; background: none; color: var(--red); border: 0; font: 400 .64rem/1.5 var(--studio-mono); letter-spacing: .1em; }
+body.vitalcar-studio .combo h3 { margin-bottom: 16px; color: var(--text); font: 600 clamp(1.4rem, 2vw, 1.8rem)/1.15 var(--studio-font); letter-spacing: -.035em; }
+body.vitalcar-studio .combo-desc { color: var(--text2); font: 400 .91rem/1.7 var(--studio-font); margin-bottom: 24px; }
+body.vitalcar-studio .combo-list { margin-bottom: 32px; }
+body.vitalcar-studio .combo-list li { margin-bottom: 10px; padding-left: 18px; color: var(--text2); font: 400 .84rem/1.6 var(--studio-font); }
+body.vitalcar-studio .combo-list li::before { content: '+'; color: var(--red); font-weight: 400; }
+body.vitalcar-studio .combo-price { margin-top: auto; color: var(--text); font: 600 2.5rem/1.05 var(--studio-font); letter-spacing: -.055em; }
+body.vitalcar-studio .combo-price .price-old { margin-bottom: 10px; color: var(--text3); font: 400 .73rem/1.5 var(--studio-font); letter-spacing: 0; }
+body.vitalcar-studio .combo-price .price-new { color: var(--text); font: 600 clamp(2.1rem, 3vw, 2.8rem)/1.1 var(--studio-font); letter-spacing: -.055em; }
+body.vitalcar-studio .combo-price .price-new small { margin-bottom: 8px; color: var(--text3); font: 400 .61rem/1.5 var(--studio-mono); letter-spacing: .065em; }
+body.vitalcar-studio .studio-combo-link { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--border); color: var(--text); font: 600 .8rem/1.5 var(--studio-font); text-decoration: none; }
+body.vitalcar-studio .studio-combo-link:hover { color: var(--red); }
+
+body.vitalcar-studio .simulador { min-width: 0; grid-template-columns: minmax(0, 1.4fr) minmax(0, .8fr); gap: 32px; align-items: start; padding: 32px; background: var(--bg2); border: 1px solid var(--border); border-radius: 2px; }
+body.vitalcar-studio .simulador > * { min-width: 0; }
+body.vitalcar-studio .sim-start { grid-column: 1 / -1; padding: 0 0 28px; background: none; border: 0; border-bottom: 1px solid var(--border); }
+body.vitalcar-studio .sim-start h3 { margin-bottom: 9px; font: 600 1.25rem/1.4 var(--studio-font); letter-spacing: -.03em; }
+body.vitalcar-studio .sim-start p { max-width: 740px; margin-bottom: 18px; color: var(--text2); font: 400 .87rem/1.75 var(--studio-font); }
+body.vitalcar-studio .sim-recommendations { gap: 8px; }
+body.vitalcar-studio .sim-recommendations button,
+body.vitalcar-studio .sim-reset { min-width: 0; min-height: 44px; padding: 10px 16px; border: 1px solid var(--studio-line-strong); border-radius: 2px; background: transparent; color: var(--text2); font: 500 .79rem/1.5 var(--studio-font); }
+body.vitalcar-studio .sim-recommendations button:hover { background: var(--studio-raised); color: var(--text); }
+body.vitalcar-studio .sim-recommendations button[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+body.vitalcar-studio .simulador button:focus-visible,
+body.vitalcar-studio .simulador input:focus-visible { outline: 2px solid var(--studio-focus); outline-offset: 3px; }
+body.vitalcar-studio .sim-field { grid-column: 1; min-width: 0; }
+body.vitalcar-studio .sim-field-title,
+body.vitalcar-studio .sim-field > label { margin-bottom: 14px; color: var(--text2); font: 400 .67rem/1.6 var(--studio-mono); letter-spacing: .1em; }
+body.vitalcar-studio .sim-pills { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; border: 0; }
+body.vitalcar-studio .sim-pills button,
+body.vitalcar-studio .sim-pills button:last-child {
+  position: relative;
+  min-width: 0;
+  min-height: 112px;
+  padding: 18px 8px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  background: var(--bg);
+  color: var(--text2);
+  font: 500 .79rem/1.5 var(--studio-font);
+  text-transform: none;
+  letter-spacing: 0;
+  gap: 13px;
+}
+body.vitalcar-studio .sim-pills button:hover { background: var(--studio-raised); color: var(--text); border-color: var(--studio-line-strong); }
+body.vitalcar-studio .sim-pills button.active,
+body.vitalcar-studio .sim-pills button[aria-pressed="true"] { background: var(--studio-raised); color: var(--text); border-color: var(--studio-signal); box-shadow: inset 0 -2px 0 var(--studio-signal); }
+body.vitalcar-studio .sim-pills button .car-icon { width: 74px; max-width: 100%; height: 30px; object-fit: contain; opacity: .66; filter: none; animation: none; transform: none; will-change: auto; }
+body.vitalcar-studio .sim-pills button.active .car-icon,
+body.vitalcar-studio .sim-pills button:not(.active):hover .car-icon,
+body.vitalcar-studio .sim-pills button:not(.active):focus-visible .car-icon { opacity: 1; filter: none; animation: none; transform: none; }
+body.vitalcar-studio .sim-services { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; border: 0; }
+body.vitalcar-studio .sim-services label {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  align-content: center;
+  align-items: start;
+  gap: 4px 10px;
+  min-width: 0;
+  min-height: 80px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  background: var(--bg);
+  color: var(--text2);
+  font: 400 .81rem/1.5 var(--studio-font);
+}
+body.vitalcar-studio .sim-services label:hover { background: var(--studio-raised); border-color: var(--studio-line-strong); }
+body.vitalcar-studio .sim-services label:has(input:checked) { background: var(--studio-accent-wash); color: var(--text); border-color: var(--studio-line-strong); box-shadow: inset 2px 0 0 var(--studio-signal); }
+body.vitalcar-studio .sim-services input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--red); }
+body.vitalcar-studio .sim-services span { min-width: 0; }
+body.vitalcar-studio .sim-services small { grid-column: 2; max-width: none; text-align: left; color: var(--text3); font: 400 .69rem/1.65 var(--studio-mono); overflow-wrap: break-word; }
+body.vitalcar-studio .sim-services label:has(input:checked) small { color: var(--text2); }
+body.vitalcar-studio .sim-services label.included { background: var(--studio-raised); border-color: var(--border); box-shadow: inset 2px 0 0 var(--green); }
+body.vitalcar-studio .sim-services label.included small { color: var(--text2); }
+body.vitalcar-studio .sim-services label:has(input:focus-visible) { outline: 2px solid var(--studio-focus); outline-offset: 2px; }
+body.vitalcar-studio .sim-services input:disabled { cursor: not-allowed; opacity: .6; }
+body.vitalcar-studio .sim-feedback { grid-column: 1; color: var(--text2); font: 400 .83rem/1.75 var(--studio-font); }
+body.vitalcar-studio .sim-feedback:empty { display: none; }
+body.vitalcar-studio .sim-result {
+  position: static;
+  grid-column: 2;
+  grid-row: 2 / span 3;
+  display: grid;
+  align-self: start;
+  gap: 24px;
+  padding: 28px;
+  border: 1px solid var(--studio-line-strong);
+  border-top: 2px solid var(--studio-signal);
+  border-radius: 2px;
+  background: var(--bg);
+}
+body.vitalcar-studio .sim-summary { color: var(--text2); font: 400 .85rem/1.8 var(--studio-font); }
+body.vitalcar-studio .sim-summary:not(:empty) { margin-bottom: 24px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+body.vitalcar-studio .sim-summary ul { margin: 14px 0; padding-left: 18px; }
+body.vitalcar-studio .sim-summary li { padding-block: 4px; }
+body.vitalcar-studio .sim-summary strong { color: var(--text); font-weight: 600; }
+body.vitalcar-studio .sim-total { display: block; }
+body.vitalcar-studio .sim-total > div { text-align: left !important; }
+body.vitalcar-studio .sim-total > span { display: block; margin-bottom: 16px; color: var(--text2); font: 400 .64rem/1.6 var(--studio-mono); letter-spacing: .09em; }
+body.vitalcar-studio .sim-total strong,
+body.vitalcar-studio .sim-total strong.promo { display: block; color: var(--text); font: 600 clamp(2.3rem, 3.4vw, 3.6rem)/1.1 var(--studio-font); letter-spacing: -.065em; text-shadow: none; overflow-wrap: break-word; }
+body.vitalcar-studio .sim-total strong.vazio { color: var(--text2); font: 400 1.5rem/1.35 var(--studio-font); letter-spacing: -.035em; }
+body.vitalcar-studio .sim-total .sim-discount { margin-bottom: 12px; color: var(--green); font: 400 .68rem/1.65 var(--studio-mono); text-transform: none; letter-spacing: 0; }
+body.vitalcar-studio .sim-original { margin-top: 10px; color: var(--text3); font: 400 .76rem/1.6 var(--studio-font); }
+body.vitalcar-studio .sim-actions { flex-direction: column; gap: 10px; }
+body.vitalcar-studio .sim-actions .btn-primary { width: 100%; padding: 14px 16px; font-size: .81rem; }
+body.vitalcar-studio .sim-reset:hover:not(:disabled) { background: var(--bg2); color: var(--text); }
+body.vitalcar-studio .sim-note { color: var(--text3); font: 400 .77rem/1.75 var(--studio-font); }
+body.vitalcar-studio #sim-rules { margin-bottom: 20px; color: var(--text2); }
+
+/* 06 / A legible rate card, with enough room for every original inclusion. */
+body.vitalcar-studio .pricing-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; border: 0; background: transparent; }
+body.vitalcar-studio .price-card { min-width: 0; padding: 28px 24px; border: 1px solid var(--border); border-radius: 2px; background: var(--bg); transition: border-color .2s; }
+body.vitalcar-studio .price-card:hover { background: var(--bg); border-color: var(--studio-line-strong); }
+body.vitalcar-studio .price-card.featured,
+body.vitalcar-studio .price-card.moto-detalhada { background: var(--bg); }
+body.vitalcar-studio .price-card.featured::before,
+body.vitalcar-studio .price-card.moto-detalhada::before { position: static; align-self: flex-start; width: fit-content; margin-bottom: 16px; padding: 3px 7px; background: var(--studio-accent-wash); border: 1px solid var(--border); color: var(--red); font: 400 .56rem/1.6 var(--studio-mono); letter-spacing: .065em; }
+body.vitalcar-studio .price-card-header { margin-bottom: 22px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+body.vitalcar-studio .price-card-title { margin-bottom: 8px; color: var(--text); font: 600 1.2rem/1.3 var(--studio-font); letter-spacing: -.025em; }
+body.vitalcar-studio .price-card-sub { color: var(--text3); font: 400 .65rem/1.7 var(--studio-mono); letter-spacing: .035em; text-transform: none; }
+body.vitalcar-studio .price-block { margin-bottom: 24px; }
+body.vitalcar-studio .price-block-title { margin-bottom: 12px; color: var(--text3); font: 400 .6rem/1.6 var(--studio-mono); letter-spacing: .1em; }
+body.vitalcar-studio .price-list { gap: 7px; }
+body.vitalcar-studio .price-list li { color: var(--text2); font: 400 .83rem/1.65 var(--studio-font); }
+body.vitalcar-studio .price-list li::before { color: var(--text3); }
+body.vitalcar-studio .price-values { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; padding-top: 20px; border-top: 1px solid var(--border); }
+body.vitalcar-studio .price-values.single { grid-template-columns: minmax(0, 1fr); }
+body.vitalcar-studio .price-value { min-width: 0; padding: 9px 4px; background: var(--bg2); border: 0; border-radius: 2px; }
+body.vitalcar-studio .price-value-label { margin-bottom: 8px; color: var(--text2); font: 400 .6rem/1.5 var(--studio-font); text-transform: none; letter-spacing: 0; }
+body.vitalcar-studio .price-value-amount { color: var(--text); font: 600 1.18rem/1.2 var(--studio-font); font-variant-numeric: tabular-nums; letter-spacing: -.035em; }
+body.vitalcar-studio .price-value-amount small.old { color: var(--text3); font: 400 .63rem/1.6 var(--studio-font); letter-spacing: 0; }
+body.vitalcar-studio .price-value-amount .price-now { color: var(--text); font-weight: 600; }
+body.vitalcar-studio .price-value-amount .price-now::before { color: var(--text2); font-size: .57em; font-weight: 400; }
+body.vitalcar-studio .price-value-amount small:not(.old) { color: var(--text2); }
+body.vitalcar-studio .pricing-note { max-width: 780px; margin: 32px auto 0; padding-top: 24px; border-top: 1px solid var(--border); color: var(--text2); font: 400 .84rem/1.8 var(--studio-font); }
+body.vitalcar-studio .pricing-note strong,
+body.vitalcar-studio .pricing-note.promo strong { color: var(--text); font-size: 1em; font-weight: 600; }
+
+/* 07 / Work, before-and-after and moving images. */
+body.vitalcar-studio .gallery-filters { max-width: 100%; gap: 6px; margin-bottom: 28px; border: 0; }
+body.vitalcar-studio .gallery-filter { min-height: 44px; padding: 11px 18px; border: 1px solid var(--border); border-radius: 2px; background: transparent; color: var(--text2); font: 500 .77rem/1.5 var(--studio-font); text-transform: none; letter-spacing: 0; }
+body.vitalcar-studio .gallery-filter:last-child { border-right: 1px solid var(--border); }
+body.vitalcar-studio .gallery-filter:hover { background: var(--bg2); color: var(--text); }
+body.vitalcar-studio .gallery-filter.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+body.vitalcar-studio .gallery-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; align-items: start; }
+body.vitalcar-studio .gallery-item { min-width: 0; aspect-ratio: 4 / 5; border: 0; border-radius: 2px; background: var(--bg2); }
+body.vitalcar-studio .gallery-item.wide { grid-column: span 2; aspect-ratio: 8 / 5; }
+body.vitalcar-studio .gallery-item:hover { transform: none; box-shadow: none; }
+body.vitalcar-studio .gallery-item img { filter: saturate(.82) contrast(1.02); transition: transform .65s var(--studio-ease), filter .5s; }
+body.vitalcar-studio .gallery-item:hover img { filter: saturate(1); transform: scale(1.035); }
+body.vitalcar-studio .gallery-item .moto-tag { top: 12px; left: 12px; padding: 5px 9px; border: 1px solid rgba(244, 241, 233, .3); background: rgba(16, 18, 20, .88); color: var(--studio-paper); font: 400 .56rem/1.5 var(--studio-mono); letter-spacing: .07em; }
+body.vitalcar-studio #gal-mais { margin-top: 12px; min-width: 180px; }
+body.vitalcar-studio .ba-slider { height: clamp(320px, 43vw, 530px); border: 1px solid var(--border); border-radius: 2px; background: var(--bg); }
+body.vitalcar-studio .ba-label { top: 18px; padding: 8px 12px; border: 1px solid rgba(244, 241, 233, .5); background: rgba(16, 18, 20, .9); color: var(--studio-paper); font: 400 .61rem/1.5 var(--studio-mono); letter-spacing: .07em; }
+body.vitalcar-studio .ba-label-after { background: var(--studio-paper); color: var(--studio-ink); }
+body.vitalcar-studio .ba-handle { width: 2px; background: var(--studio-paper); box-shadow: 0 0 0 1px rgba(16, 18, 20, .15); }
+body.vitalcar-studio .ba-handle-circle { width: 48px; height: 48px; border: 1px solid rgba(244, 241, 233, .5); border-radius: 2px; background: var(--studio-paper); color: var(--studio-ink); box-shadow: 0 2px 14px rgba(0, 0, 0, .15); }
+body.vitalcar-studio .ba-caption { margin-top: 16px; color: var(--text3); font: 400 .65rem/1.6 var(--studio-mono); letter-spacing: .04em; text-transform: none; }
+body.vitalcar-studio .video-carousel { gap: 16px; }
+body.vitalcar-studio .video-track { min-width: 0; gap: 18px; scroll-padding-inline: 4px; }
+body.vitalcar-studio .video-item { flex-basis: calc((100% - 36px) / 3); min-width: 0; gap: 12px; }
+body.vitalcar-studio .video-item video,
+body.vitalcar-studio .video-featured video { border: 1px solid var(--border); border-radius: 2px; }
+body.vitalcar-studio .video-label { color: var(--text2); font: 400 .74rem/1.6 var(--studio-font); text-align: left; }
+body.vitalcar-studio .carousel-btn { width: 44px; height: 44px; border: 1px solid var(--border); border-radius: 2px; background: var(--bg); font: 400 1.6rem/1 var(--studio-font); }
+body.vitalcar-studio .carousel-btn:hover:not(:disabled) { background: var(--text); color: var(--bg); border-color: var(--text); }
+body.vitalcar-studio .carousel-btn:disabled { background: var(--bg); color: var(--text3); border-color: var(--border); opacity: .45; }
+
+/* 08 / Real voices, generous quotes and a quiet accordion. */
+body.vitalcar-studio .testimonials { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; border: 0; }
+body.vitalcar-studio .testimonial { min-width: 0; padding: 30px; border: 1px solid var(--border); border-radius: 2px; background: var(--bg); }
+body.vitalcar-studio .testimonial:hover,
+body.vitalcar-studio .testimonial:active { background: var(--bg); }
+body.vitalcar-studio .testimonial-avatar { width: 44px; height: 44px; border: 1px solid var(--border); border-radius: 2px; background: var(--bg2); color: var(--text); font: 600 1rem/1 var(--studio-font); }
+body.vitalcar-studio .testimonial-author { color: var(--text); font: 600 .88rem/1.4 var(--studio-font); }
+body.vitalcar-studio .testimonial-author small { color: var(--text3); font-size: .65rem; }
+body.vitalcar-studio .stars { color: var(--red); font-size: .9rem; }
+body.vitalcar-studio .testimonial p { color: var(--text2); font: italic 400 1.15rem/1.6 var(--studio-serif); }
+body.vitalcar-studio .testimonial-services { color: var(--text3); font: 400 .7rem/1.7 var(--studio-font); border-top-style: solid; }
+body.vitalcar-studio .testimonial:is(:hover, :active) * { color: var(--text2) !important; }
+body.vitalcar-studio .testimonial:is(:hover, :active) .testimonial-author { color: var(--text) !important; }
+body.vitalcar-studio .testimonial:is(:hover, :active) .stars { color: var(--red) !important; }
+body.vitalcar-studio .reviews-wrap { margin-top: 32px; }
+body.vitalcar-studio .reviews-wrap::before,
+body.vitalcar-studio .reviews-wrap::after { width: 26px; }
+body.vitalcar-studio .reviews-live { gap: 20px; padding: 8px 4px 24px; scroll-padding-inline: 4px; }
+body.vitalcar-studio .review-card { flex: 0 0 clamp(280px, 32%, 370px); min-width: 0; max-width: 100%; padding: 28px; gap: 20px; border: 1px solid var(--border); border-radius: 2px; background: var(--bg); }
+body.vitalcar-studio .review-card .head { align-items: flex-start; gap: 13px; }
+body.vitalcar-studio .review-card .avatar { border: 1px solid var(--border); border-radius: 2px; background: var(--bg2); color: var(--text); font: 600 1rem/1 var(--studio-font); }
+body.vitalcar-studio .review-card .meta { min-width: 0; }
+body.vitalcar-studio .review-card .meta strong { color: var(--text); font: 600 .87rem/1.5 var(--studio-font); }
+body.vitalcar-studio .review-card .meta small { color: var(--text3); font-size: .66rem; }
+body.vitalcar-studio .review-card .stars-row { color: var(--red); font-size: .79rem; letter-spacing: .14em; }
+body.vitalcar-studio .review-card p { color: var(--text); font: italic 400 1.13rem/1.65 var(--studio-serif); }
+body.vitalcar-studio .review-card .badge { padding-top: 16px; border-top: 1px solid var(--border); color: var(--text3); font: 400 .59rem/1.6 var(--studio-mono); letter-spacing: .04em; }
+body.vitalcar-studio .rev-nav { width: 44px; height: 44px; border: 1px solid var(--studio-line-strong); border-radius: 2px; background: var(--bg); color: var(--text); }
+body.vitalcar-studio .rev-nav:hover:not(:disabled) { background: var(--text); color: var(--bg); border-color: var(--text); }
+body.vitalcar-studio .rev-prev { left: -16px; }
+body.vitalcar-studio .rev-next { right: -16px; }
+body.vitalcar-studio .rev-dots { gap: 0; flex-wrap: wrap; }
+body.vitalcar-studio .rev-dots button,
+body.vitalcar-studio .rev-dots button.ativo { position: relative; width: 44px; height: 44px; background: none; border: 0; border-radius: 2px; }
+body.vitalcar-studio .rev-dots button::after { content: ''; position: absolute; width: 6px; height: 6px; top: 19px; left: 19px; background: var(--text3); }
+body.vitalcar-studio .rev-dots button.ativo::after { width: 20px; left: 12px; background: var(--red); }
+body.vitalcar-studio .rev-hint { color: var(--text3); font-size: .62rem; letter-spacing: .035em; }
+body.vitalcar-studio .reviews-cta { margin-top: 24px; }
+
+body.vitalcar-studio .faq-list { max-width: 930px; margin: 36px 0 0 auto; border: 0; border-top: 1px solid var(--studio-line-strong); }
+body.vitalcar-studio .faq-item { border-bottom: 1px solid var(--border); background: transparent; }
+body.vitalcar-studio .faq-item:last-child { border-bottom: 1px solid var(--border); }
+body.vitalcar-studio .faq-item.open { background: transparent; }
+body.vitalcar-studio .faq-question { min-height: 82px; padding: 20px 0; gap: 24px; color: var(--text); font: 500 1.09rem/1.55 var(--studio-font); letter-spacing: -.015em; text-transform: none; }
+body.vitalcar-studio .faq-question:hover { color: var(--text2); }
+body.vitalcar-studio .faq-question:focus-visible { outline-color: var(--studio-focus); outline-offset: 5px; }
+body.vitalcar-studio .faq-icon { width: 44px; height: 44px; background: transparent; border: 1px solid var(--border); border-radius: 2px; color: var(--red); font: 400 1.3rem/1 var(--studio-font); }
+body.vitalcar-studio .faq-answer { padding: 0 68px 0 0; visibility: hidden; color: var(--text2); font: 400 .94rem/1.85 var(--studio-font); transition: padding .2s; }
+body.vitalcar-studio .faq-item.open .faq-answer { padding: 0 68px 28px 0; visibility: visible; max-height: none; }
+body.vitalcar-studio .faq-answer a { color: var(--text); }
+html.no-js body.vitalcar-studio .faq-answer { max-height: none; visibility: visible; padding-bottom: 28px; }
+
+/* 09 / Visiting and booking. */
+body.vitalcar-studio .hours-table { max-width: 930px; margin-left: auto; table-layout: fixed; background: transparent; border: 0; border-top: 1px solid var(--studio-line-strong); }
+body.vitalcar-studio .hours-table td { padding: 18px 12px; font: 400 .93rem/1.6 var(--studio-font); border-bottom: 1px solid var(--border); overflow-wrap: break-word; }
+body.vitalcar-studio .hours-table td:first-child { padding-left: 0; color: var(--text2); }
+body.vitalcar-studio .hours-table td:last-child { padding-right: 0; color: var(--text); font-family: var(--studio-mono); font-size: .85rem; font-weight: 400; font-variant-numeric: tabular-nums; }
+body.vitalcar-studio .hours-table tr:last-child td { border-bottom: 1px solid var(--border); }
+body.vitalcar-studio .contact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; border: 0; }
+body.vitalcar-studio .contact-grid > * { min-width: 0; }
+body.vitalcar-studio .video-location { grid-template-columns: minmax(0, 1fr) minmax(0, .65fr); gap: 64px; padding: 0 0 40px; border: 0; border-bottom: 1px solid var(--border); background: none; }
+body.vitalcar-studio .video-location-text { min-width: 0; }
+body.vitalcar-studio .video-location-text h3 { max-width: 500px; margin-bottom: 20px; color: var(--text); font: 600 clamp(1.8rem, 3vw, 2.7rem)/1.15 var(--studio-font); letter-spacing: -.045em; }
+body.vitalcar-studio .video-location-text p { max-width: 480px; color: var(--text2); font: 400 .94rem/1.8 var(--studio-font); }
+body.vitalcar-studio .address-line { gap: 14px; color: var(--text2); font: 400 .88rem/1.8 var(--studio-font); }
+body.vitalcar-studio .address-line strong { color: var(--text); font-weight: 600; }
+body.vitalcar-studio .video-location-player { max-width: 280px; border: 1px solid var(--border); border-radius: 2px; box-shadow: none; }
+body.vitalcar-studio .contact-card { padding: 24px 0 32px; border: 0; border-bottom: 1px solid var(--border); background: none; }
+body.vitalcar-studio .contact-card h3 { margin-bottom: 18px; color: var(--text); font: 600 1.16rem/1.4 var(--studio-font); letter-spacing: -.025em; }
+body.vitalcar-studio .contact-card h3 .dot { width: 5px; height: 5px; background: var(--studio-signal); }
+body.vitalcar-studio .contact-card p { color: var(--text2); font: 400 .94rem/1.85 var(--studio-font); }
+body.vitalcar-studio .contact-card a { display: inline-block; padding-block: 6px; color: var(--text); border-bottom: 1px solid var(--studio-line-strong); font-weight: 500; }
+body.vitalcar-studio .contact-card a:hover { color: var(--red); border-color: var(--red); }
+body.vitalcar-studio .form-card { padding: 40px; border: 1px solid var(--border); border-top: 2px solid var(--studio-signal); border-radius: 2px; background: var(--bg2); }
+body.vitalcar-studio .form-card h3 { margin-bottom: 32px; color: var(--text); font: 600 1.8rem/1.2 var(--studio-font); letter-spacing: -.04em; }
+body.vitalcar-studio .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+body.vitalcar-studio .form-field { min-width: 0; gap: 10px; }
+body.vitalcar-studio .form-field label { color: var(--text2); font: 500 .78rem/1.5 var(--studio-font); letter-spacing: 0; text-transform: none; }
+body.vitalcar-studio .form-field input,
+body.vitalcar-studio .form-field select,
+body.vitalcar-studio .form-field textarea { width: 100%; min-width: 0; min-height: 52px; padding: 14px 16px; border: 1px solid var(--studio-line-strong); border-radius: 2px; background: var(--bg); color: var(--text); font: 400 1rem/1.5 var(--studio-font); box-shadow: none; }
+body.vitalcar-studio .form-field input::placeholder,
+body.vitalcar-studio .form-field textarea::placeholder { color: var(--text3); opacity: 1; }
+body.vitalcar-studio .form-field textarea { min-height: 130px; }
+body.vitalcar-studio .form-field :is(input, select, textarea):focus { border-color: var(--text); }
+body.vitalcar-studio .form-field :is(input, select, textarea):focus-visible { outline: 2px solid var(--studio-focus); outline-offset: 3px; }
+body.vitalcar-studio .form-field [aria-invalid="true"] { border-color: var(--red); box-shadow: inset 2px 0 0 var(--red); }
+body.vitalcar-studio .booking-actions { margin-top: 28px; gap: 12px; }
+body.vitalcar-studio .booking-actions .btn-primary { min-width: 220px; }
+body.vitalcar-studio .booking-feedback { color: var(--text2); font: 400 .88rem/1.7 var(--studio-font); }
+body.vitalcar-studio .booking-feedback.ok { color: var(--green); }
+body.vitalcar-studio .booking-feedback.err { color: var(--red); }
+body.vitalcar-studio .booking-hint { max-width: 760px; margin-top: 16px; color: var(--text3); font: 400 .76rem/1.8 var(--studio-font); }
+body.vitalcar-studio .contact-cta { padding: 60px 36px; border: 1px solid rgba(244, 241, 233, .2); border-radius: 2px; background: var(--studio-ink); color: var(--studio-paper); text-align: left; }
+body.vitalcar-studio .contact-cta h2 { max-width: 730px; color: var(--studio-paper); font: 600 clamp(2rem, 4vw, 3.4rem)/1.08 var(--studio-font); letter-spacing: -.05em; }
+body.vitalcar-studio .contact-cta p { max-width: 640px; color: #b8bbb8; font: 400 .98rem/1.8 var(--studio-font); }
+body.vitalcar-studio .contact-cta .btn-primary { background: var(--studio-paper); border-color: var(--studio-paper); color: var(--studio-ink); }
+body.vitalcar-studio .contact-cta .btn-primary:hover { background: var(--studio-signal); border-color: var(--studio-signal); color: var(--studio-ink); }
+body.vitalcar-studio .map-wrapper { border: 1px solid var(--border); border-radius: 2px; overflow: hidden; }
+body.vitalcar-studio .map-wrapper iframe { height: 380px; filter: grayscale(.9) brightness(.82); }
+html.light-mode body.vitalcar-studio .map-wrapper iframe { filter: grayscale(.65); }
+body.vitalcar-studio .map-route-btn { min-height: 48px; max-width: calc(100% - 32px); bottom: 16px; right: 16px; gap: 10px; padding: 12px 18px; border: 1px solid rgba(16, 18, 20, .2); border-radius: 2px; background: var(--studio-paper); color: var(--studio-ink); box-shadow: 0 3px 16px rgba(0, 0, 0, .1); font: 600 .8rem/1.5 var(--studio-font); letter-spacing: 0; text-transform: none; }
+body.vitalcar-studio .map-route-btn svg { width: 18px; height: 18px; flex: 0 0 18px; }
+body.vitalcar-studio .map-route-btn:hover { transform: none; background: #fffdf7; box-shadow: 0 3px 16px rgba(0, 0, 0, .1); }
+
+/* 10 / Footer and utility UI use the same quiet materials. */
+body.vitalcar-studio footer { padding: 56px 0 32px; border-top: 1px solid var(--border); background: var(--bg2); }
+body.vitalcar-studio .footer-badges { max-width: 100%; margin-bottom: 28px; border: 0; gap: 12px 24px; }
+body.vitalcar-studio .footer-badges span { padding: 0; border: 0; color: var(--text2); font: 400 .64rem/1.7 var(--studio-mono); letter-spacing: .045em; }
+body.vitalcar-studio .footer-google-badge { flex-wrap: wrap; justify-content: center; max-width: 100%; min-height: 44px; padding: 12px 0; border: 0; border-bottom: 1px solid var(--border); background: none; color: var(--text2); box-shadow: none; font: 400 .8rem/1.6 var(--studio-font); }
+body.vitalcar-studio .footer-google-badge:hover { color: var(--text); transform: none; box-shadow: none; }
+body.vitalcar-studio .footer-google-stars { color: var(--red); font-size: .8rem; }
+body.vitalcar-studio .payment-badge,
+body.vitalcar-studio .trust-badge { padding: 8px 12px; border: 1px solid var(--border); border-radius: 2px; background: transparent; color: var(--text2); font: 400 .65rem/1.6 var(--studio-font); letter-spacing: 0; text-transform: none; }
+body.vitalcar-studio .verified-seals { max-width: 900px; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 0; border-block: 1px solid var(--border); }
+body.vitalcar-studio .seal { min-width: 0; padding: 20px 16px; background: none; border-right: 1px solid var(--border); }
+body.vitalcar-studio .seal:last-child { border-right: 0; }
+body.vitalcar-studio .seal-icon { width: 28px; height: 28px; opacity: .8; }
+body.vitalcar-studio .seal-text { min-width: 0; text-align: left; }
+body.vitalcar-studio .seal-text strong { color: var(--text); font: 600 .72rem/1.5 var(--studio-font); text-transform: none; }
+body.vitalcar-studio .seal-text span { color: var(--text3); font: 400 .62rem/1.6 var(--studio-font); }
+body.vitalcar-studio .footer-copy,
+body.vitalcar-studio .footer-update { color: var(--text3); font: 400 .68rem/1.8 var(--studio-font); letter-spacing: 0; }
+body.vitalcar-studio .footer-lock { max-width: 100%; padding: 8px 0; border: 0; background: none; color: var(--green); font: 400 .62rem/1.6 var(--studio-mono); }
+body.vitalcar-studio #loader { display: none; }
+
+body.vitalcar-studio #whats-float { right: 22px; bottom: 22px; min-width: 56px; height: 54px; padding: 0 16px; gap: 10px; border: 1px solid var(--border); border-radius: 3px; background: var(--text); color: var(--bg); box-shadow: 0 5px 24px rgba(0, 0, 0, .13); }
+body.vitalcar-studio #whats-float svg { width: 24px; height: 24px; fill: currentColor; }
+body.vitalcar-studio #whats-float .whats-label { color: inherit; font: 600 .74rem/1.5 var(--studio-font); text-transform: none; letter-spacing: 0; }
+body.vitalcar-studio #whats-float::after { display: none; }
+body.vitalcar-studio #whats-float:hover { transform: none; background: var(--studio-signal); color: var(--studio-ink); }
+body.vitalcar-studio #back-top { width: 44px; height: 44px; left: 22px; bottom: 22px; border: 1px solid var(--border); border-radius: 2px; background: var(--bg2); color: var(--text); }
+body.vitalcar-studio #back-top:hover { background: var(--studio-raised); border-color: var(--text3); }
+body.vitalcar-studio #chat-toggle { right: 22px; bottom: 90px; width: 48px; height: 48px; border: 1px solid var(--studio-line-strong); border-radius: 3px; background: var(--bg2); box-shadow: none; }
+body.vitalcar-studio #chat-toggle svg { fill: var(--text); }
+body.vitalcar-studio #chat-toggle:hover { transform: none; background: var(--studio-raised); }
+body.vitalcar-studio #chat-widget { bottom: 150px; right: 22px; max-height: calc(100dvh - 260px); border: 1px solid var(--studio-line-strong); border-radius: 3px; background: var(--bg2); box-shadow: 0 16px 50px rgba(0, 0, 0, .22); }
+body.vitalcar-studio .chat-header { gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--bg); color: var(--text); }
+body.vitalcar-studio .chat-header button { width: 44px; min-height: 44px; color: var(--text); }
+body.vitalcar-studio .chat-header small { color: var(--text2); opacity: 1; }
+body.vitalcar-studio .chat-body { min-height: 0; max-height: 300px; flex: 1; overscroll-behavior: contain; }
+body.vitalcar-studio .chat-msg { max-width: 94%; border-radius: 3px; font: 400 .85rem/1.6 var(--studio-font); }
+body.vitalcar-studio .chat-msg.user { border-radius: 3px; background: var(--text); color: var(--bg); }
+body.vitalcar-studio .chat-options { gap: 8px; max-height: 180px; overflow-y: auto; }
+body.vitalcar-studio .chat-options button { min-height: 44px; padding: 9px 12px; border-radius: 2px; font: 500 .76rem/1.5 var(--studio-font); }
+body.vitalcar-studio #lgpd { left: 22px; right: auto; bottom: 82px; width: 410px; max-width: calc(100% - 44px); max-height: calc(100dvh - 210px); overflow-y: auto; padding: 22px; border: 1px solid var(--studio-line-strong); border-top: 2px solid var(--studio-signal); border-radius: 2px; background: var(--bg2); color: var(--text2); box-shadow: 0 10px 36px rgba(0, 0, 0, .18); font: 400 .84rem/1.7 var(--studio-font); }
+body.vitalcar-studio #lgpd strong { color: var(--text); font: 600 1rem/1.4 var(--studio-font); text-transform: none; letter-spacing: -.02em; }
+body.vitalcar-studio #lgpd-actions button { min-height: 44px; border: 1px solid var(--border); border-radius: 2px; font: 600 .8rem/1.5 var(--studio-font); text-transform: none; letter-spacing: 0; }
+body.vitalcar-studio #lgpd-actions .accept { background: var(--text); color: var(--bg); border-color: var(--text); }
+body.vitalcar-studio #lightbox { background: rgba(8, 10, 12, .96); }
+body.vitalcar-studio #lightbox img { max-height: calc(100dvh - 110px); border: 1px solid rgba(244, 241, 233, .25); }
+body.vitalcar-studio #lightbox .close-btn { top: max(20px, env(safe-area-inset-top, 0px)); right: max(20px, env(safe-area-inset-right, 0px)); border: 1px solid rgba(244, 241, 233, .5); border-radius: 2px; background: #101214; color: #f4f1e9; font-family: var(--studio-font); }
+
+/* 11 / Responsive composition. Every content grid has a zero/min(100%) floor. */
+body.vitalcar-studio .container {
+  padding-left: max(var(--studio-gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--studio-gutter), env(safe-area-inset-right, 0px));
+}
+
+@media (max-width: 1120px) {
+  body.vitalcar-studio nav.site-nav .container { gap: 16px; }
+  body.vitalcar-studio .nav-links { gap: 0; }
+  body.vitalcar-studio .nav-links a { padding-inline: 10px; }
+  body.vitalcar-studio .nav-controls { gap: 6px; }
+  body.vitalcar-studio .logo .brand { font-size: 1.45rem; }
+  body.vitalcar-studio .hero-btns { gap: 8px; }
+  body.vitalcar-studio .hero-btns .btn-primary,
+  body.vitalcar-studio .hero-btns .btn-ghost { padding-inline: 17px; font-size: .78rem; }
+  body.vitalcar-studio .hero h1.studio-title { font-size: clamp(3.5rem, 6.1vw, 4.5rem); }
+  body.vitalcar-studio .studio-hero-grid { gap: 32px; }
+  body.vitalcar-studio .studio-visual { height: 570px; }
+  body.vitalcar-studio .studio-photo-caption { left: 22px; right: 22px; }
+  body.vitalcar-studio .studio-controls { left: 22px; right: 22px; }
+  body.vitalcar-studio .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  body.vitalcar-studio .card { border-bottom: 1px solid var(--border); }
+  body.vitalcar-studio .card:first-child { padding-left: 24px; }
+  body.vitalcar-studio .card:nth-child(3n) { border-right: 0; }
+  body.vitalcar-studio .certs-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  body.vitalcar-studio .pricing-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body.vitalcar-studio .combos { gap: 14px; }
+  body.vitalcar-studio .combo { padding: 28px 22px; }
+  body.vitalcar-studio .simulador { grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); padding: 28px; gap: 28px; }
+  body.vitalcar-studio .sim-result { padding: 24px; }
+  body.vitalcar-studio .sim-services { grid-template-columns: minmax(0, 1fr); }
+  body.vitalcar-studio .sim-services label { grid-template-columns: 18px minmax(0, 1fr) minmax(0, auto); min-height: 64px; align-items: center; }
+  body.vitalcar-studio .sim-services small { grid-column: 3; max-width: 140px; text-align: right; }
+  body.vitalcar-studio .sim-pills button .car-icon { width: 64px; }
+}
+
+/* Must agree with the existing menu script's 980px close threshold. */
+@media (max-width: 980px) {
+  :root { --studio-header: 82px; }
+  body.vitalcar-studio nav.site-nav { padding-block: 13px; padding-top: max(13px, env(safe-area-inset-top, 0px)); }
+  body.vitalcar-studio nav.site-nav .container { gap: 16px; }
+  body.vitalcar-studio .nav-controls { order: 2; margin: 0 0 0 auto; }
+  body.vitalcar-studio .nav-toggle { display: block; order: 3; position: relative; z-index: 2; }
+  body.vitalcar-studio .nav-links {
+    position: absolute;
+    inset: 100% 0 auto;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    height: auto;
+    max-height: calc(100vh - var(--studio-header) - 20px);
+    max-height: calc(100dvh - var(--studio-header) - max(20px, env(safe-area-inset-bottom, 0px)));
+    margin: 0;
+    padding: 12px var(--studio-gutter) 24px;
+    background: var(--bg);
+    border: 0;
+    border-bottom: 1px solid var(--studio-line-strong);
+    box-shadow: 0 18px 30px rgba(0, 0, 0, .14);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+    transform: none;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .18s ease, visibility .18s;
+    will-change: auto;
+  }
+  body.vitalcar-studio .nav-links.open { opacity: 1; visibility: visible; pointer-events: auto; transform: none; }
+  body.vitalcar-studio .nav-links li,
+  body.vitalcar-studio .nav-links.open li { opacity: 1; transform: none; transition: none; }
+  body.vitalcar-studio .nav-links a { display: flex; justify-content: flex-start; min-height: 54px; padding: 14px 0; border-bottom: 1px solid var(--border); color: var(--text); font-size: 1rem; text-align: left; }
+  body.vitalcar-studio .nav-links a.nav-cta { justify-content: center; margin: 16px 0 0; padding: 14px 20px !important; }
+  body.vitalcar-studio.nav-open { touch-action: auto; }
+  body.vitalcar-studio.nav-open::before { z-index: 1000; background: rgba(5, 8, 10, .6); animation: none; }
+  body.vitalcar-studio .hero.studio-hero { padding-top: calc(var(--studio-header) + 30px); }
+  body.vitalcar-studio .studio-hero-grid { gap: 28px; }
+  body.vitalcar-studio .hero h1.studio-title { font-size: clamp(3.1rem, 6.3vw, 3.9rem); }
+  body.vitalcar-studio .hero .studio-title .title-line:nth-child(2) { padding-left: 12px; }
+  body.vitalcar-studio .hero-sub { font-size: .94rem; }
+  body.vitalcar-studio .hero-btns { flex-direction: column; align-items: flex-start; }
+  body.vitalcar-studio .hero-btns .btn-primary,
+  body.vitalcar-studio .hero-btns .btn-ghost { width: 100%; }
+  body.vitalcar-studio .studio-visual { height: 560px; }
+  body.vitalcar-studio .studio-controls { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); bottom: 22px; }
+  body.vitalcar-studio #studio-motion-toggle { grid-column: 1 / -1; }
+  body.vitalcar-studio .studio-photo-caption { bottom: 142px; }
+  body.vitalcar-studio .studio-about-grid { gap: 36px; }
+  body.vitalcar-studio .combos { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  body.vitalcar-studio .combo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .75fr); gap: 0 32px; padding: 30px; }
+  body.vitalcar-studio .combo-tag { grid-column: 1; margin-bottom: 18px; }
+  body.vitalcar-studio .combo h3,
+  body.vitalcar-studio .combo-desc { grid-column: 1; }
+  body.vitalcar-studio .combo-list { grid-column: 2; grid-row: 1 / span 4; align-self: center; margin-bottom: 0; }
+  body.vitalcar-studio .combo-price { grid-column: 1; margin-top: 12px; }
+  body.vitalcar-studio .studio-combo-link { grid-column: 1 / -1; }
+  body.vitalcar-studio .simulador { grid-template-columns: minmax(0, 1fr); }
+  body.vitalcar-studio .sim-start,
+  body.vitalcar-studio .sim-field,
+  body.vitalcar-studio .sim-feedback,
+  body.vitalcar-studio .sim-result { grid-column: auto; grid-row: auto; }
+  body.vitalcar-studio .sim-services { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body.vitalcar-studio .sim-services label { grid-template-columns: 18px minmax(0, 1fr); min-height: 80px; }
+  body.vitalcar-studio .sim-services small { grid-column: 2; max-width: none; text-align: left; }
+  body.vitalcar-studio .sim-result { padding: 28px; }
+  body.vitalcar-studio .sim-total { display: flex; gap: 16px; }
+  body.vitalcar-studio .sim-actions { flex-direction: row; }
+  body.vitalcar-studio .sim-actions .btn-primary { width: auto; }
+  body.vitalcar-studio .gallery-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  body.vitalcar-studio .testimonials { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body.vitalcar-studio .video-location { gap: 36px; }
+}
+
+@media (max-width: 760px) {
+  :root { --studio-gutter: 24px; --studio-section: 72px; }
+  body.vitalcar-studio .hero.studio-hero { padding-top: calc(var(--studio-header) + 20px); }
+  body.vitalcar-studio .studio-hero-grid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  body.vitalcar-studio .hero-content { padding: 10px 0 0; }
+  body.vitalcar-studio .studio-eyebrow { margin-bottom: 24px; }
+  body.vitalcar-studio .hero h1.studio-title { max-width: 620px; margin-bottom: 24px; font-size: clamp(3.1rem, 11.6vw, 5.4rem); line-height: .98; letter-spacing: -.065em; }
+  body.vitalcar-studio .hero .studio-title .title-line:nth-child(2) { padding-left: clamp(12px, 4vw, 30px); }
+  body.vitalcar-studio .hero-sub { max-width: 500px; margin-bottom: 24px; font-size: .98rem; }
+  body.vitalcar-studio .hero-btns { flex-direction: row; align-items: stretch; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+  body.vitalcar-studio .hero-btns .btn-primary,
+  body.vitalcar-studio .hero-btns .btn-ghost { flex: 1 1 210px; width: auto; padding: 15px 20px; font-size: .82rem; }
+  body.vitalcar-studio .hero-rating { font-size: .74rem; }
+  body.vitalcar-studio .studio-hero-meta { margin-top: 12px; }
+  body.vitalcar-studio .studio-visual { height: clamp(440px, 94vw, 610px); }
+  body.vitalcar-studio .studio-controls { display: flex; bottom: 24px; }
+  body.vitalcar-studio #studio-motion-toggle { flex-basis: 150px; }
+  body.vitalcar-studio .studio-photo-caption { bottom: 96px; }
+  body.vitalcar-studio .studio-photo-caption p { font-size: 1.65rem; }
+  body.vitalcar-studio .studio-hero-bottom { margin-top: 26px; padding-block: 16px; gap: 4px 24px; font-size: .59rem; }
+  body.vitalcar-studio .studio-trust { padding-block: 20px; }
+  body.vitalcar-studio .studio-trust-item { padding: 20px; }
+  body.vitalcar-studio .studio-trust-item:first-child { padding-left: 0; }
+  body.vitalcar-studio .studio-trust-value { font-size: 1.9rem; }
+  body.vitalcar-studio .brands { padding-block: 32px; }
+  body.vitalcar-studio .brands-grid { gap: 16px 24px; }
+  body.vitalcar-studio .brands-grid span { font-size: .9rem; }
+  body.vitalcar-studio .section-title { font-size: clamp(2.25rem, 6.4vw, 3.2rem); }
+  body.vitalcar-studio .section-sub { font-size: .96rem; margin-bottom: 32px; }
+  body.vitalcar-studio .studio-about-grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  body.vitalcar-studio .studio-about-photo { max-width: 500px; width: 100%; justify-self: end; }
+  body.vitalcar-studio .studio-about-photo img { aspect-ratio: 5 / 4; }
+  body.vitalcar-studio .certs-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  body.vitalcar-studio .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body.vitalcar-studio .card { padding: 26px 20px; }
+  body.vitalcar-studio .card:first-child { padding-left: 20px; }
+  body.vitalcar-studio .card:nth-child(3n) { border-right: 1px solid var(--border); }
+  body.vitalcar-studio .card:nth-child(even),
+  body.vitalcar-studio .card:last-child { border-right: 0; }
+  body.vitalcar-studio .services-categories { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  body.vitalcar-studio .service-category-header { flex-direction: row; }
+  body.vitalcar-studio .service-category-info h3 { font-size: 1.65rem; }
+  body.vitalcar-studio .service-item { font-size: .88rem; }
+  body.vitalcar-studio .simulador { gap: 28px; padding: 24px; }
+  body.vitalcar-studio .sim-pills { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  body.vitalcar-studio .sim-pills button { border: 1px solid var(--border); }
+  body.vitalcar-studio .sim-pills button:nth-child(2n) { border-right: 1px solid var(--border); }
+  body.vitalcar-studio .sim-pills button.active:nth-child(2n) { border-color: var(--studio-signal); }
+  body.vitalcar-studio .sim-pills button .car-icon { width: 70px; }
+  body.vitalcar-studio .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  body.vitalcar-studio .gallery-filters { width: 100%; flex-wrap: nowrap; padding: 5px 2px 10px; scroll-padding: 2px; }
+  body.vitalcar-studio .gallery-filter { flex-shrink: 0; padding-inline: 16px; }
+  body.vitalcar-studio .gallery-filter:focus-visible { outline-offset: -4px; }
+  body.vitalcar-studio .ba-slider { height: clamp(300px, 65vw, 420px); }
+  body.vitalcar-studio .video-carousel { gap: 8px; }
+  body.vitalcar-studio .video-item { flex-basis: 100%; }
+  body.vitalcar-studio .video-item video { aspect-ratio: 9 / 12; max-height: 70vh; }
+  body.vitalcar-studio .video-featured video { max-height: 75vh; }
+  body.vitalcar-studio .carousel-btn { width: 44px; height: 44px; }
+  body.vitalcar-studio .review-card { flex-basis: 84%; padding: 26px; }
+  body.vitalcar-studio .rev-nav { display: none; }
+  body.vitalcar-studio .faq-list { margin-top: 28px; }
+  body.vitalcar-studio .faq-question { gap: 18px; min-height: 78px; font-size: 1rem; }
+  body.vitalcar-studio .faq-answer,
+  body.vitalcar-studio .faq-item.open .faq-answer { padding-right: 20px; font-size: .91rem; }
+  body.vitalcar-studio .contact-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  body.vitalcar-studio .video-location { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+  body.vitalcar-studio .video-location-player { width: min(100%, 290px); max-width: 290px; }
+  body.vitalcar-studio .contact-card { padding: 16px 0 24px; }
+  body.vitalcar-studio .form-card { padding: 28px; }
+  body.vitalcar-studio .form-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  body.vitalcar-studio .booking-actions { flex-direction: column; }
+  body.vitalcar-studio .booking-actions .btn-primary,
+  body.vitalcar-studio .booking-actions .btn-ghost { min-width: 0; width: 100%; }
+  body.vitalcar-studio .contact-cta { padding: 44px 28px; }
+  body.vitalcar-studio .map-wrapper iframe { height: 330px; }
+  body.vitalcar-studio .footer-badges { flex-direction: row; justify-content: center; gap: 12px 20px; }
+  body.vitalcar-studio .verified-seals { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body.vitalcar-studio .seal { padding: 16px 12px; border-bottom: 1px solid var(--border); }
+  body.vitalcar-studio .seal:nth-child(even) { border-right: 0; }
+  body.vitalcar-studio .seal:nth-last-child(-n+2) { border-bottom: 0; }
+}
+
+/* Keep the original sticky action bar at its original 768px breakpoint. */
+@media (max-width: 768px) {
+  body.vitalcar-studio { padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
+  body.vitalcar-studio .mobile-sticky { grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 0 env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px); border-top: 1px solid var(--studio-line-strong); background: var(--bg2); box-shadow: 0 -6px 24px rgba(0, 0, 0, .08); }
+  body.vitalcar-studio .mobile-sticky a,
+  body.vitalcar-studio .mobile-sticky #chat-mobile-toggle { min-width: 0; min-height: 64px; padding: 10px 6px; gap: 5px; background: var(--bg2); color: var(--text); font: 500 .69rem/1.5 var(--studio-font); letter-spacing: 0; text-transform: none; }
+  body.vitalcar-studio .mobile-sticky .zap { background: var(--text); color: var(--bg); }
+  body.vitalcar-studio .mobile-sticky #chat-mobile-toggle { border-left: 0; }
+  body.vitalcar-studio .mobile-sticky #chat-mobile-toggle span { font: 500 .69rem/1.5 var(--studio-font); letter-spacing: 0; text-transform: none; }
+  body.vitalcar-studio .mobile-sticky a svg,
+  body.vitalcar-studio .mobile-sticky #chat-mobile-toggle svg { width: 20px; height: 20px; fill: currentColor; }
+  body.vitalcar-studio .mobile-sticky :focus-visible { outline-offset: -5px; }
+  body.vitalcar-studio #chat-widget { right: 16px; width: calc(100% - 32px); max-width: none; bottom: calc(80px + env(safe-area-inset-bottom, 0px)); max-height: calc(100dvh - 190px - env(safe-area-inset-bottom, 0px)); }
+  body.vitalcar-studio #lgpd { left: 16px; right: 16px; bottom: calc(80px + env(safe-area-inset-bottom, 0px)); width: auto; max-width: none; max-height: calc(100dvh - 200px - env(safe-area-inset-bottom, 0px)); padding: 20px; }
+  body.vitalcar-studio footer { padding-bottom: 30px; }
+}
+
+@media (max-width: 560px) {
+  :root { --studio-gutter: 20px; --studio-section: 64px; --studio-header: 76px; }
+  body.vitalcar-studio nav.site-nav .container { gap: 8px; }
+  body.vitalcar-studio .logo .brand { font-size: 1.28rem; }
+  body.vitalcar-studio .logo .sub { font-size: .46rem; letter-spacing: .07em; }
+  body.vitalcar-studio .nav-controls { gap: 5px; }
+  body.vitalcar-studio .idioma-pills button { min-width: 30px; padding-inline: 6px; font-size: .57rem; }
+  body.vitalcar-studio .nav-icon-btn { width: 40px; font-size: .85rem; }
+  body.vitalcar-studio .studio-eyebrow { font-size: .58rem; letter-spacing: .1em; gap: 9px; }
+  body.vitalcar-studio .hero .studio-title .title-accent { font-size: 1.02em; }
+  body.vitalcar-studio .studio-hero-meta { gap: 8px 14px; }
+  body.vitalcar-studio .hero-badge,
+  body.vitalcar-studio #status-loja { font-size: .59rem; }
+  body.vitalcar-studio .studio-visual { height: clamp(420px, 110vw, 530px); clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px)); }
+  body.vitalcar-studio .studio-controls { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); left: 20px; right: 20px; bottom: 22px; }
+  body.vitalcar-studio .studio-photo-caption { bottom: 142px; left: 20px; right: 20px; }
+  body.vitalcar-studio .studio-photo-caption p { font-size: 1.45rem; }
+  body.vitalcar-studio .studio-frame-mark { top: 22px; left: 20px; width: 24px; height: 24px; }
+  body.vitalcar-studio .studio-visual-label { top: 20px; right: 20px; font-size: .54rem; }
+  body.vitalcar-studio .studio-hero-bottom { align-items: flex-start; flex-direction: column; }
+  body.vitalcar-studio .section-label { margin-bottom: 18px; font-size: .63rem; letter-spacing: .12em; }
+  body.vitalcar-studio .section-title { font-size: clamp(2rem, 8.7vw, 2.8rem); }
+  body.vitalcar-studio .studio-trust > .container { grid-template-columns: minmax(0, 1fr); }
+  body.vitalcar-studio .studio-trust-item { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 18px 0; border: 0; border-bottom: 1px solid var(--border); }
+  body.vitalcar-studio .studio-trust-item:last-child { border-bottom: 0; }
+  body.vitalcar-studio .studio-trust-value { max-width: 53%; font-size: 1.4rem; }
+  body.vitalcar-studio .studio-trust-label { max-width: 44%; margin: 0; font-size: .59rem; text-align: right; }
+  body.vitalcar-studio .studio-about-photo img { aspect-ratio: 4 / 5; }
+  body.vitalcar-studio .certs-grid { gap: 12px; }
+  body.vitalcar-studio .cert-card { padding: 6px; }
+  body.vitalcar-studio .cert-overlay { min-height: 68px; padding: 11px 3px 5px; gap: 6px; }
+  body.vitalcar-studio .cert-nome { font-size: .7rem; }
+  body.vitalcar-studio .grid-3 { grid-template-columns: minmax(0, 1fr); }
+  body.vitalcar-studio .card,
+  body.vitalcar-studio .card:first-child,
+  body.vitalcar-studio .card:nth-child(3n) { padding: 26px 0; border-right: 0; }
+  body.vitalcar-studio .card-icon { float: left; margin: 0 20px 16px 0; }
+  body.vitalcar-studio .card p { clear: both; max-width: 430px; }
+  body.vitalcar-studio .card h3 { min-height: 30px; padding-top: 4px; }
+  body.vitalcar-studio .studio-service-photo { margin-bottom: 22px; aspect-ratio: 4 / 3; }
+  body.vitalcar-studio .service-item { gap: 8px; font-size: .82rem; }
+  body.vitalcar-studio .combo { display: flex; gap: 0; padding: 28px 24px; }
+  body.vitalcar-studio .combo-list { align-self: stretch; margin: 0 0 28px; }
+  body.vitalcar-studio .combo h3 { font-size: 1.6rem; }
+  body.vitalcar-studio .combo-price { margin-top: 0; }
+  body.vitalcar-studio .simulador { padding: 22px 18px; gap: 24px; }
+  body.vitalcar-studio .sim-recommendations { gap: 7px; }
+  body.vitalcar-studio .sim-recommendations button { flex: 1 1 100px; padding-inline: 10px; }
+  body.vitalcar-studio .sim-pills { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  body.vitalcar-studio .sim-pills button,
+  body.vitalcar-studio .sim-pills button:last-child { flex-direction: column; justify-content: center; min-height: 104px; padding: 16px 8px; gap: 10px; }
+  body.vitalcar-studio .sim-pills button .car-icon { width: 74px; height: 30px; }
+  body.vitalcar-studio .sim-services { grid-template-columns: minmax(0, 1fr); }
+  body.vitalcar-studio .sim-services label { min-height: 72px; padding: 14px 12px; }
+  body.vitalcar-studio .sim-result { padding: 24px 18px; }
+  body.vitalcar-studio .sim-total { display: block; }
+  body.vitalcar-studio .sim-total strong { font-size: 2.8rem; }
+  body.vitalcar-studio .sim-total strong.vazio { font-size: 1.45rem; }
+  body.vitalcar-studio .sim-actions { flex-direction: column; }
+  body.vitalcar-studio .sim-actions .btn-primary { width: 100%; font-size: .8rem; }
+  body.vitalcar-studio .pricing-grid { grid-template-columns: minmax(0, 1fr); }
+  body.vitalcar-studio .price-card { padding: 26px 22px; }
+  body.vitalcar-studio .price-values { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  body.vitalcar-studio .price-value,
+  body.vitalcar-studio .price-values.single .price-value { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 14px; text-align: left; }
+  body.vitalcar-studio .price-value-label { margin-bottom: 0; font-size: .77rem; }
+  body.vitalcar-studio .price-value-amount { flex-shrink: 0; text-align: right; font-size: 1.3rem; }
+  body.vitalcar-studio .price-card-title { font-size: 1.3rem; }
+  body.vitalcar-studio .price-list li { font-size: .86rem; }
+  body.vitalcar-studio .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body.vitalcar-studio .gallery-item.wide { grid-column: span 2; aspect-ratio: 8 / 5; }
+  body.vitalcar-studio .gallery-item .moto-tag { top: 8px; left: 8px; padding: 4px 6px; font-size: .51rem; }
+  body.vitalcar-studio .testimonials { grid-template-columns: minmax(0, 1fr); }
+  body.vitalcar-studio .review-card { flex-basis: 91%; padding: 24px; }
+  body.vitalcar-studio .faq-question { padding-block: 18px; gap: 16px; font-size: .95rem; }
+  body.vitalcar-studio .faq-answer,
+  body.vitalcar-studio .faq-item.open .faq-answer { padding-right: 0; }
+  body.vitalcar-studio .hours-table td { padding: 16px 8px; font-size: .85rem; }
+  body.vitalcar-studio .hours-table td:last-child { font-size: .72rem; }
+  body.vitalcar-studio .form-card { padding: 28px 20px; }
+  body.vitalcar-studio .form-card h3 { font-size: 1.65rem; }
+  body.vitalcar-studio .form-field input,
+  body.vitalcar-studio .form-field select,
+  body.vitalcar-studio .form-field textarea { padding-inline: 12px; }
+  body.vitalcar-studio .contact-cta { padding: 40px 24px; }
+  body.vitalcar-studio .contact-cta h2 { font-size: 2rem; }
+  body.vitalcar-studio .map-wrapper iframe { height: 300px; }
+  body.vitalcar-studio .map-route-btn { font-size: .75rem; }
+  body.vitalcar-studio .seal { gap: 8px; padding-inline: 8px; }
+  body.vitalcar-studio .seal-icon { width: 24px; height: 24px; }
+}
+
+@media (max-width: 380px) {
+  :root { --studio-gutter: 16px; }
+  body.vitalcar-studio nav.site-nav .container { gap: 6px; }
+  body.vitalcar-studio .logo .brand { font-size: 1.16rem; }
+  body.vitalcar-studio .logo .sub { font-size: .42rem; letter-spacing: .05em; }
+  body.vitalcar-studio .nav-controls { gap: 4px; }
+  body.vitalcar-studio .idioma-pills button { min-width: 28px; padding-inline: 4px; }
+  body.vitalcar-studio .nav-icon-btn { width: 36px; }
+  body.vitalcar-studio .hero h1.studio-title { font-size: clamp(2.75rem, 12.8vw, 3.1rem); }
+  body.vitalcar-studio .hero-sub { font-size: .91rem; }
+  body.vitalcar-studio .hero-rating { gap: 5px 10px; font-size: .69rem; }
+  body.vitalcar-studio .studio-visual { height: 420px; }
+  body.vitalcar-studio .studio-photo-caption p { font-size: 1.28rem; }
+  body.vitalcar-studio .studio-trust-value { font-size: 1.3rem; }
+  body.vitalcar-studio .service-item { gap: 6px; }
+  body.vitalcar-studio .service-item .promo-tag { padding-inline: 4px; font-size: .56rem; }
+  body.vitalcar-studio .simulador { padding: 20px 12px; }
+  body.vitalcar-studio .sim-result { padding: 22px 14px; }
+  body.vitalcar-studio .combo,
+  body.vitalcar-studio .price-card { padding-inline: 20px; }
+  body.vitalcar-studio .form-card { padding-inline: 16px; }
+  body.vitalcar-studio .contact-cta { padding-inline: 20px; }
+  body.vitalcar-studio .video-carousel { gap: 6px; }
+  body.vitalcar-studio .carousel-btn { width: 44px; }
+}
+
+@media (max-width: 359px) {
+  body.vitalcar-studio .certs-grid,
+  body.vitalcar-studio .gallery-grid { grid-template-columns: minmax(0, 1fr); }
+  body.vitalcar-studio .gallery-item.wide { grid-column: auto; aspect-ratio: 4 / 5; }
+  body.vitalcar-studio .cert-overlay { min-height: 0; padding-block: 14px; }
+  body.vitalcar-studio .verified-seals { grid-template-columns: minmax(0, 1fr); }
+  body.vitalcar-studio .seal,
+  body.vitalcar-studio .seal:nth-last-child(-n+2) { border: 0; border-bottom: 1px solid var(--border); }
+  body.vitalcar-studio .seal:last-child { border-bottom: 0; }
+}
+
+/* 12 / Progressive motion: readable without AOS, JS, or an observer. The root
+   readiness class should be set only after the native observer is installed. */
+body.vitalcar-studio [data-aos] { opacity: 1 !important; transform: none !important; }
+html.studio-motion-ready body.vitalcar-studio [data-aos].studio-reveal {
+  opacity: 0 !important;
+  transform: translateY(22px) !important;
+  transition: opacity .65s var(--studio-ease), transform .65s var(--studio-ease) !important;
+  transition-delay: 0s !important;
+}
+html.studio-motion-ready body.vitalcar-studio [data-aos].studio-reveal.is-visible,
+html.studio-motion-ready body.vitalcar-studio [data-aos].studio-reveal:focus-within,
+html.no-js body.vitalcar-studio [data-aos].studio-reveal { opacity: 1 !important; transform: none !important; }
+
+html.no-js body.vitalcar-studio { padding-top: 0; }
+html.no-js body.vitalcar-studio nav.site-nav { position: relative; }
+html.no-js body.vitalcar-studio .studio-controls { display: none; }
+html.no-js body.vitalcar-studio .hero.studio-hero { padding-top: 48px; }
+@media (max-width: 980px) {
+  html.no-js body.vitalcar-studio nav.site-nav .container { flex-wrap: wrap; }
+  html.no-js body.vitalcar-studio .nav-toggle { display: none; }
+  html.no-js body.vitalcar-studio .nav-links { position: static; flex-direction: row; flex-wrap: wrap; order: 4; gap: 8px 18px; width: 100%; max-height: none; padding: 14px 0 0; border: 0; background: none; box-shadow: none; opacity: 1; visibility: visible; pointer-events: auto; }
+  html.no-js body.vitalcar-studio .nav-links a { min-height: 44px; padding: 8px 0; font-size: .8rem; }
+  html.no-js body.vitalcar-studio .nav-links a.nav-cta { margin: 0; }
+}
+
+html[data-motion-paused="true"] body.vitalcar-studio *,
+html[data-motion-paused="true"] body.vitalcar-studio *::before,
+html[data-motion-paused="true"] body.vitalcar-studio *::after { animation-play-state: paused !important; }
+html[data-motion-paused="true"] body.vitalcar-studio .studio-scene { transform: none !important; transition-property: opacity, visibility; }
+html[data-motion-paused="true"] body.vitalcar-studio [data-aos].studio-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+
+/* Header space is reserved once, above the in-flow promotion strip. */
+body.vitalcar-studio .hero.studio-hero { padding-top: clamp(26px, 4vw, 52px); }
+html.studio-motion-ready .hero-content .title-line { animation: studio-intro .8s var(--studio-ease) both; }
+html.studio-motion-ready .hero-content .title-line:nth-child(2) { animation-delay: .1s; }
+html.studio-motion-ready .hero-content .title-line:nth-child(3) { animation-delay: .2s; }
+@keyframes studio-intro { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+html[data-motion-paused="true"] .hero-content .title-line { animation: none !important; opacity: 1; transform: none; }
+
+@media (hover: none), (pointer: coarse) {
+  body.vitalcar-studio .studio-scene { transform: none; }
+  body.vitalcar-studio .service-category:hover .studio-service-photo img,
+  body.vitalcar-studio .gallery-item:hover img,
+  body.vitalcar-studio .gallery-item:active img { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html,
+  html:focus-within,
+  body.vitalcar-studio,
+  body.vitalcar-studio * { scroll-behavior: auto !important; }
+  body.vitalcar-studio *,
+  body.vitalcar-studio *::before,
+  body.vitalcar-studio *::after { animation: none !important; transition: none !important; }
+  html.studio-motion-ready body.vitalcar-studio [data-aos].studio-reveal,
+  body.vitalcar-studio [data-aos],
+  body.vitalcar-studio .studio-scene,
+  body.vitalcar-studio .studio-scene img,
+  body.vitalcar-studio .studio-service-photo img,
+  body.vitalcar-studio .gallery-item img,
+  body.vitalcar-studio .cert-card img { transform: none !important; }
+  html.studio-motion-ready body.vitalcar-studio [data-aos].studio-reveal,
+  body.vitalcar-studio [data-aos] { opacity: 1 !important; }
+  body.vitalcar-studio .studio-visual::after { display: none; }
+}
+
+@media (forced-colors: active) {
+  body.vitalcar-studio .studio-controls button,
+  body.vitalcar-studio .sim-pills button,
+  body.vitalcar-studio .sim-recommendations button,
+  body.vitalcar-studio .gallery-filter { border: 1px solid ButtonText; }
+  body.vitalcar-studio .studio-controls button[aria-pressed="true"],
+  body.vitalcar-studio .sim-pills button.active,
+  body.vitalcar-studio .sim-recommendations button[aria-pressed="true"],
+  body.vitalcar-studio .gallery-filter.active { outline: 2px solid Highlight; outline-offset: -4px; }
+}

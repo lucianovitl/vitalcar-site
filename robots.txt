@@ -1,0 +1,144 @@
+# robots.txt — Vitalcar Estúdios Estética Automotiva
+# Site: https://vitalcar.pages.dev/
+# Última atualização: 2026-10-03
+
+# ══════════════════════════════════════════════════════════════
+# REGRAS GERAIS — Todos os robôs de busca
+# ══════════════════════════════════════════════════════════════
+User-agent: *
+Allow: /
+
+# Bloqueia o painel administrativo
+Disallow: /admin
+Disallow: /admin/
+Disallow: /admin/*
+
+# Arquivos internos que não devem ser rastreados
+Disallow: /scripts/
+Disallow: /github/
+Disallow: /_next/
+Disallow: /node_modules/
+
+# Parâmetros de campanha (evita conteúdo duplicado)
+Disallow: /*?utm_
+Disallow: /*?fbclid=
+Disallow: /*?gclid=
+
+# Permite que o Google indexe as mídias (SEO de imagem/vídeo)
+Allow: /img/
+Allow: /video/
+Allow: /galeria/
+Allow: /certificados/
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.png$
+Allow: /*.webp$
+Allow: /*.svg$
+Allow: /*.mp4$
+Allow: /*.webm$
+Allow: /*.ico$
+
+# Arquivos essenciais liberados explicitamente
+Allow: /manifest.json$
+Allow: /sitemap.xml$
+Allow: /robots.txt$
+Allow: /favicon.ico$
+Allow: /google*.html$
+
+# ══════════════════════════════════════════════════════════════
+# GOOGLE — Otimizações específicas
+# ══════════════════════════════════════════════════════════════
+User-agent: Googlebot
+Allow: /
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /scripts/
+
+User-agent: Googlebot-Image
+Allow: /img/
+Allow: /galeria/
+Allow: /certificados/
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.png$
+Allow: /*.webp$
+Allow: /*.svg$
+
+User-agent: Googlebot-Video
+Allow: /video/
+Allow: /*.mp4$
+
+User-agent: Googlebot-Mobile
+Allow: /
+Disallow: /admin
+Disallow: /admin/*
+
+# ══════════════════════════════════════════════════════════════
+# BING — Otimizações específicas
+# ══════════════════════════════════════════════════════════════
+User-agent: Bingbot
+Allow: /
+Disallow: /admin
+Disallow: /admin/*
+
+# ══════════════════════════════════════════════════════════════
+# REDES SOCIAIS — Permitir preview de links compartilhados
+# ══════════════════════════════════════════════════════════════
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: TelegramBot
+Allow: /
+
+# ══════════════════════════════════════════════════════════════
+# BLOQUEAR ROBÔS DE SCRAPING / SEO ABUSIVO / IA
+# ══════════════════════════════════════════════════════════════
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+# ══════════════════════════════════════════════════════════════
+# SITEMAP
+# ══════════════════════════════════════════════════════════════
+Sitemap: https://vitalcar.pages.dev/sitemap.xml

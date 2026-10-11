@@ -1,0 +1,139 @@
+/* The photograph is the default. Only a successful draw enables .is-3d.
+   Keep this surface dark in both site themes, with controls outside the canvas. */
+body.vitalcar-studio .showroom-root {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  min-width: 0;
+  padding: 76px 0 22px;
+  color: #f4f1e9;
+  background: radial-gradient(ellipse at 50% 24%, #303539 0%, #1b1f22 52%, #121517 100%);
+  color-scheme: dark;
+}
+
+body.vitalcar-studio .showroom-root.is-preparing { visibility: hidden; pointer-events: none; }
+body.vitalcar-studio .showroom-root[hidden],
+body.vitalcar-studio .showroom-mode[hidden],
+body.vitalcar-studio .showroom-status[hidden] { display: none !important; }
+
+body.vitalcar-studio .studio-visual.is-3d > .studio-scene,
+body.vitalcar-studio .studio-visual.is-3d > .studio-controls,
+body.vitalcar-studio .studio-visual.is-3d > .studio-frame-mark,
+body.vitalcar-studio .studio-visual.is-3d > .studio-visual-label,
+body.vitalcar-studio .studio-visual.is-3d > .studio-scene-status,
+body.vitalcar-studio .studio-visual.is-3d::before,
+body.vitalcar-studio .studio-visual.is-3d::after { display: none; }
+body.vitalcar-studio .studio-visual.is-3d .studio-scene img { animation: none; }
+
+body.vitalcar-studio .showroom-mode {
+  position: absolute;
+  z-index: 7;
+  top: 18px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  width: fit-content;
+  max-width: calc(100% - 40px);
+  gap: 4px;
+  color: #f4f1e9;
+  color-scheme: dark;
+}
+
+body.vitalcar-studio :is(.showroom-mode, .showroom-controls) button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid rgba(244, 241, 233, .3);
+  border-radius: 2px;
+  color: #f4f1e9;
+  background: #202427;
+  font: 500 .7rem/1.4 var(--studio-font);
+  letter-spacing: .005em;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color .18s, border-color .18s;
+}
+
+body.vitalcar-studio .showroom-mode button { padding-inline: 17px; background: #15191c; }
+body.vitalcar-studio .showroom-mode button[aria-pressed="true"] {
+  color: #101214;
+  background: #f4f1e9;
+  border-color: #f4f1e9;
+  box-shadow: inset 0 -2px 0 #ef4135;
+}
+body.vitalcar-studio :is(.showroom-mode, .showroom-controls) button:hover:not(:disabled) { border-color: #f4f1e9; }
+body.vitalcar-studio .showroom-controls button:hover:not(:disabled) { background: #303639; }
+body.vitalcar-studio :is(.showroom-mode, .showroom-controls) button:focus-visible,
+body.vitalcar-studio #showroom-canvas:focus-visible { outline: 2px solid #f4f1e9; outline-offset: -5px; }
+body.vitalcar-studio .showroom-controls button:disabled { color: #b8bbb8; cursor: not-allowed; opacity: .7; }
+
+body.vitalcar-studio .showroom-caption {
+  margin: 0 20px;
+  padding: 0 0 2px;
+  color: #c1c5c3;
+  font: 400 .59rem/1.7 var(--studio-mono);
+  letter-spacing: .095em;
+  text-transform: uppercase;
+}
+body.vitalcar-studio .showroom-caption::before { content: ''; display: inline-block; width: 14px; height: 2px; margin: 0 8px 3px 0; background: #ef4135; }
+
+body.vitalcar-studio .showroom-stage { position: relative; min-width: 0; min-height: 0; overflow: hidden; }
+body.vitalcar-studio #showroom-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y;
+  cursor: grab;
+  -webkit-user-select: none;
+  user-select: none;
+}
+body.vitalcar-studio #showroom-canvas.is-dragging { cursor: grabbing; }
+
+body.vitalcar-studio .showroom-controls { display: grid; gap: 6px; min-width: 0; margin-inline: 20px; }
+body.vitalcar-studio .showroom-instructions {
+  margin: 0 0 4px;
+  color: #b8bfbd;
+  font: 400 .68rem/1.5 var(--studio-font);
+  letter-spacing: 0;
+}
+body.vitalcar-studio .showroom-colors { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; min-width: 0; }
+body.vitalcar-studio .showroom-colors button { min-width: 0; padding-inline: 6px; font-size: .67rem; }
+body.vitalcar-studio .showroom-colors button[aria-pressed="true"] { border-color: #f4f1e9; background: #303538; box-shadow: inset 0 -2px 0 #ef4135; }
+body.vitalcar-studio .showroom-swatch { width: 12px; height: 12px; flex: 0 0 12px; border: 1px solid rgba(255, 255, 255, .4); border-radius: 50%; background: #cf352e; }
+body.vitalcar-studio [data-showroom-color="pearl"] .showroom-swatch { background: #eee9d9; }
+body.vitalcar-studio [data-showroom-color="graphite"] .showroom-swatch { background: #545b62; }
+body.vitalcar-studio .showroom-tools { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; min-width: 0; }
+body.vitalcar-studio .showroom-tools button { min-width: 0; font-size: .69rem; background: transparent; }
+
+body.vitalcar-studio .showroom-sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+body.vitalcar-studio .showroom-status { position: absolute; z-index: 6; top: 74px; left: 20px; right: 20px; margin: 0; padding: 12px; border-left: 2px solid #ef4135; color: #f4f1e9; background: #15191c; font: 400 .8rem/1.5 var(--studio-font); }
+
+/* In photo mode leave its original captions and navigation intact; make room
+   for the live mode switch above the original photographic label. */
+body.vitalcar-studio .studio-visual.showroom-ready:not(.is-3d) > .studio-frame-mark { top: 84px; }
+body.vitalcar-studio .studio-visual.showroom-ready:not(.is-3d) > .studio-visual-label { top: 80px; }
+body.vitalcar-studio .studio-visual.showroom-ready:not(.is-3d) > .studio-scene-status { top: 124px; }
+body.vitalcar-studio .studio-visual.has-showroom-error > .studio-scene-status { top: 164px; }
+
+@media (max-width: 560px) {
+  body.vitalcar-studio .showroom-root { padding-top: 72px; padding-bottom: 20px; }
+  body.vitalcar-studio .showroom-caption { font-size: .56rem; letter-spacing: .06em; }
+  body.vitalcar-studio .showroom-colors button { font-size: .63rem; gap: 5px; }
+  body.vitalcar-studio .showroom-tools button { padding-inline: 6px; font-size: .65rem; }
+  body.vitalcar-studio .showroom-instructions { font-size: .65rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.vitalcar-studio :is(.showroom-mode, .showroom-controls) button { transition: none; }
+}
+
+@media (forced-colors: active) {
+  body.vitalcar-studio :is(.showroom-mode, .showroom-colors) button[aria-pressed="true"] { border: 2px solid Highlight; }
+  body.vitalcar-studio .showroom-swatch { forced-color-adjust: none; }
+}
