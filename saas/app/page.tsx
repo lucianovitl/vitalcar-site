@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { CinematicHero } from '@/components/ui/cinematic-landing-hero'
+import { CinematicHero } from '@/components/ui/CinematicHero'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
