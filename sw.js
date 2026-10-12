@@ -97,7 +97,8 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(req.url);
 
   // O painel administrativo cuida do próprio cache — não tocar.
-  if (url.origin === self.location.origin && url.pathname.startsWith('/admin')) return;
+  // O SaaS (dashboard) também cuida do próprio cache — não tocar.
+  if (url.origin === self.location.origin && (url.pathname.startsWith('/admin') || url.pathname.startsWith('/dashboard'))) return;
 
   // Nunca cachear tráfego do Firestore/Auth.
   if (NEVER_CACHE.some((d) => url.hostname.includes(d))) return;

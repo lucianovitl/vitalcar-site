@@ -1,42 +1,37 @@
 {
-  "name": "Vitalcar Estúdios Estética Automotiva",
+  "name": "Vitalcar SaaS",
   "short_name": "Vitalcar",
-  "description": "Estética automotiva em Ilhéus BA — lavagem, polimento, vitrificação, higienização. Carros e motos.",
-  "start_url": "/",
-  "scope": "/",
-  "id": "/",
+  "description": "Painel de gestão para oficinas de estética automotiva",
+  "start_url": "/dashboard",
+  "scope": "/dashboard/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#0d0b0a",
   "theme_color": "#ff1a1a",
   "lang": "pt-BR",
   "dir": "ltr",
-  "categories": [
-    "business",
-    "shopping",
-    "lifestyle"
-  ],
+  "categories": ["business", "productivity"],
   "icons": [
     {
-      "src": "/img/icon-192.png",
+      "src": "/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/img/icon-512.png",
+      "src": "/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/img/icon-512.png",
+      "src": "/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "/img/apple-touch-icon.png",
+      "src": "/icons/apple-touch-icon.png",
       "sizes": "180x180",
       "type": "image/png",
       "purpose": "any"
@@ -44,22 +39,28 @@
   ],
   "shortcuts": [
     {
-      "name": "Agendar pelo WhatsApp",
-      "short_name": "Agendar",
-      "url": "/#contato",
-      "description": "Enviar agendamento direto"
+      "name": "Ordens de Serviço",
+      "short_name": "Ordens",
+      "url": "/dashboard/ordens",
+      "description": "Gerenciar ordens de serviço"
     },
     {
-      "name": "Simulador de orçamento",
-      "short_name": "Simular",
-      "url": "/#simulador",
-      "description": "Calcular valor do serviço"
+      "name": "Agendamentos",
+      "short_name": "Agenda",
+      "url": "/dashboard/agendamentos",
+      "description": "Ver agendamentos"
     },
     {
-      "name": "Ver preços",
-      "short_name": "Preços",
-      "url": "/#precos",
-      "description": "Tabela completa de preços"
+      "name": "Clientes",
+      "short_name": "Clientes",
+      "url": "/dashboard/clientes",
+      "description": "Gerenciar clientes"
+    },
+    {
+      "name": "Financeiro",
+      "short_name": "Financeiro",
+      "url": "/dashboard/financeiro",
+      "description": "Ver financeiro"
     }
   ]
 }
