@@ -1,17 +1,19 @@
 // ============================================================
-//  VITALCAR ADMIN · SERVICE WORKER
+//  VITALCAR ADMIN — SERVICE WORKER
 //  Escopo: /admin/ — só intercepta páginas do painel
 //  Cache do shell + suporte offline do painel
 // ============================================================
 
-const CACHE_NAME = 'vitalcar-admin-v10';
-const RUNTIME_CACHE = 'vitalcar-admin-runtime-v10';
+const CACHE_NAME = 'vitalcar-admin-v11';
+const RUNTIME_CACHE = 'vitalcar-admin-runtime-v11';
 
 // Shell do admin — tudo sob /admin/
 const SHELL_ASSETS = [
   '/admin/',
   '/admin/index.html',
-  '/admin/manifest.json'
+  '/admin/manifest.json',
+  '/img/admin-icon-192.png',
+  '/img/admin-icon-512.png'
 ];
 
 // Bibliotecas externas em cache (CDN)
@@ -105,10 +107,13 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Assets same-origin sob /admin/
+  // Assets same-origin sob /admin/ E ícones em /img/
   if (url.origin === self.location.origin) {
-    if (!url.pathname.startsWith('/admin/')) {
-      // Deixa o navegador cuidar de assets fora do admin
+    const isAdminAsset = url.pathname.startsWith('/admin/');
+    const isIconAsset = url.pathname.startsWith('/img/admin-icon-');
+    
+    if (!isAdminAsset && !isIconAsset) {
+      // Deixa o navegador cuidar de assets fora do admin e ícones
       return;
     }
     event.respondWith(
