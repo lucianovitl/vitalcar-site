@@ -6,7 +6,7 @@
   "framework": "nextjs",
   "regions": ["iad1"],
   "functions": {
-    "saas/app/api/**/*.ts": {
+    "saas/app/api/**/route.ts": {
       "maxDuration": 30
     }
   },
