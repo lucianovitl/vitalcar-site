@@ -1,35 +1,91 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    
+
+    // SÓ os dois UIDs reais do painel têm acesso administrativo.
     function isAdmin() {
-      return request.auth != null && request.auth.token.admin == true;
-    }
-    
-    function isValidOrder(data) {
-      return data.origem == 'site' &&
-             data.uid == 'anon' &&
-             data.status == 'pendente';
+      return request.auth != null && (
+        request.auth.uid == 'sBBSCgUu8EgPATi1sSkh7C9AX1L2' ||
+        request.auth.uid == 'iNm06ITBokft0xtfNh8y2HoYWTe2'
+      );
     }
 
+    function isStr(x, min, max) {
+      return x is string && x.size() >= min && x.size() <= max;
+    }
+    function isNum(x, max) {
+      return x is number && x >= 0 && x <= max;
+    }
+
+    // CONFIG (videos, promo, status) — leitura pública, escrita só admin
     match /config/{docId} {
       allow read: if true;
       allow write: if isAdmin();
     }
 
+    // ORDENS
     match /ordens/{ordemId} {
-      allow read: if request.auth != null;
-      
-      // Criação via site (anônimo)
-      allow create: if 
+      allow read: if isAdmin();
+
+      // criar pelo painel: admin, origem travada, sem travar campos opcionais
+      // para nunca dar permission-denied ao salvar com telefone vazio, etc.
+      allow create: if
+        isAdmin() &&
+        request.resource.data.origem == 'painel' &&
+        isStr(request.resource.data.nome, 2, 120) &&
+        isStr(request.resource.data.veiculo, 2, 120) &&
+        isNum(request.resource.data.valor, 50000) &&
+        request.resource.data.size() <= 35;
+
+      // criar pelo site: sem login, whitelist fechada de 26 campos
+      // OBS: fieldsParaFirestore() omite strings vazias, então placa/obs/periodo/saida
+      // podem NÃO existir no doc — por isso são opcionais com !('campo' in data) ||
+      allow create: if
         request.resource.data.origem == 'site' &&
         request.resource.data.uid == 'anon' &&
-        request.resource.data.status == 'pendente';
-      
-      // Admin pode tudo
-      allow create, update, delete: if isAdmin();
+        request.resource.data.status == 'pendente' &&
+        request.resource.data.keys().hasOnly([
+          'nome','telefone','veiculo','placa','tipoVeiculo',
+          'servicos','subtotal','desconto','descontoValor','descontoTipo',
+          'valor','entrada','saida','status','origem','origemContato',
+          'formaPagamento','valorRecebido','troco','gorjeta','pago',
+          'obs','periodo','numero','uid','criadoEm'
+        ]) &&
+        isStr(request.resource.data.nome, 2, 120) &&
+        isStr(request.resource.data.veiculo, 2, 120) &&
+        isStr(request.resource.data.telefone, 8, 20) &&
+        isStr(request.resource.data.servicos, 2, 400) &&
+        isStr(request.resource.data.numero, 6, 20) &&
+        request.resource.data.numero.matches('^[0-9]{4}-[A-Z0-9]{4,10}$') &&
+        isNum(request.resource.data.valor, 50000) &&
+        isNum(request.resource.data.subtotal, 50000) &&
+        isNum(request.resource.data.desconto, 50000) &&
+        isNum(request.resource.data.descontoValor, 50000) &&
+        isNum(request.resource.data.valorRecebido, 50000) &&
+        isNum(request.resource.data.troco, 50000) &&
+        isNum(request.resource.data.gorjeta, 50000) &&
+        isStr(request.resource.data.entrada, 8, 30) &&
+        (!('obs' in request.resource.data) || isStr(request.resource.data.obs, 0, 400)) &&
+        (!('placa' in request.resource.data) || isStr(request.resource.data.placa, 0, 10)) &&
+        (!('periodo' in request.resource.data) || isStr(request.resource.data.periodo, 0, 30)) &&
+        (!('saida' in request.resource.data) || isStr(request.resource.data.saida, 0, 30)) &&
+        (!('origemContato' in request.resource.data) || isStr(request.resource.data.origemContato, 0, 40)) &&
+        (!('formaPagamento' in request.resource.data) || isStr(request.resource.data.formaPagamento, 0, 30)) &&
+        (!('pago' in request.resource.data) || isStr(request.resource.data.pago, 0, 20)) &&
+        (!('descontoTipo' in request.resource.data) || request.resource.data.descontoTipo in ['porcento','valor','']) &&
+        isStr(request.resource.data.criadoEm, 10, 40) &&
+        request.resource.data.tipoVeiculo in ['hatch','sedan','pickup','moto'];
+
+      // editar/apagar: só admin. Site NUNCA atualiza.
+      allow update, delete: if isAdmin();
     }
 
+    // MÉTRICAS — só admin
+    match /metricas/{docId} {
+      allow read, write: if isAdmin();
+    }
+
+    // FALLBACK — nenhuma coleção solta fica aberta
     match /{document=**} {
       allow read, write: if isAdmin();
     }

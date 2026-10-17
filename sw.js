@@ -5,7 +5,7 @@
 //  nunca trava em rede lenta), mídia pesada fora do cache.
 // ============================================================
 
-const VERSION        = 'v23';
+const VERSION        = 'v26';
 const CACHE_SHELL    = 'vitalcar-shell-' + VERSION;
 const CACHE_RUNTIME  = 'vitalcar-runtime-' + VERSION;
 const PRECACHE_TIMEOUT = 8000;
@@ -15,6 +15,7 @@ const SHELL_ASSETS = [
   '/index.html',
   '/privacidade.html',
   '/scripts/quote.js',
+  '/scripts/catalog.js',
   '/studio.css',
   '/scripts/studio.js',
   '/showroom.css',
@@ -97,8 +98,7 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(req.url);
 
   // O painel administrativo cuida do próprio cache — não tocar.
-  // O SaaS (dashboard) também cuida do próprio cache — não tocar.
-  if (url.origin === self.location.origin && (url.pathname.startsWith('/admin') || url.pathname.startsWith('/dashboard'))) return;
+  if (url.origin === self.location.origin && url.pathname.startsWith('/admin')) return;
 
   // Nunca cachear tráfego do Firestore/Auth.
   if (NEVER_CACHE.some((d) => url.hostname.includes(d))) return;

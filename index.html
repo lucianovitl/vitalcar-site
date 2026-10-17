@@ -892,11 +892,11 @@ a.seal:hover .seal-text strong{color:var(--red)}
 </h1>
 <p class="hero-sub" data-i18n="hero_sub">Lavagem técnica, polimento e proteção para carros e motos. Cuidado em cada detalhe, aqui em Ilhéus.</p>
 <div class="hero-btns">
-<a href="#simulador" class="btn-primary" data-i18n="hero_btn_simular">Calcular orçamento →</a>
-<a href="https://wa.me/557391436726?text=Ol%C3%A1!%20Quero%20aproveitar%20os%2010%25%20de%20inaugura%C3%A7%C3%A3o%20da%20Vitalcar." class="btn-ghost" target="_blank" rel="noopener" data-i18n="hero_btn_whats">Conversar no WhatsApp ↗</a>
+<a href="#contato" class="btn-primary hero-booking-link" data-i18n="hero_btn_book">Agendar horário</a>
+<a href="#simulador" class="btn-ghost" data-i18n="hero_btn_simular">Calcular orçamento →</a>
 </div>
 <div class="studio-hero-meta">
-<span class="hero-badge promo" id="hero-promo">🎉 10% OFF INAUGURAÇÃO · ATÉ 30/10/2026</span>
+<span class="hero-badge-animated promo" id="hero-promo">🎉 10% OFF INAUGURAÇÃO · ATÉ 30/10/2026</span>
 <span id="status-loja" class="status-badge"></span>
 </div>
 <a href="https://www.google.com/maps/place/Vital+car+estetica+Automotiva/@-14.8180163,-39.030786,17z/data=!3m1!4b1!4m8!3m7!1s0x935ef137e853f853:0x878aa2b1aec4bf28!8m2!3d-14.8180215!4d-39.0282111!9m1!1b1!16s%2Fg%2F11yhf9f863?entry=ttu" target="_blank" rel="noopener" class="hero-rating" data-google="link">
@@ -904,7 +904,7 @@ a.seal:hover .seal-text strong{color:var(--red)}
 <span class="hero-rating-text"><strong data-google="rating">5.0</strong> <span data-i18n="hero_rating">no Google · 6 avaliações</span></span>
 </a>
 </div>
-<div class="studio-visual" id="studio-visual" data-tilt>
+<div class="studio-visual studio-visual-enhanced" id="studio-visual" data-tilt>
   <div class="studio-scene is-active" data-scene-index="0" aria-hidden="false">
     <img src="img/hero-01.webp" width="1280" height="1707" loading="eager" fetchpriority="high" decoding="async" alt="Detalhe da lateral de um carro preto com pintura brilhante na Vitalcar" data-i18n-alt="studio_photo_car_alt">
     <div class="studio-photo-caption"><div><span class="studio-photo-label" data-i18n="studio_scene1_label">01 / O cuidado</span><p data-i18n="studio_scene1_text">Presença em cada reflexo.</p></div><span class="studio-photo-number" aria-hidden="true">01</span></div>
@@ -1646,6 +1646,7 @@ a.seal:hover .seal-text strong{color:var(--red)}
 <div id="lightbox"><button class="close-btn" id="lightbox-close" aria-label="Fechar">×</button><img id="lightbox-img" src="" alt=""></div>
 
 <script src="scripts/quote.js"></script>
+<script src="scripts/catalog.js"></script>
 <script src="scripts/studio.js" defer></script>
 <script src="scripts/car-3d.js" defer></script>
 <script src="scripts/showroom.js" defer></script>
@@ -2419,6 +2420,8 @@ window.compartilharServico = function(nome){
       aplicar: function(v){ return ATIVO ? Math.round(v * (1 - DESCONTO)) : v; },
       brl: brl, formatarData: formatarData
     };
+    window.VITALCAR_REAPLICAR_PROMO = aplicar;
+    try{ if(window.VITALCAR_RENDER_SERVICE_LIST) window.VITALCAR_RENDER_SERVICE_LIST(); }catch(e){}
     try{ if(window.atualizarSimuladorSite) window.atualizarSimuladorSite(); }catch(e){}
   }
 
@@ -2623,7 +2626,7 @@ window.compartilharServico = function(nome){
   var quote = window.VitalcarQuote;
   if (!quote) return;
   var tb = document.querySelectorAll('#sim-tipo button');
-  var ck = document.querySelectorAll('#sim-servicos input');
+  var root = document.getElementById('sim-servicos');
   var recommendations = document.querySelectorAll('[data-recommend]');
   var te = document.getElementById('sim-total');
   var eo = document.getElementById('sim-original');
@@ -2636,15 +2639,16 @@ window.compartilharServico = function(nome){
   function T(key, vars){ return window.VITALCAR_TR(key, vars); }
   function money(n){ return 'R$ ' + n.toLocaleString('pt-BR', { maximumFractionDigits: 2 }); }
   function vehicle(){ return { hatch:'Hatch', sedan:'Sedan', pickup:'Pick-up', moto:'Moto' }[tp]; }
+  function controls(){ return root ? Array.from(root.querySelectorAll('input[data-service-id]')) : []; }
   function name(id){
-    var input = Array.from(ck).find(function(c){ return c.dataset.serviceId === id; });
+    var input = controls().find(function(c){ return c.dataset.serviceId === id; });
     return input ? input.parentElement.querySelector('span').textContent : id;
   }
   function options(){
     return {
       type: tp, selected: selected, promo: window.VITALCAR_PROMO,
-      services: Array.from(ck).map(function(c){
-        return { id: c.dataset.serviceId, prices: { hatch:c.dataset.hatch, sedan:c.dataset.sedan, pickup:c.dataset.pickup, moto:c.dataset.moto } };
+      services: controls().map(function(c){
+        return { id: c.dataset.serviceId, category: c.parentElement.dataset.ruleCategory || c.parentElement.dataset.category, prices: { hatch:c.dataset.hatch, sedan:c.dataset.sedan, pickup:c.dataset.pickup, moto:c.dataset.moto } };
       })
     };
   }
@@ -2669,7 +2673,7 @@ window.compartilharServico = function(nome){
       b.setAttribute('aria-pressed', String(active));
     });
     recommendations.forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.recommend === recommended)); });
-    ck.forEach(function(c){
+    controls().forEach(function(c){
       var id = c.dataset.serviceId, label = c.parentElement;
       label.hidden = (label.dataset.cat === 'moto') !== (tp === 'moto');
       c.checked = selected.indexOf(id) !== -1 || !!included[id];
@@ -2715,17 +2719,17 @@ window.compartilharServico = function(nome){
       calc();
     });
   });
-  ck.forEach(function(c){
-    c.addEventListener('change', function(){
-      var change = quote.select(options(), c.dataset.serviceId, c.checked);
-      selected = change.selected;
-      if (change.conflict) notice = { key: 'sim_conflict', a: change.conflict.ids[0], b: change.conflict.ids[1] };
-      else {
-        recommended = '';
-        notice = change.replaced.length ? { key: 'sim_replaced', a: change.replaced[0], b: c.dataset.serviceId } : null;
-      }
-      calc();
-    });
+  if (root) root.addEventListener('change', function(event){
+    var c = event.target;
+    if (!c || !c.matches('input[data-service-id]')) return;
+    var change = quote.select(options(), c.dataset.serviceId, c.checked);
+    selected = change.selected;
+    if (change.conflict) notice = { key: 'sim_conflict', a: change.conflict.ids[0], b: change.conflict.ids[1] };
+    else {
+      recommended = '';
+      notice = change.replaced.length ? { key: 'sim_replaced', a: change.replaced[0], b: c.dataset.serviceId } : null;
+    }
+    calc();
   });
   recommendations.forEach(function(b){
     b.addEventListener('click', function(){
@@ -3129,7 +3133,7 @@ document.querySelectorAll('.ba-slider').forEach(function(s){
       promo_label: '🎉 Launch:', promo_ate: 'on all services until', promo_link: 'Simulate with discount →',
       hero_l1: 'The care.', hero_l2: 'The detail.', hero_l3: 'The difference.',
       hero_sub: 'Technical washing, polishing and protection for cars and motorcycles. Care in every detail, right here in Ilhéus.',
-      hero_btn_whats: 'Chat on WhatsApp ↗', hero_btn_simular: 'Calculate a quote →',
+      hero_btn_whats: 'Chat on WhatsApp ↗', hero_btn_simular: 'Calculate a quote →', hero_btn_book: 'Book a time',
       hero_rating: 'on Google · 6 reviews',
       brands_label: 'We serve all brands',
       sobre_label: 'About us', sobre_l1: 'PASSION FOR', sobre_l2: 'VEHICLES',
@@ -3248,7 +3252,7 @@ document.querySelectorAll('.ba-slider').forEach(function(s){
       promo_label: '🎉 Inauguración:', promo_ate: 'en todos los servicios hasta', promo_link: 'Simular con descuento →',
       hero_l1: 'El cuidado.', hero_l2: 'El detalle.', hero_l3: 'La diferencia.',
       hero_sub: 'Lavado técnico, pulido y protección para coches y motos. Cuidado en cada detalle, aquí en Ilhéus.',
-      hero_btn_whats: 'Conversar por WhatsApp ↗', hero_btn_simular: 'Calcular presupuesto →',
+      hero_btn_whats: 'Conversar por WhatsApp ↗', hero_btn_simular: 'Calcular presupuesto →', hero_btn_book: 'Agendar horario',
       hero_rating: 'en Google · 6 reseñas',
       brands_label: 'Atendemos todas las marcas',
       sobre_label: 'Sobre nosotros', sobre_l1: 'PASIÓN POR', sobre_l2: 'VEHÍCULOS',
@@ -3371,6 +3375,7 @@ document.querySelectorAll('.ba-slider').forEach(function(s){
       });
     });
     // Textos que o JS monta na mao tambem precisam trocar de idioma
+    if (typeof window.VITALCAR_RENDER_SERVICE_LIST === 'function') window.VITALCAR_RENDER_SERVICE_LIST();
     if (typeof window.atualizarStatusLojaSite === 'function') window.atualizarStatusLojaSite();
     if (typeof window.atualizarSimuladorSite === 'function') window.atualizarSimuladorSite();
     if (typeof window.atualizarChatSite === 'function') window.atualizarChatSite();
@@ -3428,6 +3433,87 @@ document.querySelectorAll('.ba-slider').forEach(function(s){
   if (!('serviceWorker' in navigator)) return;
   navigator.serviceWorker.register('/sw.js', { scope: '/' })
     .catch(function(err){ console.warn('[SW] falha ao registrar:', err); });
+})();
+</script>
+
+<script>
+/* ============ HERO PARTICLES SYSTEM ============ */
+(function(){
+  // Only run on desktop devices (not mobile)
+  if (window.matchMedia('(max-width: 980px)').matches) return;
+
+  // Only run if not in reduced motion mode
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const container = document.querySelector('.hero-particles');
+  if (!container) return;
+
+  // Create 50 particles
+  const particleCount = 50;
+
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'hero-particle';
+
+    // Random position
+    const x = Math.random() * 100; // 0-100%
+    const y = Math.random() * 100; // 0-100%
+
+    // Random size (2-6px)
+    const size = 2 + Math.random() * 4;
+
+    // Random animation duration (8-20s)
+    const duration = 8 + Math.random() * 12;
+
+    // Random delay (0-5s)
+    const delay = Math.random() * 5;
+
+    // Random opacity (0.1-0.6)
+    const opacity = 0.1 + Math.random() * 0.5;
+
+    // Apply styles
+    particle.style.left = `${x}%`;
+    particle.style.top = `${y}%`;
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    particle.style.opacity = opacity;
+    particle.style.animationDuration = `${duration}s`;
+    particle.style.animationDelay = `${delay}s`;
+
+    // Random color variation (red family)
+    const hueShift = Math.random() * 20 - 10; // -10 to +10 degrees
+    particle.style.background = `hsl(${10 + hueShift}, 100%, 50%)`;
+
+    container.appendChild(particle);
+  }
+
+  // Add tilt effect to hero content on mouse move
+  const hero = document.querySelector('.hero-studio-hero');
+  if (hero) {
+    hero.addEventListener('mousemove', (e) => {
+      const rect = hero.getBoundingClientRect();
+      const x = e.clientX - rect.left; // x position within the element
+      const y = e.clientY - rect.top;  // y position within the element
+
+      // Calculate tilt as percentage (-0.5 to 0.5)
+      const tiltX = ((x / rect.width) - 0.5) * 0.5;
+      const tiltY = ((y / rect.height) - 0.5) * 0.5;
+
+      // Apply tilt to children that should respond
+      const tiltElements = hero.querySelectorAll('.hero-tilt-element');
+      tiltElements.forEach(el => {
+        el.style.transform = `rotateX(${tiltY * 10}deg) rotateY(${tiltX * -10}deg)`;
+      });
+    });
+
+    // Reset tilt when mouse leaves
+    hero.addEventListener('mouseleave', () => {
+      const tiltElements = hero.querySelectorAll('.hero-tilt-element');
+      tiltElements.forEach(el => {
+        el.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      });
+    });
+  }
 })();
 </script>
 
