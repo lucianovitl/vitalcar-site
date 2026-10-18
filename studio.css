@@ -1840,7 +1840,7 @@ body.vitalcar-studio .service-item { min-height: 52px; }
 
 @media (max-width: 760px) {
   body.vitalcar-studio .hero.studio-hero { padding-top: calc(var(--studio-header) + 20px); }
-  body.vitalcar-studio .studio-hero-grid { gap: 28px; }
+  body.vitalcar-studio .studio-hero-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
   body.vitalcar-studio .hero-content { max-width: none; padding: 10px 0 0; }
   body.vitalcar-studio .hero h1.studio-title { max-width: 680px; font-size: clamp(3.2rem, 11.6vw, 5.2rem); }
   body.vitalcar-studio .studio-visual { width: 100%; height: clamp(460px, 105vw, 620px); margin: 0; border-radius: 2px; }
@@ -1864,6 +1864,11 @@ body.vitalcar-studio .service-item { min-height: 52px; }
 @media (max-width: 560px) {
   body.vitalcar-studio .hero .studio-title .title-line:nth-child(2) { padding-left: 16px; }
   body.vitalcar-studio .studio-visual { height: clamp(430px, 112vw, 540px); clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 16px 100%, 0 calc(100% - 16px)); }
+  body.vitalcar-studio .studio-photo-caption { bottom: 116px; left: 20px; right: 20px; gap: 10px; }
+  body.vitalcar-studio .studio-photo-caption p { font-size: clamp(1.2rem, 5.3vw, 1.5rem); }
+  body.vitalcar-studio .studio-controls { left: 20px; right: 20px; bottom: 20px; gap: 6px; }
+  body.vitalcar-studio .studio-controls button { min-width: 44px; padding-inline: 6px; }
+  body.vitalcar-studio #studio-motion-toggle { flex-basis: 132px; }
   body.vitalcar-studio .hero-btns .btn-primary,
   body.vitalcar-studio .hero-btns .hero-booking-link { flex: 1 1 100%; width: 100%; }
   body.vitalcar-studio .studio-services .section-title { font-size: clamp(2.35rem, 10vw, 3.45rem); }

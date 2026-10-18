@@ -5,7 +5,7 @@
 //  nunca trava em rede lenta), mídia pesada fora do cache.
 // ============================================================
 
-const VERSION        = 'v26';
+const VERSION        = 'v27';
 const CACHE_SHELL    = 'vitalcar-shell-' + VERSION;
 const CACHE_RUNTIME  = 'vitalcar-runtime-' + VERSION;
 const PRECACHE_TIMEOUT = 8000;
